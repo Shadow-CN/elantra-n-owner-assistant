@@ -1,0 +1,105 @@
+/* pages/filter/filter.wxss */
+
+.page-scroll {
+  height: 100vh;
+}
+
+.page-body {
+  padding: 0 0 160rpx 0;
+}
+
+/* Section */
+.section {
+  padding: 32rpx 32rpx 16rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin-bottom: 8rpx;
+}
+
+.section-hint {
+  font-size: 22rpx;
+  color: #999;
+  margin-bottom: 20rpx;
+}
+
+/* Chips */
+.chip-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.chip {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10rpx 24rpx;
+  border-radius: 40rpx;
+  border: 1rpx solid #D0D0D0;
+  background: #F8F8F8;
+  font-size: 26rpx;
+  color: #444;
+}
+
+.chip-active {
+  background: #1A73E8;
+  border-color: #1A73E8;
+  color: #FFFFFF;
+}
+
+.chip-count {
+  font-size: 22rpx;
+  opacity: 0.75;
+  margin-left: 4rpx;
+}
+
+/* Bottom bar */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24rpx 32rpx;
+  background: #FFFFFF;
+  border-top: 1rpx solid #EBEBEB;
+  box-shadow: 0 -4rpx 16rpx rgba(0,0,0,0.06);
+}
+
+.result-hint {
+  font-size: 24rpx;
+  color: #888;
+  margin-bottom: 16rpx;
+}
+
+.btn-row {
+  display: flex;
+  flex-direction: row;
+  gap: 16rpx;
+}
+
+.btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background: #1A73E8;
+  color: #FFFFFF;
+}
+
+.btn-secondary {
+  background: #F0F0F0;
+  color: #444;
+}

@@ -1,0 +1,66 @@
+<!-- pages/filter/filter.wxml -->
+<navigation-bar title="OBD 参数筛选" back="{{false}}" color="black" background="#FFFFFF"></navigation-bar>
+
+<scroll-view class="page-scroll" scroll-y type="list">
+  <view class="page-body">
+
+    <!-- ECU 分组 -->
+    <view class="section">
+      <view class="section-title">部件 / ECU</view>
+      <view class="section-hint">点击选择，再次点击取消</view>
+      <view class="chip-wrap">
+        <!-- 全部选项 -->
+        <view
+          class="chip {{selectedEcu === '' ? 'chip-active' : ''}}"
+          bindtap="onEcuTap"
+          data-group=""
+        >全部</view>
+        <!-- ECU groups -->
+        <view
+          wx:for="{{ecuGroups}}"
+          wx:key="group"
+          class="chip {{item.selected ? 'chip-active' : ''}}"
+          bindtap="onEcuTap"
+          data-group="{{item.group}}"
+        >{{item.label}} <text class="chip-count">({{item.count}})</text></view>
+      </view>
+    </view>
+
+    <!-- 参数类型 -->
+    <view class="section">
+      <view class="section-title">参数类型</view>
+      <view class="section-hint">点击选择，再次点击取消</view>
+      <view class="chip-wrap">
+        <view
+          class="chip {{selectedType === '' ? 'chip-active' : ''}}"
+          bindtap="onTypeTap"
+          data-type=""
+        >全部</view>
+        <view
+          wx:for="{{paramTypes}}"
+          wx:key="type"
+          class="chip {{item.selected ? 'chip-active' : ''}}"
+          bindtap="onTypeTap"
+          data-type="{{item.type}}"
+        >{{item.label}} <text class="chip-count">({{item.count}})</text></view>
+      </view>
+    </view>
+
+    <!-- 底部操作区 -->
+    <view class="bottom-bar">
+      <view class="result-hint">共 {{totalCount}} 个参数</view>
+      <view class="btn-row">
+        <view
+          wx:if="{{selectedCount > 0}}"
+          class="btn btn-secondary"
+          bindtap="onViewSelected"
+        >已选 {{selectedCount}} 个 → 导出</view>
+        <view
+          class="btn btn-primary"
+          bindtap="onViewParams"
+        >查看参数列表</view>
+      </view>
+    </view>
+
+  </view>
+</scroll-view>

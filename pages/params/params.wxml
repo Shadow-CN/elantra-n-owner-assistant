@@ -1,0 +1,68 @@
+<!-- pages/params/params.wxml -->
+<navigation-bar title="选择参数" back="{{true}}" color="black" background="#FFFFFF"></navigation-bar>
+
+<!-- 筛选状态栏 -->
+<view class="filter-bar">
+  <text class="filter-tag">{{filterEcuLabel}}</text>
+  <text class="filter-sep">·</text>
+  <text class="filter-tag">{{filterTypeLabel}}</text>
+  <text class="filter-total">共 {{totalCount}} 个</text>
+</view>
+
+<!-- 工具栏：全选 / 取消全选 / 已选数量 -->
+<view class="toolbar">
+  <view class="toolbar-left">
+    <view class="checkbox-wrap" bindtap="onSelectAll">
+      <view class="checkbox {{allChecked ? 'checkbox-checked' : ''}}">
+        <text wx:if="{{allChecked}}" class="checkbox-tick">✓</text>
+      </view>
+      <text class="toolbar-text">全选</text>
+    </view>
+    <text
+      wx:if="{{selectedCount > 0}}"
+      class="clear-btn"
+      bindtap="onClearAll"
+    >取消全选</text>
+  </view>
+  <text class="selected-count">已选 {{selectedCount}} 个</text>
+</view>
+
+<!-- 参数列表 -->
+<scroll-view class="list-scroll" scroll-y type="list">
+  <view
+    wx:for="{{pids}}"
+    wx:key="id"
+    class="param-item {{item.checked ? 'param-item-checked' : ''}}"
+    bindtap="onItemTap"
+    data-index="{{index}}"
+  >
+    <!-- 左侧 checkbox -->
+    <view class="checkbox {{item.checked ? 'checkbox-checked' : ''}}">
+      <text wx:if="{{item.checked}}" class="checkbox-tick">✓</text>
+    </view>
+
+    <!-- 参数信息 -->
+    <view class="param-info">
+      <view class="param-name-cn">{{item.name_cn}}</view>
+      <view class="param-name-en">{{item.name_en}}</view>
+      <view class="param-meta">
+        <text class="param-ecu">{{item.ecu_label}}</text>
+        <text wx:if="{{item.unit}}" class="param-unit"> · {{item.unit}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Empty state -->
+  <view wx:if="{{totalCount === 0}}" class="empty-tip">
+    <text>该筛选条件下没有参数</text>
+    <text class="empty-sub">请返回调整筛选条件</text>
+  </view>
+</scroll-view>
+
+<!-- 底部操作栏 -->
+<view class="bottom-bar">
+  <view
+    class="btn btn-primary {{selectedCount === 0 ? 'btn-disabled' : ''}}"
+    bindtap="onGoExport"
+  >导出 {{selectedCount > 0 ? selectedCount + ' 个参数' : ''}}</view>
+</view>

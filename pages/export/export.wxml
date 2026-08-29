@@ -1,0 +1,76 @@
+<!-- pages/export/export.wxml -->
+<navigation-bar title="导出配置" back="{{true}}" color="black" background="#FFFFFF"></navigation-bar>
+
+<scroll-view class="page-scroll" scroll-y type="list">
+  <view class="page-body">
+
+    <!-- 已选参数摘要 -->
+    <view class="summary-card">
+      <view class="summary-count">{{selectedCount}}</view>
+      <view class="summary-label">个已选参数</view>
+      <view class="summary-hint">点击下方按钮生成对应 App 的配置文件</view>
+    </view>
+
+    <!-- 导出目标选择 -->
+    <view class="section-title">选择目标 App</view>
+
+    <!-- Car Scanner -->
+    <view class="app-card" bindtap="onGenerateCarScanner">
+      <view class="app-info">
+        <view class="app-name">Car Scanner</view>
+        <view class="app-desc">生成 custompids.csp 文件</view>
+        <view class="app-desc">支持数值型、位字段（GetBit）</view>
+      </view>
+      <view class="app-action">
+        <view wx:if="{{generating}}" class="loading-spin">…</view>
+        <view wx:else class="arrow">→</view>
+      </view>
+    </view>
+
+    <!-- RaceChrono (未实现) -->
+    <view class="app-card app-card-disabled">
+      <view class="app-info">
+        <view class="app-name">RaceChrono</view>
+        <view class="app-desc">即将支持</view>
+      </view>
+      <view class="app-action">
+        <view class="badge-soon">敬请期待</view>
+      </view>
+    </view>
+
+    <!-- OBD Fusion (未实现) -->
+    <view class="app-card app-card-disabled">
+      <view class="app-info">
+        <view class="app-name">OBD Fusion</view>
+        <view class="app-desc">即将支持</view>
+      </view>
+      <view class="app-action">
+        <view class="badge-soon">敬请期待</view>
+      </view>
+    </view>
+
+    <!-- 上次导出结果 -->
+    <view wx:if="{{lastResult}}" class="result-card">
+      <view class="result-title">上次导出结果</view>
+      <view class="result-row">
+        <text class="result-key">成功生成</text>
+        <text class="result-val">{{lastResult.total}} 个参数</text>
+      </view>
+      <view wx:if="{{lastResult.skipped > 0}}" class="result-row">
+        <text class="result-key result-warn">跳过</text>
+        <text class="result-val result-warn">{{lastResult.skipped}} 个（公式不支持）</text>
+      </view>
+    </view>
+
+    <!-- 错误提示 -->
+    <view wx:if="{{errorMsg}}" class="error-card">
+      <text>{{errorMsg}}</text>
+    </view>
+
+    <!-- 操作区 -->
+    <view class="action-row">
+      <view class="btn btn-ghost" bindtap="onClearSelection">清空选择</view>
+    </view>
+
+  </view>
+</scroll-view>
