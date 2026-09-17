@@ -1,28 +1,59 @@
-<!--index.wxml-->
-<navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
-    <view class="userinfo">
-      <block wx:if="{{canIUseNicknameComp && !hasUserInfo}}">
-        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-          <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-        </button>
-        <view class="nickname-wrapper">
-          <text class="nickname-label">昵称</text>
-          <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
-        </view>
-      </block>
-      <block wx:elif="{{!hasUserInfo}}">
-        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-        <view wx:else> 请使用2.10.4及以上版本基础库 </view>
-      </block>
-      <block wx:else>
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      </block>
+<page-meta page-style="{{pageStyle}}" />
+<navigation-bar title="Elantra N 工具箱" back="{{false}}" color="{{navColor}}" background="{{navBg}}">
+  <view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题">
+    <view class="theme-icon theme-icon-{{themeMode}}"></view>
+  </view>
+</navigation-bar>
+
+<scroll-view class="home-scroll" scroll-y>
+  <view class="home-body">
+    <view class="home-hero">
+      <text class="home-kicker">ELANTRA N / AVANTE N CN7</text>
+      <view class="home-title">车主工具箱</view>
+      <text class="home-intro">本地运行的实用工具，按需要选择使用。</text>
     </view>
-    <view class="usermotto">
-      <text class="user-motto">{{motto}}</text>
+
+    <view class="section-heading">可用工具</view>
+    <view class="tool-card" bindtap="onOpenKnowledge1" aria-role="button" aria-label="打开维护知识库 1">
+      <view class="tool-icon">KB</view>
+      <view class="tool-info">
+        <view class="tool-title-row">
+          <text class="tool-title">维护知识库</text>
+          <text class="tool-status">知识库 1</text>
+        </view>
+        <text class="tool-desc">完整维护资料、零件号、胎压与服务信息。</text>
+      </view>
+      <text class="tool-arrow">›</text>
+    </view>
+
+    <view class="tool-card tool-card-spaced" bindtap="onOpenObdTool" aria-role="button" aria-label="打开 OBD 参数配置">
+      <view class="tool-icon">OBD</view>
+      <view class="tool-info">
+        <view class="tool-title-row">
+          <text class="tool-title">OBD 参数配置</text>
+          <text class="tool-status">可用</text>
+        </view>
+        <text class="tool-desc">筛选原厂 PID，选择参数并导出 Car Scanner 配置。</text>
+      </view>
+      <text class="tool-arrow">›</text>
+    </view>
+
+    <view class="tool-card tool-card-spaced" bindtap="onOpenKnowledge2" aria-role="button" aria-label="打开维护知识库 2">
+      <view class="tool-icon">KB2</view>
+      <view class="tool-info">
+        <view class="tool-title-row">
+          <text class="tool-title">维护知识库补充</text>
+          <text class="tool-status">知识库 2</text>
+        </view>
+        <text class="tool-desc">本地速查资料，包含补充零件号与经验记录。</text>
+      </view>
+      <text class="tool-arrow">›</text>
+    </view>
+
+    <view class="section-heading section-heading-more">更多工具</view>
+    <view class="coming-card">
+      <text class="coming-title">持续扩展中</text>
+      <text class="coming-desc">新的车主工具会在这里提供入口。</text>
     </view>
   </view>
 </scroll-view>

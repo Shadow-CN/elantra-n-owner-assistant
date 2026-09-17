@@ -1,14 +1,14 @@
 """
 convert_csv.py
 
-Converts avante_n_cn7_profile_614_all_pids.csv + avante_n_cn7_parameter_english_chinese.xlsx
-into data/pids.json for use in the WeChat mini-program.
+Converts avante_n_cn7_profile_614_all_pids.csv + avante_n_cn7_profile_614_all_pids_cn.xlsx
+into data/pids.js for use in the WeChat mini-program.
 
 Run with:
     D:\miniconda3\envs\obd_stats\python.exe scripts/convert_csv.py
 
 Output:
-    data/pids.json
+    data/pids.js
 """
 
 import csv
@@ -21,21 +21,31 @@ import openpyxl
 
 ROOT = Path(__file__).parent.parent
 CSV_PATH = ROOT / "data" / "avante_n_cn7_profile_614_all_pids.csv"
-XLSX_PATH = ROOT / "data" / "avante_n_cn7_parameter_english_chinese.xlsx"
-OUT_PATH = ROOT / "data" / "pids.json"
+XLSX_PATH = ROOT / "data" / "avante_n_cn7_profile_614_all_pids_cn.xlsx"
+OUT_PATH = ROOT / "data" / "pids.js"
 
 
 def load_chinese_names(xlsx_path: Path) -> dict[str, str]:
-    """Load parameter_id -> Chinese name from xlsx Sheet 2 (全部参数明细)."""
+    """Load parameter_id -> Chinese name from the new full-data xlsx.
+
+    The new file has a single sheet with header row containing
+    'parameter_id' and 'parameter_name_cn' columns.
+    """
     wb = openpyxl.load_workbook(xlsx_path)
-    ws = wb.worksheets[1]  # Sheet index 1: 全部参数明细
+    ws = wb.worksheets[0]
+
+    # Locate columns by header name (robust against column order changes)
+    header = [c.value for c in ws[1]]
+    try:
+        id_col = header.index("parameter_id")
+        cn_col = header.index("parameter_name_cn")
+    except ValueError as e:
+        raise RuntimeError(f"Expected column not found in xlsx: {e}") from e
 
     id_to_cn: dict[str, str] = {}
-    for i, row in enumerate(ws.iter_rows(values_only=True)):
-        if i == 0:
-            continue  # skip header
-        param_id = str(row[0] or "").strip()
-        cn_name = str(row[2] or "").strip()
+    for i, row in enumerate(ws.iter_rows(min_row=2, values_only=True)):
+        param_id = str(row[id_col] or "").strip()
+        cn_name = str(row[cn_col] or "").strip()
         if param_id:
             id_to_cn[param_id] = cn_name
     return id_to_cn
@@ -201,10 +211,14 @@ def main() -> None:
     for ecu, cnt in ecu_counts.most_common():
         print(f"    {cnt:4d}  {ecu}")
 
-    # Write output
+    # Write output as a JS module (pids.js) so WeChat mini-program require() works.
+    # JSON files cannot be require()'d directly in the mini-program runtime.
     print(f"\nWriting {OUT_PATH} ...")
+    json_str = json.dumps(pids, ensure_ascii=False, separators=(",", ":"))
     with open(OUT_PATH, "w", encoding="utf-8") as f:
-        json.dump(pids, f, ensure_ascii=False, separators=(",", ":"))
+        f.write("module.exports=")
+        f.write(json_str)
+        f.write("\n")
 
     size_kb = OUT_PATH.stat().st_size / 1024
     print(f"Done. File size: {size_kb:.1f} KB ({len(pids)} entries)")

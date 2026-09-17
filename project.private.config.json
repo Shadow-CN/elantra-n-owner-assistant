@@ -3,7 +3,7 @@
   "projectname": "Elantra%20N%20OBD%20stats",
   "setting": {
     "compileHotReLoad": true,
-    "skylineRenderEnable": true,
+    "skylineRenderEnable": false,
     "urlCheck": true,
     "coverView": true,
     "lazyloadPlaceholderEnable": false,

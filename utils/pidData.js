@@ -39,8 +39,9 @@ let _pidMap = null    // id -> pid object
 function loadPids() {
   if (_allPids !== null) return _allPids
 
-  // require() works for JSON in WeChat mini-program
-  const raw = require('../data/pids.json')
+  // require() does not support .json directly in WeChat mini-program;
+  // pids.js uses module.exports = [...] format
+  const raw = require('../data/pids')
 
   // Augment each entry with derived fields (ecu_group, param_type)
   // so pages don't need to call getEcuCategory / getParamType themselves.
@@ -56,7 +57,7 @@ function loadPids() {
   // Build id lookup map
   _pidMap = {}
   _allPids.forEach(function(pid) {
-    _pidMap[pid.id] = pid
+    _pidMap[String(pid.id)] = pid
   })
 
   return _allPids
@@ -68,7 +69,7 @@ function loadPids() {
  */
 function getPidById(id) {
   if (_pidMap === null) loadPids()
-  return _pidMap[id]
+  return _pidMap[String(id)]
 }
 
 /**
@@ -100,10 +101,28 @@ function filterPids(ecuGroup, paramType) {
  * Preserves selection order. Skips unknown ids.
  */
 function getPidsByIds(ids) {
+  if (!ids || !ids.length) return []
   if (_pidMap === null) loadPids()
-  return ids
-    .map(function(id) { return _pidMap[id] })
-    .filter(function(pid) { return pid !== undefined })
+  var result = []
+  for (var i = 0; i < ids.length; i++) {
+    var key = String(ids[i])
+    var pid = _pidMap[key] || _pidMap[ids[i]]
+    if (pid) result.push(pid)
+  }
+  return result
+}
+
+/** Slim copies for cart UI. Avoids setData of full PID objects. */
+function getCartPids(ids) {
+  return getPidsByIds(ids).map(function(pid) {
+    return {
+      id: String(pid.id),
+      name_cn: pid.name_cn || '',
+      name_en: pid.name_en || '',
+      ecu_label: pid.ecu_label || '',
+      unit: pid.unit || '',
+    }
+  })
 }
 
 /**
@@ -140,6 +159,7 @@ module.exports = {
   getAllPids,
   getPidById,
   getPidsByIds,
+  getCartPids,
   filterPids,
   getEcuCounts,
   getTypeCounts,

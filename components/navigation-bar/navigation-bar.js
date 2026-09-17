@@ -64,11 +64,16 @@ Component({
         success: (res) => {
           const isAndroid = res.platform === 'android'
           const isDevtools = res.platform === 'devtools'
+          const useExplicitSafeArea = isDevtools || isAndroid
           this.setData({
             ios: !isAndroid,
             innerPaddingRight: `padding-right: ${res.windowWidth - rect.left}px`,
             leftWidth: `width: ${res.windowWidth - rect.left }px`,
-            safeAreaTop: isDevtools || isAndroid ? `height: calc(var(--height) + ${res.safeArea.top}px); padding-top: ${res.safeArea.top}px` : ``
+            rightInset: `right: ${res.windowWidth - rect.left}px`,
+            safeAreaTop: useExplicitSafeArea ? `height: calc(var(--height) + ${res.safeArea.top}px); padding-top: ${res.safeArea.top}px` : ``,
+            navContentStyle: useExplicitSafeArea
+              ? `top: ${res.safeArea.top}px; height: var(--height);`
+              : `top: env(safe-area-inset-top); height: var(--height);`,
           })
         }
       })

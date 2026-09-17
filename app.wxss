@@ -1,10 +1,87 @@
-/**app.wxss**/
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
+/* app.wxss — global styles and CSS variables */
+
+/* ── Light mode (default) ── */
+page {
+  --bg-page:        #F6F7F8;
+  --bg-card:        #FFFFFF;
+  --bg-chip:        #F8F8F8;
+  --bg-chip-active: #e63312;
+  --bg-item-sel:    #e63312;
+  --bg-tag:         #F4F8FB;
+  --bg-toolbar:     #FFFFFF;
+  --bg-bar:         #FFFFFF;
+  --bg-badge:       #F0F0F0;
+  --bg-btn-sec:     #F0F0F0;
+  --bg-success:     #F0FFF4;
+  --bg-error:       #FFF5F5;
+  --bg-accent:      #e63312;
+
+  --text-primary:   #1A1A1A;
+  --text-secondary: #e63312;
+  --text-hint:      #e63312;
+  --text-tag:       #e63312;
+  --text-chip:      #444444;
+  --text-chip-act:  #FFFFFF;
+  --text-btn-sec:   #444444;
+  --text-badge:     #888888;
+  --text-success:   #2D7A3A;
+  --text-error:     #B91C1C;
+  --text-warn:      #D97706;
+  --text-accent:    #FFFFFF;
+  --text-toolbar:   #333333;
+
+  --border-default: #e63312;
+  --border-bottom-bar: #e63312;
+  --border-section: #e63312;
+  --border-chip:    #000000;
+  --border-check:   #e63312;
+  --border-item:    #e63312;
+  --border-success: #B7EBC4;
+  --border-error:   #FCA5A5;
+  --border-badge:   transparent;
+
+  --shadow-bar: 0 -4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+/* Dark mode is applied via page-meta page-style (injected by JS in each page's onShow).
+   Removing @media here avoids conflicts where @media overrides page-meta in Skyline. */
+
+/* Fixed 44px theme control shared by all three page navigation bars. */
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  padding: 0;
   box-sizing: border-box;
-} 
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 22px 22px;
+  mask-size: 22px 22px;
+}
+
+.theme-icon-light {
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41'/%3E%3C/svg%3E");
+}
+
+.theme-icon-dark {
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z'/%3E%3C/svg%3E");
+}
+
+.theme-icon-auto {
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='2' width='12' height='20' rx='2'/%3E%3Cpath d='M10 18h4'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='2' width='12' height='20' rx='2'/%3E%3Cpath d='M10 18h4'/%3E%3C/svg%3E");
+}

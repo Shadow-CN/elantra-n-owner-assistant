@@ -1,39 +1,70 @@
 // pages/filter/filter.js
-const { ECU_GROUPS, getEcuCategory } = require('../../utils/ecuCategories')
-const { PARAM_TYPES } = require('../../utils/paramTypes')
-const { getEcuCounts, getTypeCounts } = require('../../utils/pidData')
+var themeUtil = require('../../utils/theme')
+var shareUtil = require('../../utils/share')
+var { ECU_GROUPS } = require('../../utils/ecuCategories')
+var { PARAM_TYPES } = require('../../utils/paramTypes')
+var { filterPids, getEcuCounts, getTypeCounts, getCartPids } = require('../../utils/pidData')
+
+var ALL = '_all'
 
 Page({
   data: {
-    ecuGroups: [],      // [{ group, label, count, selected }]
-    paramTypes: [],     // [{ type, label, count, selected }]
-    selectedEcu: '',    // '' means all
-    selectedType: '',   // '' means all
-    totalCount: 0,      // total matching params under current filter
-    selectedCount: 0,   // already-selected params count (from app global)
+    ecuGroups: [],
+    paramTypes: [],
+    selectedEcu: '',
+    selectedType: '',
+    totalCount: 0,
+    selectedCount: 0,
+    cartOpen: false,
+    cartPids: [],
+    cartCount: 0,
+    navBg: '#FFFFFF',
+    navColor: 'black',
+    themeMode: 'auto',
+    pageStyle: '',
   },
 
   onLoad() {
+    shareUtil.enableShareMenu()
+    this._applyTheme()
     this._buildFilterData()
   },
 
   onShow() {
-    // Refresh selected count when returning from params page
-    const app = getApp()
-    this.setData({ selectedCount: app.globalData.selectedIds.length })
+    this._applyTheme()
+    this._refreshCart()
+  },
+
+  _applyTheme() {
+    var app = getApp()
+    var mode = app.globalData.themeMode || 'auto'
+    var dark = themeUtil.isDarkEffective(mode)
+    var nav = themeUtil.navColors(dark)
+    this.setData({
+      themeMode: mode,
+      pageStyle: themeUtil.getPageStyle(mode),
+      navBg: nav.navBg,
+      navColor: nav.navColor,
+    })
+  },
+
+  onThemeToggle() {
+    var app = getApp()
+    var newMode = themeUtil.nextMode(app.globalData.themeMode || 'auto')
+    app.globalData.themeMode = newMode
+    themeUtil.saveMode(newMode)
+    this._applyTheme()
   },
 
   _buildFilterData() {
-    const ecuCounts = getEcuCounts()
-    const typeCounts = getTypeCounts(this.data.selectedEcu)
+    var app = getApp()
+    var savedEcu = app.globalData.filterEcu || ''
+    var savedType = app.globalData.filterType || ''
 
-    // Restore filter state from app global
-    const app = getApp()
-    const savedEcu = app.globalData.filterEcu || ''
-    const savedType = app.globalData.filterType || ''
+    var ecuCounts = getEcuCounts()
+    var typeCounts = getTypeCounts(savedEcu)
 
-    // Build ECU group list, only include groups that have params
-    const ecuGroups = ECU_GROUPS
+    var ecuGroups = ECU_GROUPS
       .filter(function(g) { return ecuCounts[g.group] > 0 })
       .map(function(g) {
         return {
@@ -44,8 +75,7 @@ Page({
         }
       })
 
-    // Build param type list, counts depend on current ECU filter
-    const paramTypes = PARAM_TYPES
+    var paramTypes = PARAM_TYPES
       .filter(function(t) { return typeCounts[t.type] > 0 })
       .map(function(t) {
         return {
@@ -56,81 +86,113 @@ Page({
         }
       })
 
-    const totalCount = this._calcTotalCount(savedEcu, savedType, ecuCounts, typeCounts)
-
     this.setData({
-      ecuGroups,
-      paramTypes,
+      ecuGroups: ecuGroups,
+      paramTypes: paramTypes,
       selectedEcu: savedEcu,
       selectedType: savedType,
-      totalCount,
-      selectedCount: app.globalData.selectedIds.length,
+      totalCount: filterPids(savedEcu, savedType).length,
     })
-  },
-
-  // Calculate how many params match current ECU + type filter
-  _calcTotalCount(ecuGroup, paramType, ecuCounts, typeCounts) {
-    const { filterPids } = require('../../utils/pidData')
-    return filterPids(ecuGroup, paramType).length
   },
 
   onEcuTap(e) {
-    const group = e.currentTarget.dataset.group
-    // Toggle: tap same group again to deselect (back to "all")
-    const newEcu = this.data.selectedEcu === group ? '' : group
+    var raw = e.currentTarget.dataset.group
+    var tapped = (raw === ALL || raw === undefined) ? '' : raw
+    var newEcu = this.data.selectedEcu === tapped ? '' : tapped
 
-    const app = getApp()
+    var app = getApp()
     app.globalData.filterEcu = newEcu
-    app.globalData.filterType = ''  // Reset type filter when ECU changes
+    app.globalData.filterType = ''
 
-    // Update ECU selected state
-    const ecuGroups = this.data.ecuGroups.map(function(g) {
+    var ecuGroups = this.data.ecuGroups.map(function(g) {
       return Object.assign({}, g, { selected: g.group === newEcu })
     })
 
-    // Recompute type counts for new ECU filter
-    const typeCounts = getTypeCounts(newEcu)
-    const paramTypes = PARAM_TYPES
+    var typeCounts = getTypeCounts(newEcu)
+    var paramTypes = PARAM_TYPES
       .filter(function(t) { return typeCounts[t.type] > 0 })
       .map(function(t) {
-        return {
-          type: t.type,
-          label: t.label,
-          count: typeCounts[t.type] || 0,
-          selected: false,
-        }
+        return { type: t.type, label: t.label, count: typeCounts[t.type] || 0, selected: false }
       })
 
-    const { filterPids } = require('../../utils/pidData')
-    const totalCount = filterPids(newEcu, '').length
-
     this.setData({
-      ecuGroups,
-      paramTypes,
+      ecuGroups: ecuGroups,
+      paramTypes: paramTypes,
       selectedEcu: newEcu,
       selectedType: '',
-      totalCount,
+      totalCount: filterPids(newEcu, '').length,
     })
   },
 
   onTypeTap(e) {
-    const type = e.currentTarget.dataset.type
-    const newType = this.data.selectedType === type ? '' : type
+    var raw = e.currentTarget.dataset.type
+    var tapped = (raw === ALL || raw === undefined) ? '' : raw
+    var newType = this.data.selectedType === tapped ? '' : tapped
 
-    const app = getApp()
+    var app = getApp()
     app.globalData.filterType = newType
 
-    const paramTypes = this.data.paramTypes.map(function(t) {
+    var paramTypes = this.data.paramTypes.map(function(t) {
       return Object.assign({}, t, { selected: t.type === newType })
     })
 
-    const { filterPids } = require('../../utils/pidData')
-    const totalCount = filterPids(this.data.selectedEcu, newType).length
-
     this.setData({
-      paramTypes,
+      paramTypes: paramTypes,
       selectedType: newType,
-      totalCount,
+      totalCount: filterPids(this.data.selectedEcu, newType).length,
+    })
+  },
+
+  _refreshCart(open) {
+    var ids = getApp().globalData.selectedIds || []
+    var cartPids = getCartPids(ids)
+    var cartOpen = cartPids.length === 0 ? false : this.data.cartOpen
+    if (open === true && cartPids.length > 0) cartOpen = true
+    if (open === false) cartOpen = false
+    this.setData({
+      cartPids: cartPids,
+      cartCount: cartPids.length,
+      selectedCount: cartPids.length,
+      cartOpen: cartOpen,
+    })
+  },
+
+  onToggleCart() {
+    if (this.data.cartOpen) {
+      this.setData({ cartOpen: false })
+      return
+    }
+    var cartPids = getCartPids(getApp().globalData.selectedIds || [])
+    if (cartPids.length === 0) {
+      wx.showToast({ title: '还没有选择参数', icon: 'none' })
+      return
+    }
+    this.setData({
+      cartPids: cartPids,
+      cartCount: cartPids.length,
+      cartOpen: true,
+    })
+  },
+
+  onRemoveCartItem(e) {
+    var id = String(e.currentTarget.dataset.id)
+    getApp().globalData.selectedIds = (getApp().globalData.selectedIds || []).filter(function(x) {
+      return String(x) !== id
+    })
+    this._refreshCart(true)
+  },
+
+  onClearCart() {
+    var self = this
+    wx.showModal({
+      title: '清空已选',
+      content: '确定要清空所有已选参数吗？',
+      success: function(res) {
+        if (!res.confirm) return
+        getApp().globalData.selectedIds = []
+        self.setData({ cartOpen: false })
+        self._refreshCart()
+      },
     })
   },
 
@@ -139,10 +201,17 @@ Page({
   },
 
   onViewSelected() {
-    if (this.data.selectedCount === 0) {
+    if (this.data.cartCount === 0) {
       wx.showToast({ title: '尚未选择任何参数', icon: 'none' })
       return
     }
     wx.navigateTo({ url: '/pages/export/export' })
+  },
+  onShareAppMessage() {
+    return shareUtil.appMessage('filter')
+  },
+
+  onShareTimeline() {
+    return shareUtil.timeline('filter')
   },
 })

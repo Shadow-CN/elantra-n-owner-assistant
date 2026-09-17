@@ -1,4 +1,6 @@
 // pages/export/export.js
+var themeUtil = require('../../utils/theme')
+var shareUtil = require('../../utils/share')
 var pidData = require('../../utils/pidData')
 var carScannerExporter = require('../../utils/carScannerExporter')
 var fileHelper = require('../../utils/fileHelper')
@@ -6,30 +8,92 @@ var fileHelper = require('../../utils/fileHelper')
 Page({
   data: {
     selectedCount: 0,
-    selectedPids: [],     // full PID objects for selected IDs
+    selectedPids: [],
+    cartOpen: false,
     generating: false,
-    lastResult: null,     // { total, skipped, skippedNames }
+    lastResult: null,
     errorMsg: '',
+    navBg: '#FFFFFF',
+    navColor: 'black',
+    themeMode: 'auto',
+    pageStyle: '',
   },
 
   onLoad() {
+    shareUtil.enableShareMenu()
     this._loadSelected()
   },
 
   onShow() {
+    this._applyTheme()
     this._loadSelected()
   },
 
-  _loadSelected() {
+  _applyTheme() {
+    var app = getApp()
+    var mode = app.globalData.themeMode || 'auto'
+    var dark = themeUtil.isDarkEffective(mode)
+    var nav = themeUtil.navColors(dark)
+    this.setData({
+      themeMode: mode,
+      pageStyle: themeUtil.getPageStyle(mode),
+      navBg: nav.navBg,
+      navColor: nav.navColor,
+    })
+  },
+
+  onThemeToggle() {
+    var app = getApp()
+    var newMode = themeUtil.nextMode(app.globalData.themeMode || 'auto')
+    app.globalData.themeMode = newMode
+    themeUtil.saveMode(newMode)
+    this._applyTheme()
+  },
+
+  _loadSelected(resetResult) {
     var app = getApp()
     var ids = app.globalData.selectedIds || []
     var pids = pidData.getPidsByIds(ids)
-
-    this.setData({
+    var patch = {
       selectedCount: pids.length,
       selectedPids: pids,
-      lastResult: null,
-      errorMsg: '',
+      cartOpen: pids.length === 0 ? false : this.data.cartOpen,
+    }
+    if (resetResult !== false) {
+      patch.lastResult = null
+      patch.errorMsg = ''
+    }
+    this.setData(patch)
+  },
+
+  onToggleCart() {
+    if (!this.data.cartOpen && this.data.selectedCount === 0) {
+      wx.showToast({ title: '还没有选择参数', icon: 'none' })
+      return
+    }
+    this.setData({ cartOpen: !this.data.cartOpen })
+  },
+
+  onRemoveCartItem(e) {
+    var id = e.currentTarget.dataset.id
+    var app = getApp()
+    app.globalData.selectedIds = (app.globalData.selectedIds || []).filter(function(x) {
+      return x !== id
+    })
+    this._loadSelected(false)
+  },
+
+  onClearCart() {
+    var self = this
+    wx.showModal({
+      title: '清空已选',
+      content: '确定要清空所有已选参数吗？',
+      success: function(res) {
+        if (!res.confirm) return
+        getApp().globalData.selectedIds = []
+        self.setData({ cartOpen: false })
+        self._loadSelected(false)
+      },
     })
   },
 
@@ -76,7 +140,17 @@ Page({
           lastResult: result,
         })
 
-        if (result.skipped > 0) {
+        if (info.shareSkipped) {
+          // Share sheet not available (devtools / unsupported env).
+          // File is already written to USER_DATA_PATH.
+          wx.showModal({
+            title: '文件已生成',
+            content: '已生成 ' + result.total + ' 个参数。\n' +
+              '分享界面在当前环境不可用（如在真机上测试可正常弹出分享）。\n' +
+              '文件路径：' + info.filePath,
+            showCancel: false,
+          })
+        } else if (result.skipped > 0) {
           wx.showModal({
             title: '导出完成',
             content: '已生成 ' + result.total + ' 个参数。\n' +
@@ -117,5 +191,12 @@ Page({
 
   onGoParams() {
     wx.navigateBack()
+  },
+  onShareAppMessage() {
+    return shareUtil.appMessage('export')
+  },
+
+  onShareTimeline() {
+    return shareUtil.timeline('export')
   },
 })

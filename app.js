@@ -1,11 +1,35 @@
 // app.js
+var themeUtil = require('./utils/theme')
+
 App({
-  onLaunch() {},
+  onLaunch() {
+    var mode = themeUtil.loadMode()
+    this.globalData.themeMode = mode
+
+    // Use the new API to get system theme (avoids deprecated wx.getSystemInfoSync)
+    try {
+      var info = wx.getAppBaseInfo()
+      this.globalData.systemTheme = info.theme || 'light'
+    } catch (e) {
+      this.globalData.systemTheme = 'light'
+    }
+
+    // Listen for system theme changes; re-apply theme on current page if in auto mode
+    wx.onThemeChange(function(res) {
+      var app = getApp()
+      app.globalData.systemTheme = res.theme
+      var pages = getCurrentPages()
+      var cur = pages[pages.length - 1]
+      if (cur && typeof cur._applyTheme === 'function') {
+        cur._applyTheme()
+      }
+    })
+  },
   globalData: {
-    // 当前筛选条件
-    filterEcu: '',       // 选中的 ECU 分组 key，空字符串表示全部
-    filterType: '',      // 选中的参数类型 key，空字符串表示全部
-    // 用户已选中的参数 id 集合 (Set 会被序列化成 Array 存储)
+    themeMode: 'auto',   // 'auto' | 'dark' | 'light'
+    systemTheme: 'light',
+    filterEcu: '',
+    filterType: '',
     selectedIds: [],
   }
 })

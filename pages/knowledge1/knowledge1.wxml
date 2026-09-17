@@ -1,0 +1,25 @@
+<page-meta page-style="{{pageStyle}}" />
+<navigation-bar title="维护知识库" back="{{true}}" color="{{navColor}}" background="{{navBg}}">
+  <view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题"><view class="theme-icon theme-icon-{{themeMode}}"></view></view>
+</navigation-bar>
+<scroll-view class="knowledge-scroll" scroll-y>
+  <view class="body">
+    <view class="hero">
+      <text class="ghost">N</text>
+      <text class="kicker">ELANTRA N · CN7N</text>
+      <view class="hero-title">维护<text>知识库</text></view>
+      <text class="hero-desc">配件号、保养规格、胎压与维护资料速查。点击任意资料行可复制。</text>
+      <view class="hero-chips"><text>CN7N</text><text>MAINTENANCE</text><text>LOCAL GUIDE</text></view>
+      <input class="search" value="{{query}}" bindinput="onSearch" placeholder="搜索零件、机油、胎压或工程模式" placeholder-class="search-placeholder" />
+    </view>
+    <view class="converter"><text class="converter-title">胎压换算器 <text>PSI · KPA · BAR</text></text><view class="converter-row"><view><text>PSI</text><input type="number" value="{{psi}}" bindinput="onPsi" /></view><view><text>kPa</text><input type="number" value="{{kpa}}" bindinput="onKpa" /></view><view><text>bar</text><input type="digit" value="{{bar}}" bindinput="onBar" /></view></view><view class="quick"><text>快速填入</text><text wx:for="{{[32,33,35,36,37]}}" wx:key="*this" bindtap="onQuickPsi" data-value="{{item}}">{{item}}</text></view></view>
+    <view wx:for="{{sections}}" wx:key="id" class="section">
+      <view class="section-head"><text class="section-id">{{item.id}}</text><view><text class="section-title">{{item.title}}</text><text class="section-sub">{{item.subtitle}}</text></view></view>
+      <view wx:for="{{item.cards}}" wx:for-item="card" wx:key="title" class="card">
+        <text class="card-title">{{card.title}}</text>
+        <text wx:for="{{card.lines}}" wx:key="*this" class="line" bindtap="onCopyLine" data-value="{{item}}">{{item}}</text>
+      </view>
+    </view>
+    <text class="footnote">零件号、价格与工时仅供参考；安全相关项目请以官方维修手册与专业人员复核为准。</text>
+  </view>
+</scroll-view>

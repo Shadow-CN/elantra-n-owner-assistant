@@ -1,7 +1,12 @@
 <!-- pages/filter/filter.wxml -->
-<navigation-bar title="OBD 参数筛选" back="{{false}}" color="black" background="#FFFFFF"></navigation-bar>
+<page-meta page-style="{{pageStyle}}" />
+<navigation-bar title="OBD 参数筛选" back="{{true}}" color="{{navColor}}" background="{{navBg}}">
+  <view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题">
+    <view class="theme-icon theme-icon-{{themeMode}}"></view>
+  </view>
+</navigation-bar>
 
-<scroll-view class="page-scroll" scroll-y type="list">
+<scroll-view class="page-scroll" scroll-y>
   <view class="page-body">
 
     <!-- ECU 分组 -->
@@ -9,13 +14,11 @@
       <view class="section-title">部件 / ECU</view>
       <view class="section-hint">点击选择，再次点击取消</view>
       <view class="chip-wrap">
-        <!-- 全部选项 -->
         <view
           class="chip {{selectedEcu === '' ? 'chip-active' : ''}}"
           bindtap="onEcuTap"
-          data-group=""
+          data-group="_all"
         >全部</view>
-        <!-- ECU groups -->
         <view
           wx:for="{{ecuGroups}}"
           wx:key="group"
@@ -34,7 +37,7 @@
         <view
           class="chip {{selectedType === '' ? 'chip-active' : ''}}"
           bindtap="onTypeTap"
-          data-type=""
+          data-type="_all"
         >全部</view>
         <view
           wx:for="{{paramTypes}}"
@@ -46,21 +49,45 @@
       </view>
     </view>
 
-    <!-- 底部操作区 -->
-    <view class="bottom-bar">
-      <view class="result-hint">共 {{totalCount}} 个参数</view>
-      <view class="btn-row">
-        <view
-          wx:if="{{selectedCount > 0}}"
-          class="btn btn-secondary"
-          bindtap="onViewSelected"
-        >已选 {{selectedCount}} 个 → 导出</view>
-        <view
-          class="btn btn-primary"
-          bindtap="onViewParams"
-        >查看参数列表</view>
-      </view>
-    </view>
-
   </view>
 </scroll-view>
+
+<!-- 底部：已选购物车 + 查看列表 -->
+<view class="cart-sheet {{cartOpen ? '' : 'is-hidden'}}">
+  <view class="cart-sheet-head">
+    <text class="cart-sheet-title">已选参数</text>
+    <text class="cart-sheet-clear" bindtap="onClearCart">清空</text>
+    <text class="cart-sheet-export" bindtap="onViewSelected">导出</text>
+  </view>
+  <view wx:if="{{cartCount === 0}}" class="cart-empty">还没有选择参数</view>
+  <scroll-view class="cart-sheet-list {{cartCount === 0 ? 'is-hidden' : ''}}" scroll-y>
+    <view>
+      <view
+        wx:for="{{cartPids}}"
+        wx:key="id"
+        class="cart-item"
+      >
+        <view class="cart-item-info">
+          <view class="param-name-cn">{{item.name_cn}}</view>
+          <view class="param-name-en">{{item.name_en}}</view>
+          <view class="param-meta">
+            <text class="param-ecu">{{item.ecu_label}}</text>
+            <text wx:if="{{item.unit}}" class="param-unit"> · {{item.unit}}</text>
+          </view>
+        </view>
+        <text class="cart-item-remove" catchtap="onRemoveCartItem" data-id="{{item.id}}">移除</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<view class="bottom-bar">
+  <view class="result-hint">共 {{totalCount}} 个参数</view>
+  <view class="btn-row">
+    <view class="cart-entry" bindtap="onToggleCart">
+      <text class="cart-entry-label">已选 {{cartCount}} 个</text>
+      <text class="cart-entry-arrow">{{cartOpen ? '▼' : '▲'}}</text>
+    </view>
+    <view class="btn btn-primary" bindtap="onViewParams">查看参数列表</view>
+  </view>
+</view>

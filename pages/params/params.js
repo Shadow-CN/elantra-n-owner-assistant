@@ -1,28 +1,59 @@
 // pages/params/params.js
-const { filterPids, getPidsByIds } = require('../../utils/pidData')
-const { ECU_GROUPS } = require('../../utils/ecuCategories')
-const { PARAM_TYPES } = require('../../utils/paramTypes')
+var themeUtil = require('../../utils/theme')
+var shareUtil = require('../../utils/share')
+var { filterPids, getPidsByIds, getCartPids } = require('../../utils/pidData')
+var { ECU_GROUPS } = require('../../utils/ecuCategories')
+var { PARAM_TYPES } = require('../../utils/paramTypes')
 
 // Max number of params a user can select at once
 const MAX_SELECT = 100
 
 Page({
   data: {
-    pids: [],             // displayed (filtered) list with 'checked' field
+    pids: [],
     selectedCount: 0,
     totalCount: 0,
     allChecked: false,
     filterEcuLabel: '全部',
     filterTypeLabel: '全部',
+    cartOpen: false,
+    cartPids: [],
+    cartCount: 0,
+    navBg: '#FFFFFF',
+    navColor: 'black',
+    themeMode: 'auto',
+    pageStyle: '',
   },
 
   onLoad() {
+    shareUtil.enableShareMenu()
     this._loadList()
   },
 
   onShow() {
-    // If returning from export, re-sync checked state
+    this._applyTheme()
     this._syncChecked()
+  },
+
+  _applyTheme() {
+    var app = getApp()
+    var mode = app.globalData.themeMode || 'auto'
+    var dark = themeUtil.isDarkEffective(mode)
+    var nav = themeUtil.navColors(dark)
+    this.setData({
+      themeMode: mode,
+      pageStyle: themeUtil.getPageStyle(mode),
+      navBg: nav.navBg,
+      navColor: nav.navColor,
+    })
+  },
+
+  onThemeToggle() {
+    var app = getApp()
+    var newMode = themeUtil.nextMode(app.globalData.themeMode || 'auto')
+    app.globalData.themeMode = newMode
+    themeUtil.saveMode(newMode)
+    this._applyTheme()
   },
 
   _loadList() {
@@ -56,6 +87,7 @@ Page({
       filterEcuLabel: ecuLabel,
       filterTypeLabel: typeLabel,
     })
+    this._refreshCart()
   },
 
   _syncChecked() {
@@ -70,6 +102,7 @@ Page({
       selectedCount,
       allChecked: pids.length > 0 && selectedCount === pids.length,
     })
+    this._refreshCart()
   },
 
   onItemTap(e) {
@@ -79,8 +112,7 @@ Page({
 
     const newChecked = !pid.checked
 
-    // Enforce max selection limit
-    if (newChecked && this.data.selectedCount >= MAX_SELECT) {
+    if (newChecked && this.data.cartCount >= MAX_SELECT) {
       wx.showToast({ title: `最多选择 ${MAX_SELECT} 个参数`, icon: 'none' })
       return
     }
@@ -95,9 +127,15 @@ Page({
 
   onSelectAll() {
     const allChecked = !this.data.allChecked
-    if (allChecked && this.data.totalCount > MAX_SELECT) {
-      wx.showToast({ title: `超过 ${MAX_SELECT} 个，请缩小筛选范围`, icon: 'none' })
-      return
+    if (allChecked) {
+      const currentIds = new Set(this.data.pids.map(function(p) { return p.id }))
+      const kept = (getApp().globalData.selectedIds || []).filter(function(id) {
+        return !currentIds.has(id)
+      }).length
+      if (kept + this.data.totalCount > MAX_SELECT) {
+        wx.showToast({ title: `超过 ${MAX_SELECT} 个，请缩小筛选范围`, icon: 'none' })
+        return
+      }
     }
     const pids = this.data.pids.map(function(pid) {
       return Object.assign({}, pid, { checked: allChecked })
@@ -134,6 +172,60 @@ Page({
     const selectedCount = this.data.pids.filter(function(p) { return p.checked }).length
     const allChecked = this.data.pids.length > 0 && selectedCount === this.data.pids.length
     this.setData({ selectedCount, allChecked })
+    this._refreshCart()
+  },
+
+  _refreshCart(open) {
+    var ids = getApp().globalData.selectedIds || []
+    var cartPids = getCartPids(ids)
+    var cartOpen = cartPids.length === 0 ? false : this.data.cartOpen
+    if (open === true && cartPids.length > 0) cartOpen = true
+    if (open === false) cartOpen = false
+    this.setData({
+      cartPids: cartPids,
+      cartCount: cartPids.length,
+      cartOpen: cartOpen,
+    })
+  },
+
+  onToggleCart() {
+    if (this.data.cartOpen) {
+      this.setData({ cartOpen: false })
+      return
+    }
+    var cartPids = getCartPids(getApp().globalData.selectedIds || [])
+    if (cartPids.length === 0) {
+      wx.showToast({ title: '还没有选择参数', icon: 'none' })
+      return
+    }
+    this.setData({
+      cartPids: cartPids,
+      cartCount: cartPids.length,
+      cartOpen: true,
+    })
+  },
+
+  onRemoveCartItem(e) {
+    var id = String(e.currentTarget.dataset.id)
+    getApp().globalData.selectedIds = (getApp().globalData.selectedIds || []).filter(function(x) {
+      return String(x) !== id
+    })
+    this._syncChecked()
+    this._refreshCart(true)
+  },
+
+  onClearCart() {
+    var self = this
+    wx.showModal({
+      title: '清空已选',
+      content: '确定要清空所有已选参数吗？',
+      success: function(res) {
+        if (!res.confirm) return
+        getApp().globalData.selectedIds = []
+        self.setData({ cartOpen: false })
+        self._syncChecked()
+      },
+    })
   },
 
   onGoExport() {
@@ -147,5 +239,12 @@ Page({
 
   onGoFilter() {
     wx.navigateBack()
+  },
+  onShareAppMessage() {
+    return shareUtil.appMessage('params')
+  },
+
+  onShareTimeline() {
+    return shareUtil.timeline('params')
   },
 })

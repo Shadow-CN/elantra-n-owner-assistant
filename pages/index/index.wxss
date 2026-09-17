@@ -1,63 +1,137 @@
-/**index.wxss**/
 page {
+  display: flex;
+  flex-direction: column;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  background: var(--bg-page);
 }
 
-.scrollarea {
+.home-scroll {
   flex: 1;
-  overflow-y: hidden;
 }
 
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #aaa;
-  width: 80%;
+.home-body {
+  padding: 48rpx 32rpx 64rpx;
 }
 
-.userinfo-avatar {
-  overflow: hidden;
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.home-hero {
+  padding: 28rpx 0 56rpx;
 }
 
-.usermotto {
-  margin-top: 200px;
-}
-
-.avatar-wrapper {
-  padding: 0;
-  width: 56px !important;
-  border-radius: 8px;
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
-.avatar {
+.home-kicker {
   display: block;
-  width: 56px;
-  height: 56px;
+  color: var(--text-secondary);
+  font-size: 20rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
 }
 
-.nickname-wrapper {
+.home-title {
+  margin-top: 14rpx;
+  color: var(--text-primary);
+  font-size: 56rpx;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.home-intro {
+  display: block;
+  margin-top: 16rpx;
+  color: var(--text-hint);
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+.section-heading {
+  margin-bottom: 16rpx;
+  color: var(--text-secondary);
+  font-size: 24rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+}
+
+.section-heading-more {
+  margin-top: 48rpx;
+}
+
+.tool-card,
+.coming-card {
+  border: 1rpx solid var(--border-default);
+  border-radius: 20rpx;
+  background: var(--bg-card);
+}
+
+.tool-card {
   display: flex;
-  width: 100%;
-  padding: 16px;
-  box-sizing: border-box;
-  border-top: .5px solid rgba(0, 0, 0, 0.1);
-  border-bottom: .5px solid rgba(0, 0, 0, 0.1);
-  color: black;
+  align-items: center;
+  padding: 28rpx;
+  gap: 20rpx;
 }
 
-.nickname-label {
-  width: 105px;
+.tool-card-spaced {
+  margin-top: 16rpx;
 }
 
-.nickname-input {
+.tool-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 16rpx;
+  background: var(--bg-accent);
+  color: var(--text-accent);
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.tool-info {
   flex: 1;
+  min-width: 0;
+}
+
+.tool-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.tool-title {
+  color: var(--text-primary);
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.tool-status {
+  padding: 2rpx 12rpx;
+  border-radius: 16rpx;
+  background: var(--bg-chip-active);
+  color: var(--text-chip-act);
+  font-size: 20rpx;
+}
+
+.tool-desc,
+.coming-desc {
+  display: block;
+  margin-top: 8rpx;
+  color: var(--text-secondary);
+  font-size: 23rpx;
+  line-height: 1.5;
+}
+
+.tool-arrow {
+  color: var(--text-tag);
+  font-size: 48rpx;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.coming-card {
+  padding: 28rpx;
+}
+
+.coming-title {
+  color: var(--text-primary);
+  font-size: 28rpx;
+  font-weight: 600;
 }

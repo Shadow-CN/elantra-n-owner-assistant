@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)https://carplay.66ir.com/cn7n.html -->
+<html lang="zh-CN" data-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<title>ELANTRA N · 维护知识库</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./ELANTRA N · 维护知识库_files/css2" rel="stylesheet">
+<style>
+  :root, [data-theme="dark"]{
+    color-scheme:dark;
+    --bg:#07090e;--bg-2:#0a0d15;--panel:#0e131d;--panel-2:#121826;
+    --line:#1c2433;--line-2:#262f41;
+    --blue:#2d7ff9;--blue-2:#5aa0ff;--cyan:#3ad0e8;
+    --red:#ff3b3b;--red-soft:rgba(255,59,59,.12);--green:#3ad17a;
+    --text:#eef2f8;--muted:#8290a3;--dim:#566177;
+    --blue-glow:rgba(45,127,249,.32);
+    --glow-1:rgba(45,127,249,.16);--glow-2:rgba(58,208,232,.08);--glow-3:rgba(255,59,59,.06);
+    --grid-op:.28;--ghost:#ffffff;--ghost-op:.025;
+    --title-grad:linear-gradient(180deg,#fff 25%,#9fb4d4 110%);
+    --shadow:0 20px 50px -16px rgba(0,0,0,.55);
+  }
+  [data-theme="light"]{
+    color-scheme:light;
+    --bg:#f2f5f9;--bg-2:#e8edf4;--panel:#ffffff;--panel-2:#eef2f8;
+    --line:#e1e6ef;--line-2:#ccd5e2;
+    --blue:#1f6fe6;--blue-2:#1559c0;--cyan:#0b9bb8;
+    --red:#e23232;--red-soft:rgba(226,50,50,.1);--green:#1fa45e;
+    --text:#0e1622;--muted:#46536a;--dim:#6f7c8e;
+    --blue-glow:rgba(31,111,230,.28);
+    --glow-1:rgba(31,111,230,.1);--glow-2:rgba(11,155,184,.06);--glow-3:rgba(226,50,50,.04);
+    --grid-op:.5;--ghost:#0d1622;--ghost-op:.04;
+    --title-grad:linear-gradient(180deg,#0d1622 18%,#3a4658 115%);
+    --shadow:0 20px 50px -18px rgba(20,40,80,.22);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--bg)}
+  body{background:var(--bg);color:var(--text);font-family:'Saira',-apple-system,sans-serif;line-height:1.55;overflow-x:hidden;position:relative}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(900px 500px at 78% -8%,var(--glow-1),transparent 60%),radial-gradient(700px 500px at -5% 12%,var(--glow-2),transparent 55%),radial-gradient(1000px 700px at 50% 120%,var(--glow-3),transparent 60%)}
+  body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:var(--grid-op);
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;
+    -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 75%);mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 75%)}
+  .wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 24px}
+
+  /* top bar */
+  .topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line)}
+  .topbar .wrap{display:flex;align-items:center;gap:12px;height:62px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Saira Condensed';font-weight:800;letter-spacing:.06em;flex:none}
+  .logo{height:27px;width:auto;display:block;flex:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.4))}
+  [data-theme="light"] .logo{filter:drop-shadow(1px 0 0 rgba(0,0,0,.5)) drop-shadow(-1px 0 0 rgba(0,0,0,.5)) drop-shadow(0 1px 0 rgba(0,0,0,.5)) drop-shadow(0 -1px 0 rgba(0,0,0,.5))}
+  .brand b{font-size:18px}
+  .brand .cc{color:var(--dim);font-weight:500;font-size:13px;font-family:'JetBrains Mono'}
+
+  .search{position:relative;flex:1;max-width:380px;margin-left:6px}
+  .search input{width:100%;height:38px;background:var(--panel);border:1px solid var(--line-2);border-radius:10px;color:var(--text);font-family:'Saira';font-size:14px;padding:0 14px 0 38px;outline:none;transition:.18s}
+  .search input::placeholder{color:var(--dim)}
+  .search input:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-glow)}
+  .search .si{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--dim);fill:none;stroke-width:2;pointer-events:none}
+  .results{position:absolute;top:46px;left:0;right:0;background:var(--panel);border:1px solid var(--line-2);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;max-height:360px;overflow-y:auto;display:none;z-index:60}
+  .results.on{display:block}
+  .results .r{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;cursor:pointer;border-top:1px solid var(--line)}
+  .results .r:first-child{border-top:none}
+  .results .r:hover,.results .r.sel{background:var(--panel-2)}
+  .results .rl{font-size:14px}
+  .results .rc{font-family:'JetBrains Mono';font-size:10px;color:var(--blue);border:1px solid var(--line-2);border-radius:5px;padding:2px 7px;flex:none}
+  .results .none{padding:15px;color:var(--dim);font-family:'JetBrains Mono';font-size:13px;text-align:center}
+
+  .ttoggle{width:38px;height:38px;flex:none;border-radius:10px;border:1px solid var(--line-2);background:var(--panel);color:var(--muted);display:grid;place-items:center;cursor:pointer;transition:.18s;margin-left:auto}
+  .ttoggle:hover{color:var(--text);border-color:var(--blue)}
+  .ttoggle svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+  .topnav{display:flex;gap:2px}
+  .topnav a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:7px 11px;border-radius:7px;transition:.18s}
+  .topnav a:hover{color:var(--text);background:var(--panel-2)}
+  @media(max-width:860px){.topnav{display:none}.ttoggle{margin-left:0}}
+  @media(max-width:560px){.brand b,.brand .cc{display:none}.search{margin-left:0}}
+
+  /* hero */
+  .hero{position:relative;padding:74px 0 52px;overflow:hidden}
+  .ghost{position:absolute;right:-3%;top:-14%;z-index:0;font-family:'Saira Condensed';font-weight:900;font-size:min(40vw,420px);line-height:.8;color:var(--ghost);opacity:var(--ghost-op);letter-spacing:-.04em;pointer-events:none;transform:skewX(-8deg)}
+  .kicker{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.18em;color:var(--cyan);text-transform:uppercase;margin-bottom:18px}
+  .kicker::before{content:"";width:34px;height:1px;background:var(--cyan)}
+  h1.title{font-family:'Saira Condensed';font-weight:900;letter-spacing:.01em;font-size:clamp(54px,11vw,128px);line-height:.86;text-transform:uppercase;background:var(--title-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1.title em{font-style:normal;color:var(--blue);-webkit-text-fill-color:var(--blue)}
+  .lede{max-width:540px;margin-top:20px;color:var(--muted);font-size:16px}
+  .chassis-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .chip{font-family:'JetBrains Mono';font-size:12px;color:var(--muted);border:1px solid var(--line-2);border-radius:999px;padding:6px 13px;background:color-mix(in srgb,var(--text) 2%,transparent)}
+  .chip b{color:var(--text);font-weight:500}
+
+  section.block{padding:54px 0;border-top:1px solid var(--line);scroll-margin-top:72px}
+  .sechead{display:flex;align-items:baseline;gap:16px;margin-bottom:30px;flex-wrap:wrap}
+  .sechead .idx{font-family:'JetBrains Mono';font-size:13px;color:var(--blue);letter-spacing:.1em;padding-top:8px}
+  .sechead h2{font-family:'Saira Condensed';font-weight:800;text-transform:uppercase;font-size:clamp(28px,5vw,46px);line-height:1;letter-spacing:.01em}
+  .sechead .en{font-family:'JetBrains Mono';color:var(--dim);font-size:13px;letter-spacing:.06em}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  .grid{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+
+  .card{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:16px;padding:24px;position:relative;transition:border-color .25s,transform .25s,box-shadow .25s}
+  .card:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  .card-h{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .card-h .tag{font-family:'JetBrains Mono';font-size:11px;color:var(--blue);border:1px solid var(--blue);border-radius:6px;padding:2px 8px;letter-spacing:.05em}
+  .card-h h3{font-family:'Saira Condensed';font-weight:700;font-size:24px;text-transform:uppercase;letter-spacing:.02em}
+  .card-sub{color:var(--dim);font-size:12.5px;font-family:'JetBrains Mono';margin-bottom:18px}
+  .oem{display:flex;justify-content:space-between;align-items:center;gap:14px;background:linear-gradient(90deg,color-mix(in srgb,var(--blue) 12%,transparent),transparent);border:1px solid color-mix(in srgb,var(--blue) 34%,transparent);border-radius:12px;padding:13px 16px;margin-bottom:16px}
+  .oem small{display:block;font-family:'JetBrains Mono';font-size:10.5px;color:var(--blue-2);letter-spacing:.14em;margin-bottom:3px}
+  .oem .ot{font-family:'Saira';color:var(--muted);font-size:13px}
+  .prow{display:grid;grid-template-columns:108px 1fr;gap:12px;padding:9px 0;border-top:1px solid var(--line);align-items:start}
+  .prow:first-of-type{border-top:none}
+  .brand-cn{font-size:14px;color:var(--muted)}
+  .brand-cn b{display:block;font-family:'JetBrains Mono';font-size:10px;color:var(--dim);font-weight:400;letter-spacing:.08em}
+  .pns{display:flex;flex-wrap:wrap;gap:7px}
+  .pn{font-family:'JetBrains Mono';font-size:13px;color:var(--text);background:var(--panel-2);border:1px solid var(--line-2);border-radius:7px;padding:5px 9px;cursor:pointer;position:relative;transition:.16s;user-select:all;white-space:nowrap}
+  .pn:hover{border-color:var(--blue);color:var(--blue-2);background:color-mix(in srgb,var(--blue) 8%,transparent)}
+  .pn.big{font-size:16px;padding:7px 12px;border-color:color-mix(in srgb,var(--blue) 40%,transparent)}
+  .pn::after{content:"复制";position:absolute;top:-26px;left:50%;transform:translateX(-50%) scale(.9);background:var(--blue);color:#fff;font-size:10px;font-family:'Saira';padding:2px 7px;border-radius:5px;opacity:0;pointer-events:none;transition:.16s;white-space:nowrap}
+  .pn:hover::after{opacity:1;transform:translateX(-50%) scale(1)}
+  .pn.copied::after{content:"已复制 ✓";background:var(--green);opacity:1}
+  .hint{margin-top:14px;font-size:12px;color:var(--dim);font-family:'JetBrains Mono';display:flex;align-items:center;gap:7px}
+  .hint svg{width:13px;height:13px;flex:none;opacity:.7;stroke:currentColor;fill:none;stroke-width:1.8}
+
+  .ptable{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .ptable .ph{display:grid;grid-template-columns:1fr auto;padding:12px 20px;background:var(--panel-2);font-family:'JetBrains Mono';font-size:11px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase}
+  .ptr{display:grid;grid-template-columns:1fr auto;gap:14px;padding:14px 20px;border-top:1px solid var(--line);align-items:center;transition:background .2s}
+  .ptr .nm{font-size:15px}
+  .ptr .nm b{display:block;font-family:'JetBrains Mono';font-size:10.5px;color:var(--dim);font-weight:400;letter-spacing:.06em;margin-top:2px}
+  .ptr .vals{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end}
+
+  .torque{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:16px;padding:26px 24px;text-align:center;transition:border-color .25s,transform .25s}
+  .torque:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  .torque .lab{font-size:15px;color:var(--muted);margin-bottom:2px}
+  .torque .lab b{display:block;font-family:'JetBrains Mono';font-size:10.5px;color:var(--dim);font-weight:400;letter-spacing:.08em;margin-top:3px}
+  .torque .big{font-family:'Saira Condensed';font-weight:900;font-size:60px;line-height:1;margin:14px 0 2px;color:var(--text)}
+  .torque .big span{font-family:'Saira';font-weight:400;font-size:18px;color:var(--blue-2)}
+  .torque .rec{font-family:'JetBrains Mono';font-size:11px;color:var(--blue);letter-spacing:.06em}
+  .bar{height:6px;border-radius:99px;background:var(--panel-2);margin:18px 4px 8px;position:relative}
+  .bar i{position:absolute;height:100%;border-radius:99px;left:0;width:100%;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+  .bar .mk{position:absolute;top:50%;width:11px;height:11px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 0 0 3px var(--bg-2),0 0 10px var(--blue)}
+  .range{display:flex;justify-content:space-between;font-family:'JetBrains Mono';font-size:11px;color:var(--dim)}
+
+  .tire-lead{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:820px){.tire-lead{grid-template-columns:1fr}}
+  .psi-card{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:16px;padding:26px 24px}
+  .psi-card h4{font-family:'Saira Condensed';font-weight:700;font-size:20px;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:9px}
+  .psi-card h4 .dot{width:8px;height:8px;border-radius:50%}
+  .psi-row{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-top:1px solid var(--line)}
+  .psi-row:first-of-type{border-top:none}
+  .psi-row .t{color:var(--muted);font-size:14px}
+  .psi-row .v{font-family:'Saira Condensed';font-weight:800;font-size:30px}
+  .psi-row .v span{font-family:'JetBrains Mono';font-size:12px;color:var(--dim);font-weight:400;margin-left:6px}
+  .note-square{margin-top:16px;font-size:12.5px;color:var(--muted);font-family:'JetBrains Mono';border-left:2px solid var(--cyan);padding-left:12px;line-height:1.6}
+
+  /* converter tool */
+  .conv{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:16px;padding:26px 24px;margin-top:18px}
+  .conv h4{font-family:'Saira Condensed';font-weight:700;font-size:20px;text-transform:uppercase;display:flex;align-items:center;gap:10px;margin-bottom:20px}
+  .conv h4 .tg{font-family:'JetBrains Mono';font-size:10px;color:var(--cyan);border:1px solid color-mix(in srgb,var(--cyan) 40%,transparent);border-radius:6px;padding:2px 8px;letter-spacing:.06em}
+  .conv-row{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
+  .cv{flex:1;min-width:150px}
+  .cv label{font-family:'JetBrains Mono';font-size:11px;color:var(--dim);letter-spacing:.1em;display:block;margin-bottom:8px}
+  .cv .inwrap{display:flex;align-items:baseline;gap:8px;background:var(--panel-2);border:1px solid var(--line-2);border-radius:12px;padding:10px 14px;transition:.18s}
+  .cv .inwrap:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-glow)}
+  .cv input{flex:1;width:100%;min-width:0;background:transparent;border:none;outline:none;color:var(--text);font-family:'Saira Condensed';font-weight:800;font-size:30px}
+  .cv input::-webkit-outer-spin-button,.cv input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .cv input[type=number]{-moz-appearance:textfield}
+  .cv .u{font-family:'JetBrains Mono';font-size:13px;color:var(--blue-2);flex:none}
+  .swap{font-family:'JetBrains Mono';font-size:22px;color:var(--dim);padding-bottom:8px}
+  .quick{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px;align-items:center}
+  .quick .ql{font-family:'JetBrains Mono';font-size:11px;color:var(--dim);margin-right:4px}
+  .quick button{font-family:'JetBrains Mono';font-size:12.5px;color:var(--muted);background:var(--panel-2);border:1px solid var(--line-2);border-radius:8px;padding:6px 11px;cursor:pointer;transition:.16s}
+  .quick button:hover{border-color:var(--blue);color:var(--blue-2)}
+
+  .handling{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+  @media(max-width:600px){.handling{grid-template-columns:1fr}}
+  .hcard{border:1px solid var(--line);border-radius:14px;padding:20px;background:var(--panel)}
+  .hcard .sym{font-family:'Saira Condensed';font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+  .hcard .arrow{font-family:'JetBrains Mono';font-size:13px;color:var(--text);display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .hcard .arrow b{font-family:'Saira Condensed';font-weight:800;font-size:22px;color:var(--cyan)}
+  .hcard.us{border-color:color-mix(in srgb,var(--cyan) 30%,transparent)}
+  .hcard.us .sym{color:var(--cyan)}
+  .hcard.os{border-color:color-mix(in srgb,var(--blue) 30%,transparent)}
+  .hcard.os .sym,.hcard.os .arrow b{color:var(--blue-2)}
+
+  .shop{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .shop-h{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .shop-h h3{font-family:'Saira Condensed';font-weight:700;font-size:23px}
+  .shop-h .tag{font-family:'JetBrains Mono';font-size:11px;color:var(--cyan);border:1px solid color-mix(in srgb,var(--cyan) 40%,transparent);border-radius:6px;padding:3px 9px}
+  .li{padding:14px 22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:14px;transition:background .2s}
+  .li:first-of-type{border-top:none}
+  .li .name{font-size:14.5px;color:var(--text)}
+  .li .name b{display:block;font-family:'JetBrains Mono';font-size:11px;color:var(--dim);font-weight:400;margin-top:3px}
+  .li .meta{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
+  .li .meta span{font-family:'JetBrains Mono';font-size:10.5px;color:var(--muted);border:1px solid var(--line-2);border-radius:5px;padding:2px 7px}
+  .li .meta span.warn{color:var(--red);border-color:color-mix(in srgb,var(--red) 40%,transparent)}
+  .price{font-family:'Saira Condensed';font-weight:800;font-size:26px;white-space:nowrap;text-align:right}
+  .price small{font-family:'Saira';font-weight:400;font-size:13px;color:var(--dim);margin-right:2px}
+  .price.alt{color:var(--green)}
+  .price .na{font-family:'JetBrains Mono';font-size:13px;color:var(--dim);font-weight:400}
+
+  .manual{display:flex;align-items:center;gap:20px;flex-wrap:wrap;background:linear-gradient(100deg,rgba(45,127,249,.10),var(--panel));border:1px solid var(--line-2);border-radius:16px;padding:24px 26px;text-decoration:none;color:inherit;transition:border-color .25s,transform .25s,box-shadow .25s}
+  .manual:hover{border-color:var(--blue);transform:translateY(-2px)}
+  .manual .ico{width:46px;height:46px;border-radius:11px;background:var(--blue);display:grid;place-items:center;flex:none;box-shadow:0 10px 24px -10px var(--blue)}
+  .manual .ico svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:1.6}
+  .manual .mt b{font-family:'Saira Condensed';font-weight:700;font-size:22px;text-transform:uppercase}
+  .manual .mt span{display:block;color:var(--dim);font-family:'JetBrains Mono';font-size:12px;margin-top:3px;word-break:break-all}
+  .manual .go{margin-left:auto;font-family:'JetBrains Mono';font-size:13px;color:var(--blue);display:flex;align-items:center;gap:6px}
+  @media(max-width:600px){.manual .go{margin-left:0}}
+
+  .danger{background:linear-gradient(180deg,var(--red-soft),transparent),linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid color-mix(in srgb,var(--red) 34%,transparent);border-radius:16px;padding:26px;position:relative;overflow:hidden}
+  .danger::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:repeating-linear-gradient(45deg,var(--red) 0 14px,#1a0d0d 14px 28px);opacity:.55}
+  .danger-h{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .danger-h .warn-ic{width:30px;height:30px;flex:none}
+  .danger-h h3{font-family:'Saira Condensed';font-weight:800;font-size:24px;text-transform:uppercase;color:var(--red)}
+  .danger p.cau{color:var(--muted);font-size:13.5px;margin-bottom:22px;font-family:'JetBrains Mono'}
+  .steps{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:22px}
+  .step{font-family:'Saira';font-size:13.5px;background:var(--panel-2);border:1px solid var(--line-2);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px}
+  .step b{font-family:'JetBrains Mono';font-size:11px;color:var(--red);background:var(--red-soft);border-radius:5px;width:20px;height:20px;display:grid;place-items:center;flex:none}
+  .sep{color:var(--dim);font-family:'JetBrains Mono'}
+  .code-reveal{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:#0a0c12;border:1px solid var(--line-2);border-radius:12px;padding:16px 20px}
+  .code-reveal .lbl{font-family:'JetBrains Mono';font-size:11px;color:#6b7689;letter-spacing:.12em}
+  .secret{font-family:'JetBrains Mono';font-weight:700;font-size:34px;letter-spacing:.16em;color:var(--red);cursor:pointer;filter:blur(9px);transition:filter .3s;user-select:none}
+  .secret.show{filter:none;user-select:all}
+  .reveal-btn{font-family:'JetBrains Mono';font-size:12px;color:#9aa6b6;border:1px solid #2a3344;background:transparent;border-radius:8px;padding:8px 14px;cursor:pointer;transition:.18s}
+  .reveal-btn:hover{color:#fff;border-color:var(--red)}
+
+  footer{border-top:1px solid var(--line);padding:40px 0 60px;margin-top:20px}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-end}
+  footer .disc{max-width:640px;color:var(--dim);font-size:12px;font-family:'JetBrains Mono';line-height:1.7}
+  footer .sig{font-family:'Saira Condensed';font-weight:800;font-size:20px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);z-index:99;background:var(--blue);color:#fff;font-family:'JetBrains Mono';font-size:13px;padding:10px 18px;border-radius:10px;box-shadow:0 14px 40px -10px var(--blue);opacity:0;pointer-events:none;transition:.25s}
+  #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ===== service / carplay ===== */
+  .svc-intro{display:flex;align-items:center;gap:18px;margin-bottom:24px;flex-wrap:wrap}
+  .svc-intro .cpico{width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:grid;place-items:center;flex:none;box-shadow:0 12px 30px -10px var(--blue)}
+  .svc-intro .cpico svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:1.7}
+  .svc-intro p{color:var(--muted);font-size:15px;max-width:600px;line-height:1.6}
+  .svc-intro p b{color:var(--text);font-weight:600}
+  .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+  @media(max-width:760px){.feat{grid-template-columns:1fr}}
+  .feat .f{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:14px;padding:18px}
+  .feat .f .fi{width:34px;height:34px;border-radius:9px;background:color-mix(in srgb,var(--blue) 14%,transparent);display:grid;place-items:center;margin-bottom:12px}
+  .feat .f .fi svg{width:18px;height:18px;stroke:var(--blue-2);fill:none;stroke-width:1.8}
+  .feat .f h5{font-family:'Saira Condensed';font-weight:700;font-size:17px;text-transform:uppercase;letter-spacing:.02em;margin-bottom:5px}
+  .feat .f p{color:var(--muted);font-size:13px;line-height:1.55}
+  .tiers{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.tiers{grid-template-columns:1fr}}
+  .tier{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:16px;padding:26px 24px;position:relative;transition:.25s}
+  .tier:hover{transform:translateY(-2px);border-color:var(--line-2)}
+  .tier .no{font-family:'JetBrains Mono';font-size:12px;color:var(--dim);letter-spacing:.1em}
+  .tier h4{font-family:'Saira Condensed';font-weight:700;font-size:23px;text-transform:uppercase;margin:6px 0 16px;letter-spacing:.02em}
+  .tier .amt{font-family:'Saira Condensed';font-weight:900;font-size:52px;line-height:1;color:var(--text)}
+  .tier .amt small{font-family:'Saira';font-weight:400;font-size:22px;color:var(--dim);margin-right:3px}
+  .tier .amt .yuan{font-size:17px;color:var(--muted);margin-left:6px;font-weight:600}
+  .tier .gift{display:inline-block;margin-top:12px;font-family:'JetBrains Mono';font-size:11px;color:var(--green);border:1px solid color-mix(in srgb,var(--green) 42%,transparent);border-radius:6px;padding:3px 9px;background:color-mix(in srgb,var(--green) 8%,transparent)}
+  .tier ul{list-style:none;margin-top:20px;display:flex;flex-direction:column;gap:11px}
+  .tier li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted)}
+  .tier li svg{width:16px;height:16px;flex:none;margin-top:3px;stroke:var(--cyan);fill:none;stroke-width:2.6}
+  .tier.best{border-color:color-mix(in srgb,var(--blue) 50%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--blue) 22%,transparent),0 24px 54px -26px var(--blue)}
+  .tier.best .amt{color:var(--blue-2)}
+  .tier .rec-badge{position:absolute;top:-11px;right:20px;background:var(--blue);color:#fff;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;padding:4px 12px;border-radius:999px;box-shadow:0 8px 20px -6px var(--blue)}
+  .cpnote{display:flex;gap:12px;align-items:flex-start;background:color-mix(in srgb,var(--blue) 7%,transparent);border:1px solid color-mix(in srgb,var(--blue) 26%,transparent);border-radius:14px;padding:16px 18px;margin-top:18px}
+  .cpnote svg{width:20px;height:20px;flex:none;margin-top:1px;stroke:var(--blue-2);fill:none;stroke-width:1.8}
+  .cpnote p{font-size:13.5px;color:var(--muted);line-height:1.65}
+  .cpnote p b{color:var(--text);font-weight:600}
+  .notice{display:flex;gap:13px;align-items:flex-start;background:linear-gradient(180deg,rgba(255,176,32,.09),transparent),var(--panel);border:1px solid rgba(255,176,32,.36);border-radius:14px;padding:18px 20px;margin-top:14px}
+  .notice .ni{width:24px;height:24px;flex:none;margin-top:1px}
+  .notice .nt h5{font-family:'Saira Condensed';font-weight:700;font-size:16px;text-transform:uppercase;color:#ffb020;margin-bottom:6px;letter-spacing:.03em}
+  .notice .nt p{font-size:13.5px;color:var(--muted);line-height:1.65}
+  .notice .nt p b{color:var(--text);font-weight:600}
+
+  /* contact CTA */
+  .contact{display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:linear-gradient(100deg,rgba(45,127,249,.12),var(--panel));border:1px solid rgba(45,127,249,.3);border-radius:16px;padding:22px 24px;margin-top:18px}
+  .contact .ct-ico{width:52px;height:52px;border-radius:13px;background:#07c160;display:grid;place-items:center;flex:none;box-shadow:0 12px 28px -12px rgba(7,193,96,.7)}
+  .contact .ct-ico svg{width:27px;height:27px;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .contact .ct-main{flex:1;min-width:200px}
+  .contact .ct-lbl{font-family:'JetBrains Mono';font-size:11px;color:var(--blue-2);letter-spacing:.12em;margin-bottom:8px}
+  .contact .ct-id{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .contact .ct-id .pn{font-size:22px;font-weight:700;padding:8px 16px}
+  .contact .ct-go{font-family:'JetBrains Mono';font-size:12px;color:var(--green)}
+  .contact .ct-hint{color:var(--muted);font-size:13px;margin-top:10px;line-height:1.55}
+
+  /* ===== engine oil ===== */
+  .oil-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:880px){.oil-grid{grid-template-columns:1fr}}
+  .oilc{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;transition:border-color .25s,transform .25s}
+  .oilc:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  .oilc .oh{display:flex;align-items:flex-start;gap:11px}
+  .oilc .swatch{width:22px;height:22px;border-radius:6px;flex:none;margin-top:3px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),0 2px 6px -2px rgba(0,0,0,.5)}
+  .oilc .brand{font-family:'Saira Condensed';font-weight:800;font-size:12px;color:var(--blue-2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px}
+  .oilc h3{font-family:'Saira Condensed';font-weight:700;font-size:19px;line-height:1.12;letter-spacing:.01em}
+  .oilc .osub{color:var(--dim);font-size:12px;font-family:'JetBrains Mono';margin:9px 0 15px}
+  .oilc .visc{display:inline-flex;align-items:baseline;gap:7px;align-self:flex-start;background:color-mix(in srgb,var(--blue) 12%,transparent);border:1px solid color-mix(in srgb,var(--blue) 32%,transparent);border-radius:10px;padding:6px 13px;margin-bottom:15px}
+  .oilc .visc b{font-family:'Saira Condensed';font-weight:900;font-size:23px;color:var(--text);line-height:1}
+  .oilc .visc span{font-family:'JetBrains Mono';font-size:9.5px;color:var(--blue-2);letter-spacing:.1em}
+  .oilc .specs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+  .oilc .specs span{font-family:'JetBrains Mono';font-size:10.5px;color:var(--muted);border:1px solid var(--line-2);border-radius:6px;padding:3px 8px}
+  .oilc .foot{margin-top:auto;border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+  .oilc .chan{font-size:13.5px;color:var(--text)}
+  .oilc .chan b{display:block;font-family:'JetBrains Mono';font-size:10px;color:var(--dim);letter-spacing:.08em;margin-bottom:4px;font-weight:400}
+  .oilc .opr{font-family:'Saira Condensed';font-weight:800;font-size:20px;text-align:right;white-space:nowrap}
+  .oilc .opr small{display:block;font-family:'Saira';font-weight:400;font-size:11px;color:var(--dim);margin-top:3px}
+  .oilc .opr.free{color:var(--green)}
+  .ptag{font-family:'Saira Condensed';font-weight:800;font-size:19px;color:var(--text)}
+
+  /* ===== dash cam ===== */
+  .subhead{display:flex;align-items:baseline;gap:12px;margin:2px 0 16px;font-family:'Saira Condensed';font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:.03em}
+  .subhead .en{font-family:'JetBrains Mono';font-size:11px;color:var(--dim);letter-spacing:.08em;font-weight:400}
+  .dcam-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media(max-width:920px){.dcam-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.dcam-grid{grid-template-columns:1fr}}
+  .dcam-grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:600px){.dcam-grid2{grid-template-columns:1fr}}
+  .dcam .pr.na{color:var(--dim);font-size:20px;font-weight:700}
+  .dcam{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:16px;padding:22px;transition:border-color .25s,transform .25s;position:relative}
+  .dcam:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  .dcam .b{font-family:'Saira Condensed';font-weight:800;font-size:13px;color:var(--blue-2);letter-spacing:.04em;margin-bottom:4px}
+  .dcam h3{font-family:'Saira Condensed';font-weight:700;font-size:23px;letter-spacing:.02em}
+  .dcam .pr{font-family:'Saira Condensed';font-weight:900;font-size:34px;color:var(--text);margin-top:14px}
+  .dcam .pr small{font-family:'Saira';font-weight:400;font-size:16px;color:var(--dim);margin-right:3px}
+  .dcam .tagline{font-size:12.5px;color:var(--muted);font-family:'JetBrains Mono';margin-top:9px}
+  .dcam .note{margin-top:13px;font-size:12px;font-family:'JetBrains Mono';line-height:1.5;display:flex;align-items:flex-start;gap:7px;color:var(--muted)}
+  .dcam .note .mk{flex:none;font-weight:700}
+  .dcam .note.con .mk{color:#ffb020}
+  .dcam .note.pro .mk{color:var(--green)}
+  .dcam .note.info .mk{color:var(--blue-2)}
+  .dcam.wide{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .dcam.wide .pr{margin-top:0}
+  .dcam.best{border-color:color-mix(in srgb,var(--blue) 50%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--blue) 22%,transparent),0 22px 50px -26px var(--blue)}
+  .dcam.best .pr{color:var(--blue-2)}
+  .dcam .rec-badge{position:absolute;top:-11px;right:20px;background:var(--blue);color:#fff;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;padding:4px 12px;border-radius:999px;box-shadow:0 8px 20px -6px var(--blue)}
+
+  /* ===== transmission ===== */
+  .txsvc{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:linear-gradient(100deg,rgba(45,127,249,.1),var(--panel));border:1px solid rgba(45,127,249,.3);border-radius:16px;padding:18px 22px;margin-bottom:18px}
+  .txsvc .txcode{font-family:'JetBrains Mono';font-size:13px;font-weight:700;color:var(--blue-2);border:1px solid rgba(45,127,249,.4);border-radius:8px;padding:7px 12px;background:rgba(45,127,249,.08);flex:none}
+  .txsvc .txname{font-family:'Saira Condensed';font-weight:700;font-size:20px;text-transform:uppercase;letter-spacing:.01em}
+  .txsvc .txname span{display:block;font-family:'JetBrains Mono';font-size:10px;color:var(--dim);letter-spacing:.06em;margin-top:3px;text-transform:none}
+  .txsvc .txlabor{margin-left:auto;font-family:'Saira';font-size:14px;color:var(--muted);white-space:nowrap}
+  .txsvc .txlabor b{font-family:'Saira Condensed';font-weight:800;font-size:23px;color:var(--text);margin-left:5px}
+
+  /* ===== maintenance interval ===== */
+  .cyc-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:600px){.cyc-row{grid-template-columns:1fr}}
+  .cyc-item{background:var(--panel-2);border:1px solid var(--line-2);border-radius:12px;padding:14px 16px}
+  .cyc-item.clean{border-left:3px solid var(--cyan)}
+  .cyc-item.replace{border-left:3px solid var(--blue)}
+  .cyc-item .cyc-lab{display:block;font-family:'JetBrains Mono';font-size:10.5px;color:var(--dim);letter-spacing:.1em;margin-bottom:7px}
+  .cyc-item .cyc-val{font-family:'Saira Condensed';font-weight:800;font-size:26px;color:var(--text)}
+  .cyc-item .cyc-val small{font-family:'Saira';font-weight:400;font-size:13px;color:var(--blue-2);margin-left:4px}
+
+  /* search flash highlight */
+  @keyframes flashpulse{0%{box-shadow:0 0 0 0 var(--blue-glow),0 0 0 1px var(--blue)}70%{box-shadow:0 0 0 10px transparent,0 0 0 1px var(--blue)}100%{box-shadow:0 0 0 0 transparent}}
+  .flash{animation:flashpulse 1.4s ease-out;border-radius:12px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <img class="logo" src="data:image/png;base64,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" alt="Hyundai N">
+      <b>ELANTRA&nbsp;N</b>
+      <span class="cc">CN7&nbsp;N</span>
+    </div>
+    <div class="search">
+      <svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+      <input id="q" type="text" placeholder="搜索部件 / 零件号…" autocomplete="off" spellcheck="false">
+      <div class="results" id="res"></div>
+    </div>
+    <button class="ttoggle" id="theme" aria-label="切换主题">
+      <svg id="ic-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"></path></svg>
+      <svg id="ic-moon" viewBox="0 0 24 24" style="display:none"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+    </button>
+    <nav class="topnav">
+      <a href="https://carplay.66ir.com/cn7n.html#parts">配件</a><a href="https://carplay.66ir.com/cn7n.html#oil">机油</a><a href="https://carplay.66ir.com/cn7n.html#trans">变速箱</a><a href="https://carplay.66ir.com/cn7n.html#dashcam">记录仪</a><a href="https://carplay.66ir.com/cn7n.html#torque">扭矩</a><a href="https://carplay.66ir.com/cn7n.html#tire">轮胎</a><a href="https://carplay.66ir.com/cn7n.html#carplay">CarPlay</a><a href="https://carplay.66ir.com/cn7n.html#price">价目</a><a href="https://carplay.66ir.com/cn7n.html#manual">手册</a><a href="https://carplay.66ir.com/cn7n.html#eng">工程模式</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="ghost">N</div>
+  <div class="wrap">
+    <div class="kicker">维护知识库 · Maintenance Dossier</div>
+    <h1 class="title">ELANTRA&nbsp;<em>N</em></h1>
+    <p class="lede">现代伊兰特 N 的配件号、扭矩规格、赛道胎压速查，以及现代起亚原厂车机 CarPlay 解锁升级服务。点击零件号即可复制，顶部可搜索、可切换深浅色。</p>
+    <div class="chassis-row">
+      <span class="chip">底盘 · <b>CN7 N</b></span>
+      <span class="chip">动力 · <b>2.0T Theta&nbsp;Ⅲ</b></span>
+      <span class="chip">单位 · <b>N·m / PSI / kPa</b></span>
+      <span class="chip">更新 · <b>2026</b></span>
+    </div>
+  </div>
+</header>
+
+<!-- 01 PARTS -->
+<section class="block" id="parts">
+  <div class="wrap">
+    <div class="sechead reveal in" style="transition-delay: 0ms;"><div class="idx">01 / 10</div><h2>配件信息</h2><div class="en">PARTS &amp; PART NUMBERS</div></div>
+    <div class="grid g2">
+      <div class="card reveal in" data-find="" data-label="空调滤芯" data-cat="配件" data-kw="cabin air filter 空调 滤清器 mahle mann bosch sofima 97133" style="transition-delay: 55ms;">
+        <div class="card-h"><span class="tag">FILTER</span><h3>空调滤芯</h3></div>
+        <div class="card-sub">Cabin Air Filter</div>
+        <div class="oem"><div><small>原厂 OEM</small><span class="ot">原厂件</span></div><span class="pn big">K 97133 L1100</span></div>
+        <div class="prow"><div class="brand-cn">马勒<b>MAHLE</b></div><div class="pns"><span class="pn">LAK1840</span><span class="pn">LA1840</span></div></div>
+        <div class="prow"><div class="brand-cn">曼牌<b>MANN</b></div><div class="pns"><span class="pn">CUK21028</span><span class="pn">CUK21032</span></div></div>
+        <div class="prow"><div class="brand-cn">博世<b>BOSCH</b></div><div class="pns"><span class="pn">0986AF4636</span></div></div>
+        <div class="prow"><div class="brand-cn">科德宝<b>FREUDENBERG</b></div><div class="pns"><span class="pn">CF105</span><span class="pn">BL507</span></div></div>
+        <div class="prow"><div class="brand-cn">索菲玛<b>SOFIMA</b></div><div class="pns"><span class="pn">S4514CA1</span><span class="pn">MC3294C</span></div></div>
+      </div>
+      <div class="card reveal in" data-find="" data-label="机油滤芯" data-cat="配件" data-kw="oil filter 机滤 机油 mahle mann bosch hengst sofima 26300" style="transition-delay: 110ms;">
+        <div class="card-h"><span class="tag">FILTER</span><h3>机油滤芯</h3></div>
+        <div class="card-sub">Engine Oil Filter</div>
+        <div class="oem"><div><small>原厂 OEM</small><span class="ot">原厂件</span></div><span class="pn big">K 26300 35505N</span></div>
+        <div class="prow"><div class="brand-cn">马勒<b>MAHLE</b></div><div class="pns"><span class="pn">OC523</span></div></div>
+        <div class="prow"><div class="brand-cn">曼牌<b>MANN</b></div><div class="pns"><span class="pn">W811/80</span><span class="pn">W8054</span></div></div>
+        <div class="prow"><div class="brand-cn">博世<b>BOSCH</b></div><div class="pns"><span class="pn">0986AF0047</span><span class="pn">0986AF1150</span></div></div>
+        <div class="prow"><div class="brand-cn">科德宝<b>FREUDENBERG</b></div><div class="pns"><span class="pn">OF014</span></div></div>
+        <div class="prow"><div class="brand-cn">汉格斯特<b>HENGST</b></div><div class="pns"><span class="pn">H13WO1</span></div></div>
+        <div class="prow"><div class="brand-cn">索菲玛<b>SOFIMA</b></div><div class="pns"><span class="pn">S6902R</span><span class="pn">S6902R1</span></div></div>
+      </div>
+    </div>
+    <div class="ptable reveal in" style="margin-top: 18px; transition-delay: 165ms;">
+      <div class="ph"><span>部件 · COMPONENT</span><span>零件号 · PART NO.</span></div>
+      <div class="ptr" data-find="" data-label="空气滤芯" data-cat="配件" data-kw="air filter 28113 原厂"><div class="nm">空气滤芯<b>AIR FILTER · 原厂</b></div><div class="vals"><span class="pn">28113 IB000</span></div></div>
+      <div class="ptr" data-find="" data-label="火花塞" data-cat="配件" data-kw="spark plug ngk silzkr"><div class="nm">火花塞<b>SPARK PLUG</b></div><div class="vals"><span class="pn">18857 09085</span><span class="pn">NGK SILZKR8H9G</span></div></div>
+      <div class="ptr" data-find="" data-label="改款钥匙" data-cat="配件" data-kw="key fob facelift 钥匙 遥控"><div class="nm">改款钥匙<b>KEY FOB · FACELIFT</b></div><div class="vals"><span class="pn">95440 IB500 YPN</span></div></div>
+      <div class="ptr" data-find="" data-label="旧款钥匙" data-cat="配件" data-kw="key fob pre-facelift 钥匙 遥控"><div class="nm">旧款钥匙<b>KEY FOB · PRE-FACELIFT</b></div><div class="vals"><span class="pn">95440 IB000</span></div></div>
+      <div class="ptr" data-find="" data-label="地毯卡子" data-cat="配件" data-kw="carpet clip 脚垫 卡扣"><div class="nm">地毯卡子<b>CARPET CLIP</b></div><div class="vals"><span class="pn">84270 F2100</span></div></div>
+      <div class="ptr" data-find="" data-label="前翼子板固定保险杠支架" data-cat="配件" data-kw="fender bumper bracket 保险杠 下垂 支架 86551 86552"><div class="nm">前翼子板固定保险杠支架<b>FRONT FENDER BUMPER BRACKET · L/R</b></div><div class="vals"><span class="pn">86551 AAAA0</span><span class="pn">86552 AAAA0</span></div></div>
+      <div class="ptr" data-find="" data-label="G70 高压油泵" data-cat="配件" data-kw="hp fuel pump g70 高压油泵 35320"><div class="nm">G70 高压油泵<b>HP FUEL PUMP (G70)</b></div><div class="vals"><span class="pn">35320 2GTA1</span></div></div>
+      <div class="ptr" data-find="" data-label="发动机放油螺丝垫片" data-cat="配件" data-kw="engine drain plug washer 发动机 放油 螺丝 垫片 m14 22 1.5"><div class="nm">发动机放油螺丝垫片<b>ENGINE DRAIN PLUG WASHER</b></div><div class="vals"><span class="pn">M14 × 22 × 1.5</span></div></div>
+    </div>
+    <div class="card reveal in" data-find="" data-label="NP 滤芯保养周期" data-cat="配件" data-kw="np 滤芯 滤清器 清理 更换 周期 保养 10000 40000 空气滤芯 进气" style="margin-top: 18px; transition-delay: 220ms;">
+      <div class="card-h"><span class="tag">FILTER</span><h3>NP 滤芯</h3></div>
+      <div class="card-sub">保养周期 · MAINTENANCE INTERVAL</div>
+      <div class="cyc-row">
+        <div class="cyc-item clean"><span class="cyc-lab">清理 · CLEAN</span><span class="cyc-val">每 10,000<small>km</small></span></div>
+        <div class="cyc-item replace"><span class="cyc-lab">更换 · REPLACE</span><span class="cyc-val">每 40,000<small>km</small></span></div>
+      </div>
+    </div>
+    <div class="card reveal in" data-find="" data-label="雨刮器 通用 24/18 U型口" data-cat="配件" data-kw="wiper blade 雨刮 雨刷 通用 24 18 u型口 u-hook 贵万江 piaa 胶条" style="margin-top: 18px; transition-delay: 275ms;">
+      <div class="card-h"><span class="tag">WIPER</span><h3>雨刮器</h3></div>
+      <div class="card-sub">通用尺寸 24″ / 18″ · U 型接口（U-hook）</div>
+      <div class="prow"><div class="brand-cn">贵万江<b>国产胶条版</b></div><div class="pns"><span class="ptag">¥51</span></div></div>
+      <div class="prow"><div class="brand-cn">贵万江<b>进口胶条版</b></div><div class="pns"><span class="ptag">¥72</span></div></div>
+      <div class="prow"><div class="brand-cn">PIAA<b>IMPORT</b></div><div class="pns"><span class="ptag">¥129</span></div></div>
+    </div>
+    <div class="hint reveal" style="transition-delay: 330ms;"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>点击任意零件号即可复制到剪贴板，订货时直接粘贴。</div>
+  </div>
+</section>
+
+<!-- 02 ENGINE OIL -->
+<section class="block" id="oil">
+  <div class="wrap">
+    <div class="sechead reveal" style="transition-delay: 330ms;"><div class="idx">02 / 10</div><h2>机油</h2><div class="en">ENGINE OIL · 0W-30</div></div>
+    <div class="oil-grid">
+      <div class="oilc reveal" data-find="" data-label="壳牌 先锋超凡喜力 ECT BBA" data-cat="机油" data-kw="shell ect bba 欧系 0w-30 机油 棕色瓶 4s 白嫖 北京现代" style="transition-delay: 330ms;">
+        <div class="oh"><span class="swatch" style="background:#6b4326"></span><div><div class="brand">壳牌 SHELL</div><h3>先锋超凡喜力 ECT BBA</h3></div></div>
+        <div class="osub">欧系 · 棕色瓶</div>
+        <div class="visc"><b>0W-30</b><span>VISCOSITY</span></div>
+        <div class="specs"><span>API SQ</span><span>ACEA C3</span><span>BMW LL-19 FE</span><span>MB 229.51</span></div>
+        <div class="foot"><div class="chan"><b>渠道 CHANNEL</b>北京现代 4S 店</div><div class="opr free">白嫖 ×3</div></div>
+      </div>
+      <div class="oilc reveal" data-find="" data-label="壳牌 超凡喜力极速闪电版" data-cat="机油" data-kw="shell helix ultra 极速闪电 0w-30 红色瓶 途虎养车 机油 曼牌" style="transition-delay: 330ms;">
+        <div class="oh"><span class="swatch" style="background:#c62828"></span><div><div class="brand">壳牌 SHELL</div><h3>超凡喜力 极速闪电版</h3></div></div>
+        <div class="osub">红色塑料瓶</div>
+        <div class="visc"><b>0W-30</b><span>VISCOSITY</span></div>
+        <div class="specs"><span>API SP</span><span>ACEA C3</span><span>BMW LL-19 FE</span><span>MB 229.51</span></div>
+        <div class="foot"><div class="chan"><b>渠道 CHANNEL</b>途虎养车</div><div class="opr">¥289.6<small>/5L · 含曼牌机滤</small></div></div>
+      </div>
+      <div class="oilc reveal" data-find="" data-label="美孚1号 ESP 美版" data-cat="机油" data-kw="mobil 1 esp 美版 0w-30 灰色瓶 京东国际 机油" style="transition-delay: 330ms;">
+        <div class="oh"><span class="swatch" style="background:#8a8f98"></span><div><div class="brand">美孚 MOBIL</div><h3>美孚 1 号 ESP</h3></div></div>
+        <div class="osub">美版 · 灰色塑料瓶</div>
+        <div class="visc"><b>0W-30</b><span>VISCOSITY</span></div>
+        <div class="specs"><span>API SP</span><span>ACEA C3</span><span>MB 229.51</span></div>
+        <div class="foot"><div class="chan"><b>渠道 CHANNEL</b>京东国际</div><div class="opr">¥39.5<small>/L</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 TRANSMISSION -->
+<section class="block" id="trans">
+  <div class="wrap">
+    <div class="sechead reveal" style="transition-delay: 330ms;"><div class="idx">03 / 10</div><h2>变速箱油</h2><div class="en">TRANSMISSION FLUID · DCT</div></div>
+
+    <div class="txsvc reveal" data-find="" data-label="变速箱油更换 自动变速器油" data-cat="变速箱" data-kw="变速箱 变速器油 dct atf 自动变速器 更换 保养 油 04300 2n100 2n110 磁性塞 密封垫 bhb0005r" style="transition-delay: 330ms;">
+      <div class="txcode">BHB0005R</div>
+      <div class="txname">更换 · 自动变速器油<span>AUTOMATIC TRANSMISSION FLUID</span></div>
+      <div class="txlabor">工时 3.0h × ¥100<b>= ¥300</b></div>
+    </div>
+
+    <div class="ptable reveal" style="transition-delay: 330ms;">
+      <div class="ph"><span>配件 · COMPONENT</span><span>零件号 · PART NO.</span></div>
+      <div class="ptr"><div class="nm">变速器油（润滑冷却）<b>OIL-TRANSMISSION · ×1</b></div><div class="vals"><span class="pn">04300 2N100</span></div></div>
+      <div class="ptr"><div class="nm">变速器油（液压控制）<b>OIL-TRANSMISSION · ×1</b></div><div class="vals"><span class="pn">04300 2N110</span></div></div>
+      <div class="ptr"><div class="nm">放油螺丝（磁性）<b>DRAIN PLUG · ×1</b></div><div class="vals"><span class="pn">00810 17121</span></div></div>
+      <div class="ptr"><div class="nm">放油螺丝垫片<b>DRAIN WASHER · ×1</b></div><div class="vals"><span class="pn">45323 39000</span></div></div>
+      <div class="ptr"><div class="nm">加油口螺丝<b>FILL PLUG · ×1</b></div><div class="vals"><span class="pn">43121 11000</span></div></div>
+      <div class="ptr"><div class="nm">加油螺丝垫片<b>FILL WASHER · ×1</b></div><div class="vals"><span class="pn">17511 16000</span></div></div>
+      <div class="ptr"><div class="nm">磁性塞<b>PLUG-MAGNET · ×1</b></div><div class="vals"><span class="pn">45324 23100</span></div></div>
+      <div class="ptr"><div class="nm">油塞密封垫<b>SEAL WASHER · ×1 · ¥6</b></div><div class="vals"><span class="pn">21513 23001</span></div></div>
+    </div>
+
+    <div class="hint reveal" style="transition-delay: 330ms;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg>湿式双离合（wet DCT）需分别更换“润滑冷却”与“液压控制”两种油。放油螺丝为磁性塞；换油时建议一并更换放油口与加油口的密封垫。</div>
+  </div>
+</section>
+
+<!-- 04 DASH CAM -->
+<section class="block" id="dashcam">
+  <div class="wrap">
+    <div class="sechead reveal" style="transition-delay: 330ms;"><div class="idx">04 / 10</div><h2>行车记录仪</h2><div class="en">DASH CAM</div></div>
+
+    <div class="subhead reveal" style="transition-delay: 330ms;">单录推荐 <span class="en">SINGLE CHANNEL · 单镜头</span></div>
+    <div class="dcam-grid">
+      <div class="dcam reveal" data-find="" data-label="70迈 A810 Pro 行车记录仪" data-cat="记录仪" data-kw="70迈 70mai a810 pro dash cam 行车记录仪 单录 2.4g wifi" style="transition-delay: 330ms;">
+        <div class="b">70迈</div><h3>A810 Pro</h3><div class="pr"><small>¥</small>475</div>
+        <div class="note con"><span class="mk">△</span>仅支持 2.4G WiFi</div>
+      </div>
+      <div class="dcam best reveal" data-find="" data-label="70迈 M800 Pro 行车记录仪 单录推荐" data-cat="记录仪" data-kw="70迈 70mai m800 pro dash cam 行车记录仪 单录 推荐 首选" style="transition-delay: 330ms;">
+        <div class="rec-badge">推荐 · PICK</div>
+        <div class="b">70迈</div><h3>M800 Pro</h3><div class="pr"><small>¥</small>519</div>
+        <div class="note pro"><span class="mk">✓</span>单录款综合推荐</div>
+      </div>
+      <div class="dcam reveal" data-find="" data-label="万奇欧 E1 Pro 行车记录仪" data-cat="记录仪" data-kw="万奇欧 vantrue e1 pro dash cam 行车记录仪 单录 体积小 发热" style="transition-delay: 330ms;">
+        <div class="b">万奇欧</div><h3>E1 Pro</h3><div class="pr"><small>¥</small>599</div>
+        <div class="note info"><span class="mk">▸</span>带屏幕</div>
+      </div>
+      <div class="dcam reveal" data-find="" data-label="70迈 X800 行车记录仪" data-cat="记录仪" data-kw="70迈 70mai x800 dash cam 行车记录仪 单录 h265 h.265 编码 省空间 节省存储" style="transition-delay: 330ms;">
+        <div class="b">70迈</div><h3>X800</h3><div class="pr"><small>¥</small>899</div>
+        <div class="note pro"><span class="mk">✓</span>支持 H.265 编码，省存储空间</div>
+      </div>
+    </div>
+    <div class="notice reveal" style="transition-delay: 330ms;">
+      <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="#ffb020" stroke-width="1.8"><path d="M12 3 2 20h20z"></path><path d="M12 9v5"></path><circle cx="12" cy="17.5" r=".6" fill="#ffb020"></circle></svg>
+      <div class="nt"><h5>选购提醒</h5><p>以上单录款<b>请勿购买“前后双录”版本</b>；如需前后双录，请选择下方推荐型号。</p></div>
+    </div>
+
+    <div class="subhead reveal" style="margin-top: 32px; transition-delay: 330ms;">前后双录推荐 <span class="en">FRONT + REAR · 双录</span></div>
+    <div class="dcam-grid2">
+      <div class="dcam best reveal" data-find="" data-label="万奇欧 S1 Pro Max 前后双录" data-cat="记录仪" data-kw="万奇欧 vantrue s1 pro max 前后双录 dash cam 行车记录仪 推荐" style="transition-delay: 330ms;">
+        <div class="rec-badge">推荐 · BEST</div>
+        <div class="b">万奇欧</div><h3>S1 Pro Max</h3><div class="pr"><small>¥</small>1350</div>
+        <div class="note pro"><span class="mk">✓</span>前后双录 · 双镜头记录</div>
+      </div>
+      <div class="dcam reveal" data-find="" data-label="威孚 A229 Ultra 前后双录" data-cat="记录仪" data-kw="威孚 viofo a229 ultra 前后双录 dash cam 行车记录仪" style="transition-delay: 330ms;">
+        <div class="b">威孚</div><h3>A229 Ultra</h3><div class="pr"><small>¥</small>1650</div>
+        <div class="note info"><span class="mk">▸</span>前后双录 · 双镜头记录</div>
+      </div>
+    </div>
+
+    <div class="cpnote reveal" style="transition-delay: 330ms;">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg>
+      <p><b>双录款建议：</b>前后双录会同时写入两路视频，建议搭配<b>高速 TF（microSD）卡</b>（U3 / V30 及以上），保证录制稳定、不丢帧。</p>
+    </div>
+
+    <div class="cpnote reveal" style="transition-delay: 330ms;">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg>
+      <p><b>推荐配件：</b>行车记录仪阅读灯取电线 —— 原车对插、免走线，取电隐蔽、安装更整洁。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 TORQUE -->
+<section class="block" id="torque">
+  <div class="wrap">
+    <div class="sechead reveal" style="transition-delay: 330ms;"><div class="idx">05 / 10</div><h2>紧固扭矩</h2><div class="en">TORQUE SPECIFICATIONS</div></div>
+    <div class="grid g3">
+      <div class="torque reveal" data-find="" data-label="放油螺丝扭矩" data-cat="扭矩" data-kw="drain plug torque 放油 35" style="transition-delay: 330ms;">
+        <div class="lab">放油螺丝<b>DRAIN PLUG</b></div>
+        <div class="big">35<span> N·m</span></div><div class="rec">推荐值 RECOMMENDED</div>
+        <div class="bar"><i></i><div class="mk" style="left:25%"></div></div>
+        <div class="range"><span>34.3</span><span>范围 N·m</span><span>44.1</span></div>
+      </div>
+      <div class="torque reveal" data-find="" data-label="机油滤清器扭矩" data-cat="扭矩" data-kw="oil filter torque 机滤 13" style="transition-delay: 330ms;">
+        <div class="lab">机油滤清器<b>OIL FILTER</b></div>
+        <div class="big">13<span> N·m</span></div><div class="rec">推荐值 RECOMMENDED</div>
+        <div class="bar"><i></i><div class="mk" style="left:31%"></div></div>
+        <div class="range"><span>11.8</span><span>范围 N·m</span><span>15.7</span></div>
+      </div>
+      <div class="torque reveal" data-find="" data-label="轮毂螺母扭矩" data-cat="扭矩" data-kw="wheel hub nut torque 轮毂 螺母 120" style="transition-delay: 330ms;">
+        <div class="lab">轮毂螺母<b>WHEEL HUB NUT</b></div>
+        <div class="big">120<span> N·m</span></div><div class="rec">推荐值 RECOMMENDED</div>
+        <div class="bar"><i></i><div class="mk" style="left:62%"></div></div>
+        <div class="range"><span>107.9</span><span>范围 N·m</span><span>127.5</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 TIRE -->
+<section class="block" id="tire">
+  <div class="wrap">
+    <div class="sechead reveal" style="transition-delay: 330ms;"><div class="idx">06 / 10</div><h2>轮胎性能指南</h2><div class="en">PS4S HN · TIRE PRESSURE</div></div>
+    <div class="tire-lead">
+      <div class="psi-card reveal" data-find="" data-label="热胎最佳胎压" data-cat="轮胎" data-kw="hot tire pressure bar psi kpa 热胎 巴 35 37 2.4" style="transition-delay: 330ms;">
+        <h4><span class="dot" style="background:var(--red)"></span>热胎最佳 · HOT</h4>
+        <div class="psi-row"><div class="t">PSI</div><div class="v">35–37<span>psi</span></div></div>
+        <div class="psi-row"><div class="t">千帕 kPa</div><div class="v" style="font-size:21px;color:var(--muted)">241–255<span>kPa</span></div></div>
+        <div class="psi-row"><div class="t">BAR</div><div class="v" style="font-size:21px;color:var(--muted)">2.41–2.55<span>bar</span></div></div>
+        <div class="note-square">SQUARE SET（同胎设定）<br>四轮规格相同，故前后采用相同胎压起步。</div>
+      </div>
+      <div class="psi-card reveal" data-find="" data-label="冷胎起始胎压" data-cat="轮胎" data-kw="cold tire pressure bar psi kpa 冷胎 巴 32 33 2.2" style="transition-delay: 330ms;">
+        <h4><span class="dot" style="background:var(--cyan)"></span>冷胎起始 · COLD</h4>
+        <div class="psi-row"><div class="t">PSI</div><div class="v">32–33<span>psi</span></div></div>
+        <div class="psi-row"><div class="t">千帕 kPa</div><div class="v" style="font-size:21px;color:var(--muted)">220.6–227.5<span>kPa</span></div></div>
+        <div class="psi-row"><div class="t">BAR</div><div class="v" style="font-size:21px;color:var(--muted)">2.21–2.28<span>bar</span></div></div>
+        <div class="note-square" style="border-color:var(--blue)">行驶升温后压力自然上升<br>至热胎最佳区间。</div>
+      </div>
+    </div>
+
+    <div class="conv reveal" data-find="" data-label="胎压换算器 psi/千帕/bar" data-cat="工具" data-kw="converter psi kpa bar 换算 胎压 单位 巴 千帕" style="transition-delay: 330ms;">
+      <h4>胎压换算器 <span class="tg">PSI · KPA · BAR</span></h4>
+      <div class="conv-row">
+        <div class="cv"><label>PSI</label><div class="inwrap"><input id="psi" type="number" inputmode="decimal" placeholder="35" value="35"><span class="u">psi</span></div></div>
+        <div class="cv"><label>千帕 KPA</label><div class="inwrap"><input id="kpa" type="number" inputmode="decimal" placeholder="241"><span class="u">kPa</span></div></div>
+        <div class="cv"><label>BAR</label><div class="inwrap"><input id="bar" type="number" inputmode="decimal" step="0.01" placeholder="2.41"><span class="u">bar</span></div></div>
+      </div>
+      <div class="quick"><span class="ql">快速填入 · psi</span><button data-psi="32">32</button><button data-psi="33">33</button><button data-psi="35">35</button><button data-psi="36">36</button><button data-psi="37">37</button></div>
+    </div>
+
+    <div class="handling">
+      <div class="hcard us reveal" data-find="" data-label="转向不足调整" data-cat="轮胎" data-kw="understeer 推头 转向不足 后轮 胎压" style="transition-delay: 330ms;">
+        <div class="sym">⟳ 转向不足 · UNDERSTEER</div>
+        <div style="color:var(--muted);font-size:13px">推头、入弯转不进去</div>
+        <div class="arrow">增加后轮胎压 <b>+2 PSI</b> <span style="color:var(--dim);font-family:&#39;JetBrains Mono&#39;;font-size:12px">+13 kPa · +0.14 bar</span></div>
+      </div>
+      <div class="hcard os reveal" data-find="" data-label="转向过度调整" data-cat="轮胎" data-kw="oversteer 甩尾 转向过度 前轮 胎压" style="transition-delay: 330ms;">
+        <div class="sym">⟲ 转向过度 · OVERSTEER</div>
+        <div style="color:var(--muted);font-size:13px">甩尾、车尾不稳</div>
+        <div class="arrow">增加前轮胎压 <b>+2 PSI</b> <span style="color:var(--dim);font-family:&#39;JetBrains Mono&#39;;font-size:12px">+13 kPa · +0.14 bar</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 SERVICE / CARPLAY -->
+<section class="block" id="carplay">
+  <div class="wrap">
+    <div class="sechead reveal" style="transition-delay: 330ms;"><div class="idx">07 / 10</div><h2>CarPlay 解锁升级</h2><div class="en">HYUNDAI · KIA OEM HEAD UNIT</div></div>
+
+    <div class="svc-intro reveal" data-find="" data-label="CarPlay 解锁升级服务" data-cat="服务" data-kw="carplay 解锁 升级 现代 起亚 原厂车机 第三方 app 莫斯科 u盘 直刷" style="transition-delay: 330ms;">
+      <div class="cpico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M8 20h8M12 17v3M7 8.5h.01M7 12h6"></path></svg></div>
+      <p>现代 / 起亚原厂车机 <b>CarPlay 解锁</b>与<b>第三方 APP 安装</b>。支持 U 盘直刷、无需拆机，由专业技术团队开发与维护，全程不影响原车功能。</p>
+    </div>
+
+    <div class="feat reveal" style="transition-delay: 330ms;">
+      <div class="f"><div class="fi"><svg viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="13" rx="2"></rect><path d="M12 15v5M9 22h6"></path></svg></div><h5>U 盘直刷</h5><p>插入 U 盘即可升级，无需拆机、不动硬件。</p></div>
+      <div class="f"><div class="fi"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.2 7.8 8 9 4.8-1.2 8-4.5 8-9V6z"></path><path d="m9 12 2 2 4-4"></path></svg></div><h5>稳定 · 安全 · 可逆</h5><p>不影响任何原车功能，可随时还原。</p></div>
+      <div class="f"><div class="fi"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7M21 4v5h-5"></path></svg></div><h5>免费后续更新</h5><p>专业技术团队持续维护，提供免费升级服务。</p></div>
+    </div>
+
+    <div class="tiers">
+      <div class="tier reveal" style="transition-delay: 330ms;">
+        <div class="no">方案 ① · PLAN A</div>
+        <h4>原车 CarPlay 解锁</h4>
+        <div class="amt"><small>¥</small>800<span class="yuan">元</span></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"></path></svg>解锁原厂车机 CarPlay 功能</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"></path></svg>与韩国原厂一致的有线 CarPlay</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"></path></svg>U 盘直刷 · 不拆机 · 可逆</li>
+        </ul>
+      </div>
+      <div class="tier best reveal" style="transition-delay: 330ms;">
+        <div class="rec-badge">推荐 · RECOMMENDED</div>
+        <div class="no">方案 ② · PLAN B</div>
+        <h4>第三方 APP 安装</h4>
+        <div class="amt"><small>¥</small>1380<span class="yuan">元</span></div>
+        <span class="gift">赠 · 原车 CarPlay 解锁</span>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"></path></svg>原车安装第三方 APP</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"></path></svg>免费赠送原车 CarPlay 解锁</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"></path></svg>直接使用原生系统，无需依赖 CarPlay</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cpnote reveal" style="transition-delay: 330ms;">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg>
+      <p><b>CarPlay 说明：</b>当前版本为与韩国原厂一致的<b>有线 CarPlay</b>；后续将通过系统升级方式<b>免费支持无线 CarPlay</b>。</p>
+    </div>
+
+    <div class="notice reveal" style="transition-delay: 330ms;">
+      <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="#ffb020" stroke-width="1.8"><path d="M12 3 2 20h20z"></path><path d="M12 9v5"></path><circle cx="12" cy="17.5" r=".6" fill="#ffb020"></circle></svg>
+      <div class="nt">
+        <h5>注意事项</h5>
+        <p>目前在<b>个别车辆</b>上，CarPlay 存在偶发无法连接或连接中断的情况，该问题已确认，将在后续无线 CarPlay 更新中优化修复。<b>如对系统稳定性要求较高，建议优先选择 ¥1380 方案</b>，直接使用车机原生系统功能，无需依赖 CarPlay。</p>
+      </div>
+    </div>
+
+    <div class="contact reveal" data-find="" data-label="微信咨询 · QUIC443" data-cat="服务" data-kw="微信 联系方式 wechat quic443 咨询 联系 添加" style="transition-delay: 330ms;">
+      <div class="ct-ico"><svg viewBox="0 0 24 24"><path d="M9 3C5.1 3 2 5.7 2 9c0 1.9 1 3.6 2.7 4.8L4 17l3-1.5c.6.1 1.3.2 2 .2"></path><path d="M22 14.3c0-2.8-2.7-5-6-5s-6 2.2-6 5 2.7 5 6 5c.7 0 1.4-.1 2-.3l2.6 1.3-.7-2.3c1.3-.9 2.1-2.2 2.1-3.7z"></path><path d="M7 8.5h.01M11 8.5h.01"></path></svg></div>
+      <div class="ct-main">
+        <div class="ct-lbl">微信咨询 · WECHAT</div>
+        <div class="ct-id"><span class="pn">QUIC443</span><span class="ct-go">搜索添加 →</span></div>
+        <div class="ct-hint">点击复制微信号，搜索添加即可咨询 CarPlay 解锁 / 第三方 APP 安装与升级。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 PRICING -->
+<section class="block" id="price">
+  <div class="wrap">
+    <div class="sechead reveal" style="transition-delay: 330ms;"><div class="idx">08 / 10</div><h2>价目信息</h2><div class="en">DEALER PRICING · 含工时</div></div>
+    <div class="grid g2">
+      <div class="shop reveal" style="transition-delay: 330ms;">
+        <div class="shop-h"><h3>京现荣华</h3><span class="tag">4S 店</span></div>
+        <div class="li" data-find="" data-label="前刹车皮 · 京现荣华" data-cat="价目" data-kw="front brake pads 前刹车 京现荣华"><div class="name">前刹车皮<b>FRONT BRAKE PADS</b><div class="meta"><span>工时 300</span></div></div><div class="price"><small>¥</small>1200</div></div>
+        <div class="li" data-find="" data-label="后刹车皮 · 京现荣华" data-cat="价目" data-kw="rear brake pads 后刹车 京现荣华"><div class="name">后刹车皮<b>REAR BRAKE PADS</b><div class="meta"><span>工时 300</span></div></div><div class="price"><small>¥</small>1000</div></div>
+        <div class="li" data-find="" data-label="刹车油 · 京现荣华" data-cat="价目" data-kw="brake fluid 刹车油 京现荣华"><div class="name">刹车油<b>BRAKE FLUID</b><div class="meta"><span>工时 360</span></div></div><div class="price"><small>¥</small>256</div></div>
+        <div class="li"><div class="name">空气滤芯<b>28113 IB000</b></div><div class="price"><small>¥</small>149</div></div>
+        <div class="li"><div class="name">空调滤芯<b>97133 L1100</b></div><div class="price"><span class="na">价格待询</span></div></div>
+      </div>
+      <div class="shop reveal" style="transition-delay: 330ms;">
+        <div class="shop-h"><h3>610 · 奥星越秀</h3><span class="tag">官方授权</span></div>
+        <div class="li" data-find="" data-label="前刹车摩擦块套件 · 610" data-cat="价目" data-kw="front brake pad kit 58101 前刹车 610 奥星越秀"><div class="name">前盘式制动器摩擦块套件<b>58101-IBA00 · FRONT PAD KIT</b><div class="meta"><span class="warn">需订货</span><span>工时 500</span></div></div><div class="price"><small>¥</small>1652<span style="font-size:15px">.05</span></div></div>
+        <div class="li"><div class="name">空气滤芯<b>原厂 · OEM</b></div><div class="price"><small>¥</small>115</div></div>
+        <div class="li"><div class="name">空调滤芯<b>原厂 · OEM</b><div class="meta"><span>工时 50</span></div></div><div class="price"><small>¥</small>425</div></div>
+        <div class="li"><div class="name">空调滤芯<b>副厂 · AFTERMARKET</b><div class="meta"><span>工时 50</span></div></div><div class="price alt"><small>¥</small>95</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 MANUAL -->
+<section class="block" id="manual">
+  <div class="wrap">
+    <div class="sechead reveal" style="transition-delay: 330ms;"><div class="idx">09 / 10</div><h2>维修手册</h2><div class="en">SERVICE MANUAL</div></div>
+    <a class="manual reveal" href="https://www.hexorcism.com/22CN7N/" target="_blank" rel="noopener" data-find="" data-label="改款前维修手册" data-cat="手册" data-kw="service manual repair 维修手册 英文 hexorcism" style="transition-delay: 330ms;">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path><path d="M13 3v5h5"></path></svg></div>
+      <div class="mt"><b>改款前维修手册 · 英文</b><span>hexorcism.com/22CN7N/</span></div>
+      <div class="go">打开 →</div>
+    </a>
+  </div>
+</section>
+
+<!-- 10 ENGINEERING MODE -->
+<section class="block" id="eng">
+  <div class="wrap">
+    <div class="sechead reveal" style="transition-delay: 330ms;"><div class="idx">10 / 10</div><h2>工程模式</h2><div class="en">ENGINEERING MODE · 谨慎操作</div></div>
+    <div class="danger reveal" data-find="" data-label="工程模式进入方法" data-cat="工程" data-kw="engineering mode 工程模式 车机 密码 隐藏菜单" style="transition-delay: 330ms;">
+      <div class="danger-h"><svg class="warn-ic" viewBox="0 0 24 24" fill="none" stroke="#ff3b3b" stroke-width="1.8"><path d="M12 3 2 20h20z"></path><path d="M12 9v5"></path><circle cx="12" cy="17.5" r=".6" fill="#ff3b3b"></circle></svg><h3>进入工程菜单</h3></div>
+      <p class="cau">⚠ 仅用于查看，请勿随意修改任何参数——错误改动可能影响车辆功能。</p>
+      <div class="steps">
+        <span class="step"><b>1</b>车机开机</span><span class="sep">→</span>
+        <span class="step"><b>2</b>进入收音机</span><span class="sep">→</span>
+        <span class="step"><b>3</b>音量调至 2</span><span class="sep">→</span>
+        <span class="step"><b>4</b>设置 · 通用</span><span class="sep">→</span>
+        <span class="step"><b>5</b>「更新」按钮左侧点 5 下</span><span class="sep">→</span>
+        <span class="step"><b>6</b>「更新」按钮右侧点 1 下</span>
+      </div>
+      <div class="code-reveal">
+        <div><div class="lbl">PASSWORD · 密码</div><div class="secret" id="secret" onclick="revealCode()">23060663</div></div>
+        <button class="reveal-btn" id="rbtn" onclick="revealCode()">点击显示密码</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="disc">本页为个人维护速查资料，零件号、价格与工时仅供参考，下单前请与配件商核对适配性；扭矩与胎压数据请以官方维修手册及实测为准。安全相关项目（制动、扭矩）建议由专业人员复核。</div>
+    <div class="sig">ELANTRA&nbsp;N · CN7N</div>
+  </div>
+</footer>
+
+<div id="toast">已复制到剪贴板</div>
+
+<script>
+  /* ---------- copy part numbers ---------- */
+  function showToast(t){var el=document.getElementById('toast');el.textContent=t;el.classList.add('on');clearTimeout(window._tt);window._tt=setTimeout(function(){el.classList.remove('on')},1400);}
+  function fallbackCopy(txt){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(ta);}
+  document.querySelectorAll('.pn').forEach(function(el){
+    el.addEventListener('click',function(){
+      var txt=el.textContent.trim();
+      var done=function(){el.classList.add('copied');showToast('已复制 '+txt);setTimeout(function(){el.classList.remove('copied')},1200);};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done).catch(function(){fallbackCopy(txt);done();});}
+      else{fallbackCopy(txt);done();}
+    });
+  });
+
+  /* ---------- engineering code ---------- */
+  function revealCode(){var s=document.getElementById('secret');s.classList.toggle('show');document.getElementById('rbtn').textContent=s.classList.contains('show')?'点击隐藏':'点击显示密码';}
+
+  /* ---------- theme toggle (session only) ---------- */
+  var root=document.documentElement,sun=document.getElementById('ic-sun'),moon=document.getElementById('ic-moon');
+  document.getElementById('theme').addEventListener('click',function(){
+    var light=root.getAttribute('data-theme')==='light';
+    root.setAttribute('data-theme',light?'dark':'light');
+    sun.style.display=light?'block':'none';
+    moon.style.display=light?'none':'block';
+  });
+
+  /* ---------- bar · psi · kPa converter ---------- */
+  var P2K=6.894757,P2B=0.06894757,B2P=14.503774,bar=document.getElementById('bar'),psi=document.getElementById('psi'),kpa=document.getElementById('kpa');
+  function fromBar(){var v=parseFloat(bar.value);if(isFinite(v)){psi.value=(v*B2P).toFixed(1);kpa.value=(v*100).toFixed(0);}else{psi.value='';kpa.value='';}}
+  function fromPsi(){var v=parseFloat(psi.value);if(isFinite(v)){bar.value=(v*P2B).toFixed(2);kpa.value=(v*P2K).toFixed(0);}else{bar.value='';kpa.value='';}}
+  function fromKpa(){var v=parseFloat(kpa.value);if(isFinite(v)){bar.value=(v/100).toFixed(2);psi.value=(v/P2K).toFixed(1);}else{bar.value='';psi.value='';}}
+  bar.addEventListener('input',fromBar);
+  psi.addEventListener('input',fromPsi);
+  kpa.addEventListener('input',fromKpa);
+  document.querySelectorAll('.quick button').forEach(function(b){b.addEventListener('click',function(){psi.value=b.getAttribute('data-psi');fromPsi();psi.focus();});});
+  fromPsi();
+
+  /* ---------- search ---------- */
+  var idx=[];
+  document.querySelectorAll('[data-find]').forEach(function(el){
+    var label=el.getAttribute('data-label')||'',cat=el.getAttribute('data-cat')||'',kw=el.getAttribute('data-kw')||'';
+    idx.push({el:el,label:label,cat:cat,hay:(label+' '+cat+' '+kw).toLowerCase()});
+  });
+  var qEl=document.getElementById('q'),resEl=document.getElementById('res'),curSel=-1,curItems=[];
+  function flash(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');setTimeout(function(){el.classList.remove('flash')},1500);}
+  function jump(el){closeRes();qEl.blur();el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){flash(el);},260);}
+  function closeRes(){resEl.classList.remove('on');resEl.innerHTML='';curSel=-1;curItems=[];}
+  function render(q){
+    var ql=q.trim().toLowerCase();
+    if(!ql){closeRes();return;}
+    var hits=idx.filter(function(it){return it.hay.indexOf(ql)>-1;}).slice(0,8);
+    curItems=hits;curSel=-1;
+    if(!hits.length){resEl.innerHTML='<div class="none">无匹配结果</div>';resEl.classList.add('on');return;}
+    resEl.innerHTML=hits.map(function(it,i){return '<div class="r" data-i="'+i+'"><span class="rl">'+it.label+'</span><span class="rc">'+it.cat+'</span></div>';}).join('');
+    resEl.classList.add('on');
+    resEl.querySelectorAll('.r').forEach(function(r){r.addEventListener('click',function(){jump(hits[+r.getAttribute('data-i')].el);});});
+  }
+  qEl.addEventListener('input',function(){render(qEl.value);});
+  qEl.addEventListener('focus',function(){if(qEl.value.trim())render(qEl.value);});
+  qEl.addEventListener('keydown',function(e){
+    if(!curItems.length)return;
+    if(e.key==='ArrowDown'){e.preventDefault();curSel=(curSel+1)%curItems.length;}
+    else if(e.key==='ArrowUp'){e.preventDefault();curSel=(curSel-1+curItems.length)%curItems.length;}
+    else if(e.key==='Enter'){e.preventDefault();jump(curItems[curSel<0?0:curSel].el);return;}
+    else if(e.key==='Escape'){closeRes();qEl.blur();return;}
+    else return;
+    resEl.querySelectorAll('.r').forEach(function(r,i){r.classList.toggle('sel',i===curSel);});
+  });
+  document.addEventListener('click',function(e){if(!e.target.closest('.search'))closeRes();});
+
+  /* ---------- scroll reveal ---------- */
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';io.observe(el);});
+</script>
+
+
+</body></html>

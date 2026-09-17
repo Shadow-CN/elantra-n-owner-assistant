@@ -2,7 +2,7 @@
 
 .page-scroll {
   height: 100vh;
-  background: #F6F7F8;
+  background: var(--bg-page);
 }
 
 .page-body {
@@ -11,7 +11,7 @@
 
 /* Summary card */
 .summary-card {
-  background: #1A73E8;
+  background: var(--bg-accent);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,28 +22,103 @@
 .summary-count {
   font-size: 80rpx;
   font-weight: 700;
-  color: #FFFFFF;
+  color: var(--text-accent);
   line-height: 1.1;
 }
 
 .summary-label {
   font-size: 28rpx;
-  color: rgba(255,255,255,0.85);
+  color: var(--text-accent);
   margin-top: 8rpx;
 }
 
 .summary-hint {
   font-size: 22rpx;
-  color: rgba(255,255,255,0.65);
+  color: var(--text-accent);
   margin-top: 16rpx;
+}
+
+.cart-card {
+  background: var(--bg-card);
+  margin-bottom: 24rpx;
+  border-top: 1rpx solid var(--border-item);
+}
+
+.cart-card-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20rpx 32rpx;
+  border-bottom: 1rpx solid var(--border-item);
+}
+
+.cart-card-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cart-card-clear {
+  margin-left: auto;
+  font-size: 24rpx;
+  color: var(--text-tag);
+}
+
+.cart-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20rpx 32rpx;
+  border-bottom: 1rpx solid var(--border-item);
+  gap: 16rpx;
+}
+
+.cart-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-name-cn {
+  font-size: 28rpx;
+  color: var(--text-primary);
+  font-weight: 500;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+.cart-name-en {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  margin-top: 4rpx;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+.cart-meta {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: var(--text-tag);
+}
+
+.cart-item-remove {
+  font-size: 24rpx;
+  color: var(--text-error);
+  flex-shrink: 0;
+  padding: 8rpx 0 8rpx 16rpx;
+}
+
+.cart-empty {
+  padding: 48rpx 32rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--text-hint);
 }
 
 /* Section title */
 .section-title {
   font-size: 26rpx;
-  color: #888;
+  color: var(--text-secondary);
   padding: 0 32rpx 12rpx;
-  text-transform: uppercase;
   letter-spacing: 1rpx;
 }
 
@@ -52,14 +127,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: #FFFFFF;
+  background: var(--bg-card);
   margin: 0 0 2rpx 0;
   padding: 32rpx;
   gap: 16rpx;
-}
-
-.app-card:active {
-  background: #F0F0F0;
 }
 
 .app-card-disabled {
@@ -73,13 +144,13 @@
 .app-name {
   font-size: 32rpx;
   font-weight: 600;
-  color: #1A1A1A;
+  color: var(--text-primary);
   margin-bottom: 6rpx;
 }
 
 .app-desc {
   font-size: 22rpx;
-  color: #888;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -92,18 +163,18 @@
 
 .arrow {
   font-size: 32rpx;
-  color: #1A73E8;
+  color: var(--text-tag);
 }
 
 .loading-spin {
   font-size: 28rpx;
-  color: #888;
+  color: var(--text-secondary);
 }
 
 .badge-soon {
   font-size: 20rpx;
-  color: #888;
-  background: #F0F0F0;
+  color: var(--text-badge);
+  background: var(--bg-badge);
   padding: 4rpx 16rpx;
   border-radius: 20rpx;
 }
@@ -111,15 +182,15 @@
 /* Result card */
 .result-card {
   margin: 24rpx 32rpx 0;
-  background: #F0FFF4;
-  border: 1rpx solid #B7EBC4;
+  background: var(--bg-success);
+  border: 1rpx solid var(--border-success);
   border-radius: 16rpx;
   padding: 24rpx;
 }
 
 .result-title {
   font-size: 24rpx;
-  color: #2D7A3A;
+  color: var(--text-success);
   font-weight: 600;
   margin-bottom: 12rpx;
 }
@@ -133,28 +204,28 @@
 
 .result-key {
   font-size: 24rpx;
-  color: #555;
+  color: var(--text-secondary);
 }
 
 .result-val {
   font-size: 24rpx;
-  color: #1A1A1A;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .result-warn {
-  color: #D97706;
+  color: var(--text-warn);
 }
 
 /* Error card */
 .error-card {
   margin: 24rpx 32rpx 0;
-  background: #FFF5F5;
-  border: 1rpx solid #FCA5A5;
+  background: var(--bg-error);
+  border: 1rpx solid var(--border-error);
   border-radius: 16rpx;
   padding: 24rpx;
   font-size: 24rpx;
-  color: #B91C1C;
+  color: var(--text-error);
   line-height: 1.6;
 }
 
@@ -172,6 +243,6 @@
 }
 
 .btn-ghost {
-  border: 1rpx solid #D0D0D0;
-  color: #888;
+  border: 1rpx solid var(--border-chip);
+  color: var(--text-secondary);
 }

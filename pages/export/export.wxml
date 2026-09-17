@@ -1,14 +1,42 @@
 <!-- pages/export/export.wxml -->
-<navigation-bar title="导出配置" back="{{true}}" color="black" background="#FFFFFF"></navigation-bar>
+<page-meta page-style="{{pageStyle}}" />
+<navigation-bar title="导出配置" back="{{true}}" color="{{navColor}}" background="{{navBg}}">
+  <view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题">
+    <view class="theme-icon theme-icon-{{themeMode}}"></view>
+  </view>
+</navigation-bar>
 
 <scroll-view class="page-scroll" scroll-y type="list">
   <view class="page-body">
 
-    <!-- 已选参数摘要 -->
-    <view class="summary-card">
+    <!-- 已选参数摘要（点击展开购物车） -->
+    <view class="summary-card" bindtap="onToggleCart">
       <view class="summary-count">{{selectedCount}}</view>
       <view class="summary-label">个已选参数</view>
-      <view class="summary-hint">点击下方按钮生成对应 App 的配置文件</view>
+      <view class="summary-hint">{{cartOpen ? '点击收起已选列表' : '点击查看已选参数'}}</view>
+    </view>
+
+    <view wx:if="{{cartOpen}}" class="cart-card">
+      <view class="cart-card-head">
+        <text class="cart-card-title">已选列表</text>
+        <text class="cart-card-clear" catchtap="onClearCart">清空</text>
+      </view>
+      <view wx:if="{{selectedCount === 0}}" class="cart-empty">还没有选择参数</view>
+      <view
+        wx:for="{{selectedPids}}"
+        wx:key="id"
+        class="cart-item"
+      >
+        <view class="cart-item-info">
+          <view class="cart-name-cn">{{item.name_cn}}</view>
+          <view class="cart-name-en">{{item.name_en}}</view>
+          <view class="cart-meta">
+            <text>{{item.ecu_label}}</text>
+            <text wx:if="{{item.unit}}"> · {{item.unit}}</text>
+          </view>
+        </view>
+        <text class="cart-item-remove" catchtap="onRemoveCartItem" data-id="{{item.id}}">移除</text>
+      </view>
     </view>
 
     <!-- 导出目标选择 -->
