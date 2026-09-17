@@ -9,10 +9,6 @@ var PAGE_SHARES = {
     title: 'Elantra N 维护知识库',
     path: '/pages/knowledge1/knowledge1',
   },
-  knowledge2: {
-    title: 'Elantra N 维护知识库补充',
-    path: '/pages/knowledge2/knowledge2',
-  },
   filter: {
     title: 'Elantra N OBD 参数配置',
     path: '/pages/filter/filter',

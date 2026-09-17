@@ -28,7 +28,6 @@
 |---|---|---|
 | 首页 | `pages/index/index` | 工具入口 |
 | 维护知识库 | `pages/knowledge1/knowledge1` | 主要维护资料 |
-| 维护知识库补充 | `pages/knowledge2/knowledge2` | 补充资料页 |
 | OBD 筛选 | `pages/filter/filter` | 按 ECU / 类型筛选 |
 | 参数列表 | `pages/params/params` | 勾选 PID |
 | 导出配置 | `pages/export/export` | 生成并分享 `.csp` |
@@ -71,7 +70,6 @@ app.js / app.json / app.wxss       小程序入口与全局样式
 components/navigation-bar/         自定义导航栏
 pages/index/                       首页
 pages/knowledge1/                  维护知识库
-pages/knowledge2/                  补充知识库
 pages/filter/                      OBD 参数筛选
 pages/params/                      参数选择列表
 pages/export/                      Car Scanner 配置导出

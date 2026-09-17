@@ -38,18 +38,6 @@
       <text class="tool-arrow">›</text>
     </view>
 
-    <view class="tool-card tool-card-spaced" bindtap="onOpenKnowledge2" aria-role="button" aria-label="打开维护知识库 2">
-      <view class="tool-icon">KB2</view>
-      <view class="tool-info">
-        <view class="tool-title-row">
-          <text class="tool-title">维护知识库补充</text>
-          <text class="tool-status">知识库 2</text>
-        </view>
-        <text class="tool-desc">本地速查资料，包含补充零件号与经验记录。</text>
-      </view>
-      <text class="tool-arrow">›</text>
-    </view>
-
     <view class="section-heading section-heading-more">更多工具</view>
     <view class="coming-card">
       <text class="coming-title">持续扩展中</text>

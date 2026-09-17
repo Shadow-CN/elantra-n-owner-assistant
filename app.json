@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/knowledge1/knowledge1",
-    "pages/knowledge2/knowledge2",
     "pages/filter/filter",
     "pages/params/params",
     "pages/export/export"

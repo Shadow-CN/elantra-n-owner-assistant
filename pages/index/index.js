@@ -47,10 +47,6 @@ Page({
     wx.navigateTo({ url: '/pages/knowledge1/knowledge1' })
   },
 
-  onOpenKnowledge2() {
-    wx.navigateTo({ url: '/pages/knowledge2/knowledge2' })
-  },
-
   onShareAppMessage() {
     return shareUtil.appMessage('index')
   },
