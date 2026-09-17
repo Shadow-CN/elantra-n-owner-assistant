@@ -1,6 +1,6 @@
 # Elantra N Owner Assistant
 
-伊兰特 N / Avante N CN7 车主助手微信小程序。
+伊兰特 N / Avante N CN7N 车主助手微信小程序。
 
 这个项目把 Elantra N 车主常用的维护资料、零件信息和 OBD PID 配置工具整理到一个本地小程序里，方便在手机上快速查询，也可以选择 PID 并导出 Car Scanner 可用的 `.csp` 配置文件。
 
