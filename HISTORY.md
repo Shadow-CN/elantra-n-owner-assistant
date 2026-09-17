@@ -11,7 +11,7 @@
 
 微信小程序：把 Elantra N / Avante N CN7 的 OBD PID 内置进去，筛选 → 多选 → 生成本地配置文件。
 
-目标 App：Car Scanner、RaceChrono、OBD Fusion。  
+目标 App：Car Scanner、RaceChrono、LUFI XF。早期考虑过 OBD Fusion，现已取消该方向。
 **第一阶段只做 Car Scanner（`.csp`）**。不用云、不登录、不多车型。
 
 核心约束（立项时主人写死的）：
@@ -157,7 +157,7 @@ Git 仍停在 `85b995a Initial Commit`，后面改动大多未提交。
 - **主页 = 筛选页**，不是参数页
 - 品牌色叫 **N蓝 / N红**，不要再叫 Performance Blue / Active Red 给主人听
 - 对话中文；代码英文标点
-- 不要擅自做 RaceChrono / OBD Fusion / 云 / 改 100 条上限
+- 不要擅自做 RaceChrono / 云 / 改 100 条上限。LUFI XF 必须基于官方 `.INI` 模板，不能从零生成。
 - 不要让主人改 JS；助手改完自己在开发者工具路径上想清楚怎么测
 - 小程序不能当网页在 Chrome 里点按验收
 
@@ -165,7 +165,7 @@ Git 仍停在 `85b995a Initial Commit`，后面改动大多未提交。
 
 ## 6. 未完成
 
-- RaceChrono、OBD Fusion 导出（页面上有「即将支持」）
+- RaceChrono、LUFI XF 导出（LUFI 需要官方模板文件后再开放）
 - 100 条选择上限是否取消或加大
 - 主题在换编辑器之后可能又改过一版（浅色用 N红做强调），以 `utils/theme.js` 当前文件为准
 - 代码从未在 git 上提交过第二笔，换机器记得把未提交文件一起带走

@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/knowledge1/knowledge1",
+    "pages/knowledge/knowledge",
     "pages/filter/filter",
     "pages/params/params",
     "pages/export/export"

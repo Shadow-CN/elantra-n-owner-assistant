@@ -3,9 +3,11 @@ var themeUtil = require('../../utils/theme')
 var shareUtil = require('../../utils/share')
 var { ECU_GROUPS } = require('../../utils/ecuCategories')
 var { PARAM_TYPES } = require('../../utils/paramTypes')
-var { filterPids, getEcuCounts, getTypeCounts, getCartPids } = require('../../utils/pidData')
+var { getAllPids, filterPids, getEcuCounts, getTypeCounts, getCartPids } = require('../../utils/pidData')
 
 var ALL = '_all'
+var MAX_SELECT = 100
+var SEARCH_LIMIT = 20
 
 Page({
   data: {
@@ -15,6 +17,9 @@ Page({
     selectedType: '',
     totalCount: 0,
     selectedCount: 0,
+    searchQuery: '',
+    searchResults: [],
+    searchTotal: 0,
     cartOpen: false,
     cartPids: [],
     cartCount: 0,
@@ -33,6 +38,7 @@ Page({
   onShow() {
     this._applyTheme()
     this._refreshCart()
+    this._refreshSearchResults()
   },
 
   _applyTheme() {
@@ -141,6 +147,100 @@ Page({
       selectedType: newType,
       totalCount: filterPids(this.data.selectedEcu, newType).length,
     })
+  },
+
+  _formatSearchPid(pid, selectedIds) {
+    return {
+      id: String(pid.id),
+      display_name: pid.name_cn || pid.name_en || '',
+      name_cn: pid.name_cn || '',
+      name_en: pid.name_en || '',
+      ecu_label: pid.ecu_label || '',
+      unit: pid.unit || '',
+      checked: selectedIds.has(String(pid.id)),
+    }
+  },
+
+  _searchPids(query) {
+    var q = (query || '').trim().toLowerCase()
+    if (!q) {
+      this.setData({ searchResults: [], searchTotal: 0 })
+      return
+    }
+
+    var selectedIds = new Set((getApp().globalData.selectedIds || []).map(function(id) {
+      return String(id)
+    }))
+    var matches = []
+    var total = 0
+    var all = getAllPids()
+
+    for (var i = 0; i < all.length; i++) {
+      var pid = all[i]
+      var haystack = [
+        pid.id,
+        pid.name_cn,
+        pid.name_en,
+        pid.ecu,
+        pid.ecu_label,
+        pid.unit,
+        pid.cmd,
+        pid.did,
+      ].join(' ').toLowerCase()
+
+      if (haystack.indexOf(q) === -1) continue
+      total += 1
+      if (matches.length < SEARCH_LIMIT) {
+        matches.push(this._formatSearchPid(pid, selectedIds))
+      }
+    }
+
+    this.setData({
+      searchResults: matches,
+      searchTotal: total,
+    })
+  },
+
+  _refreshSearchResults() {
+    if (!this.data.searchQuery) return
+    this._searchPids(this.data.searchQuery)
+  },
+
+  onSearchInput(e) {
+    var query = e.detail.value || ''
+    this.setData({ searchQuery: query })
+    this._searchPids(query)
+  },
+
+  onClearSearch() {
+    this.setData({
+      searchQuery: '',
+      searchResults: [],
+      searchTotal: 0,
+    })
+  },
+
+  onToggleSearchPid(e) {
+    var id = String(e.currentTarget.dataset.id)
+    var app = getApp()
+    var selectedIds = (app.globalData.selectedIds || []).map(function(x) {
+      return String(x)
+    })
+    var index = selectedIds.indexOf(id)
+
+    if (index >= 0) {
+      selectedIds.splice(index, 1)
+    } else {
+      if (selectedIds.length >= MAX_SELECT) {
+        wx.showToast({ title: '最多选择 ' + MAX_SELECT + ' 个参数', icon: 'none' })
+        return
+      }
+      selectedIds.push(id)
+    }
+
+    app.globalData.selectedIds = selectedIds
+    this._refreshCart()
+    this._refreshSearchResults()
   },
 
   _refreshCart(open) {

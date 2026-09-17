@@ -43,8 +43,8 @@ Page({
     wx.navigateTo({ url: '/pages/filter/filter' })
   },
 
-  onOpenKnowledge1() {
-    wx.navigateTo({ url: '/pages/knowledge1/knowledge1' })
+  onOpenKnowledge() {
+    wx.navigateTo({ url: '/pages/knowledge/knowledge' })
   },
 
   onShareAppMessage() {

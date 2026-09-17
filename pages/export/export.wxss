@@ -137,6 +137,10 @@
   opacity: 0.45;
 }
 
+.app-card-info {
+  border-left: 6rpx solid var(--text-tag);
+}
+
 .app-info {
   flex: 1;
 }
@@ -177,6 +181,15 @@
   background: var(--bg-badge);
   padding: 4rpx 16rpx;
   border-radius: 20rpx;
+}
+
+.badge-info {
+  font-size: 20rpx;
+  color: var(--text-tag);
+  background: var(--bg-tag);
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  white-space: nowrap;
 }
 
 /* Result card */

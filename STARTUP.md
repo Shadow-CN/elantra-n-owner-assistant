@@ -111,7 +111,7 @@ readme/avante_n_cn7_custom_pid_conversion_guide_zh.md   公式转换规则
 
 ## 未做 / 不要擅自扩大
 
-- RaceChrono、OBD Fusion：导出页有入口，标了「即将支持」，先别做
+- RaceChrono、LUFI XF：导出页有入口。LUFI 需要官方 `.INI` 模板，不能从零生成二进制 INI。
 - 云同步、登录、多车型
 - 去掉或改 100 条上限：等主人说
 - 不要把 `pages/index` 加回入口

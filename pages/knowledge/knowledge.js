@@ -4,11 +4,17 @@ var shareUtil = require('../../utils/share')
 Page({
   data: {
     navBg: '#FFFFFF', navColor: 'black', themeMode: 'auto', pageStyle: '', query: '', psi: '35', kpa: '241', bar: '2.41',
+    contacts: [
+      { name: 'VP', role: '排气和改装件', wechat: 'R-35111' },
+      { name: '刘玉玺', role: '原厂 / 副厂配件', wechat: 'L17515117183' },
+    ],
     sections: [
       { id: '01', title: '配件信息', subtitle: 'PARTS & PART NUMBERS', cards: [
         { title: '空调滤芯', lines: ['原厂 K 97133 L1100', '马勒 LAK1840 / LA1840', '曼牌 CUK21028 / CUK21032', '博世 0986AF4636', '科德宝 CF105 / BL507', '索菲玛 S4514CA1 / MC3294C'] },
-        { title: '机油滤芯', lines: ['原厂 K 26300 35505N', '马勒 OC523 · 曼牌 W811/80 / W8054', '博世 0986AF0047 / 0986AF1150', '科德宝 OF014 · 汉格斯特 H13WO1', '索菲玛 S6902R / S6902R1'] },
-        { title: '其他零件', lines: ['空气滤芯 28113 IB000 · 火花塞 18857 09085 / NGK SILZKR8H9G', '改款钥匙 95440 IB500 YPN · 旧款钥匙 95440 IB000', '地毯卡子 84270 F2100 · 前翼子板支架 86551 / 86552 AAAA0', 'G70 高压油泵 35320 2GTA1 · 放油螺丝垫片 M14 × 22 × 1.5'] },
+        { title: '机油滤芯', lines: ['原厂 K 26300 35505N', '马勒 OC523 · 曼牌 W811/80 / W8054', '博世 0986AF0047 / 0986AF1150', '科德宝 OF014 · 汉格斯特 H13WO1', '索菲玛 S6902R / S6902R1', 'K&N HP1004 · FRAM FPS9688', '斯巴鲁短机滤 15208 AA100'] },
+        { title: '火花塞', lines: ['原厂 18857 09085', 'NGK SILZKR8H9G / 94595', '改装参考：ILKR9Q7G / 97312', '改装参考：R2556G-9'] },
+        { title: '其他零件', lines: ['空气滤芯 28113 IB000', '改款钥匙 95440 IB500 YPN · 旧款钥匙 95440 IB000', '地毯卡子 84270 F2100 · 前翼子板支架 86551 / 86552 AAAA0', 'G70 高压油泵 35320 2GTA1', '排气垫片 28751 3J000 · 放油螺丝垫片 M14 × 22 × 1.5'] },
+        { title: '地毯卡子参考图', lines: ['地毯卡子 84270 F2100'], image: '/en_knowledge/微信图片_20260901145009130_2.jpg' },
         { title: 'NP 滤芯与雨刮器', lines: ['NP 滤芯：每 10,000 km 清理，每 40,000 km 更换', '雨刮器：24″ / 18″，U 型接口', '贵万江 ¥51 / ¥72，PIAA ¥129'] },
       ] },
       { id: '02', title: '机油', subtitle: 'ENGINE OIL · 0W-30', cards: [
@@ -18,7 +24,8 @@ Page({
       ] },
       { id: '03', title: '变速箱油', subtitle: 'TRANSMISSION FLUID · DCT', cards: [
         { title: '更换信息', lines: ['BHB0005R · 自动变速器油更换', '工时 3.0h × ¥100 = ¥300', '湿式 DCT 需分别更换润滑冷却与液压控制两种油。'] },
-        { title: '原厂件', lines: ['润滑冷却油 04300 2N100 · 液压控制油 04300 2N110', '磁性放油螺丝 00810 17121 · 放油垫片 45323 39000', '加油口螺丝 43121 11000 · 加油垫片 17511 11000', '磁性塞 45324 23100 · 油塞密封垫 21513 23001'] },
+        { title: '原厂件', lines: ['润滑冷却油 04300 2N100 · 液压控制油 04300 2N110', '磁性放油螺丝 00810 17121 · 放油垫片 45323 39000', '加油口螺丝 43121 11000 · 加油垫片 17511 16000', '磁性塞 45324 23100 · 油塞密封垫 21513 23001'] },
+        { title: '电脑版', lines: ['韩版 ECU 39160 2G554 · TCU 954A1 2N530', '美版 ECU 39116 2G561 · TCU 954A1 2N541', '中规 ECU 39160 2G558 · TCU 954A1 2N550'] },
       ] },
       { id: '04', title: '行车记录仪', subtitle: 'DASH CAM', cards: [
         { title: '单录推荐', lines: ['70迈 A810 Pro ¥475，仅 2.4G WiFi', '70迈 M800 Pro ¥519，单录综合推荐', '万奇欧 E1 Pro ¥599，带屏幕', '70迈 X800 ¥899，支持 H.265'] },
@@ -40,10 +47,13 @@ Page({
         { title: '610 · 奥星越秀', lines: ['前盘式制动器摩擦块套件 58101-IBA00：¥1652.05，需订货，工时 ¥500', '空气滤芯原厂 ¥115 · 空调滤芯原厂 ¥425 / 副厂 ¥95，工时 ¥50'] },
       ] },
       { id: '09', title: '维修手册', subtitle: 'SERVICE MANUAL', cards: [
-        { title: '改款前维修手册 · 英文', lines: ['https://www.hexorcism.com/22CN7N/'] },
+        { title: '改款前维修手册 · 英文', lines: ['个人主体小程序不能直接跳外链；点击复制链接后到浏览器打开。', 'https://www.hexorcism.com/22CN7N/'] },
       ] },
       { id: '10', title: '工程模式', subtitle: 'ENGINEERING MODE · 谨慎操作', cards: [
         { title: '进入方法', lines: ['车机开机 → 收音机 → 音量 2 → 设置 / 通用', '更新按钮左侧点 5 下，再点右侧 1 下', '密码：23060663', '仅用于查看，请勿随意修改参数。'] },
+      ] },
+      { id: '11', title: '经验记录', subtitle: 'OWNER NOTES', cards: [
+        { title: '加装法兰异响', lines: ['加装法兰之后轮圈轴头出现“搁楞搁楞”异响，可在法兰合头之间垫一层铜皮处理。'] },
       ] },
     ],
   },
@@ -79,6 +89,6 @@ Page({
   onKpa(e) { var v = Number(e.detail.value); this.setData({ kpa: e.detail.value, psi: isFinite(v) ? (v / 6.894757).toFixed(1) : '', bar: isFinite(v) ? (v / 100).toFixed(2) : '' }) },
   onBar(e) { var v = Number(e.detail.value); this.setData({ bar: e.detail.value, psi: isFinite(v) ? (v * 14.503774).toFixed(1) : '', kpa: isFinite(v) ? (v * 100).toFixed(0) : '' }) },
   onQuickPsi(e) { var v = String(e.currentTarget.dataset.value); this.onPsi({ detail: { value: v } }) },
-  onShareAppMessage() { return shareUtil.appMessage('knowledge1') },
-  onShareTimeline() { return shareUtil.timeline('knowledge1') },
+  onShareAppMessage() { return shareUtil.appMessage('knowledge') },
+  onShareTimeline() { return shareUtil.timeline('knowledge') },
 })

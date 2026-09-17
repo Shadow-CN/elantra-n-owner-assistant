@@ -2,6 +2,8 @@
 
 > 基于 Infocar Profile 614 数据库的字段解释、字节定位、端序与符号处理，以及 Car Scanner、OBD Fusion、RaceChrono、LUFI XF 配置示例
 
+> 当前小程序导出目标为 Car Scanner；LUFI XF 作为后续目标，需要官方 `.INI` 模板后才能生成。OBD Fusion 内容仅作为历史技术参考，不再作为项目支持方向。
+
 **适用车型：** HYUNDAI AVANTE N / ELANTRA N (CN7 N), 2023, 2.0 T-GDI  
 **数据库规模：** 2,680 个参数 / 28 个 ECU / 全部为 UDS Service 0x22  
 **版本：** 1.1 - 2026-08-26

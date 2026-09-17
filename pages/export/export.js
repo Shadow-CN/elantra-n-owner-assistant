@@ -175,6 +175,14 @@ Page({
     )
   },
 
+  onShowLufiInfo() {
+    wx.showModal({
+      title: 'LUFI XF 支持',
+      content: 'LUFI .INI 是二进制模板改写格式，必须基于官方可导入模板生成。当前项目已加入转换规范文档，待补充官方模板后再开放生成。',
+      showCancel: false,
+    })
+  },
+
   onClearSelection() {
     wx.showModal({
       title: '清空选择',

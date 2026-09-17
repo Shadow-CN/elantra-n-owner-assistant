@@ -18,6 +18,18 @@
       <view wx:for="{{item.cards}}" wx:for-item="card" wx:key="title" class="card">
         <text class="card-title">{{card.title}}</text>
         <text wx:for="{{card.lines}}" wx:key="*this" class="line" bindtap="onCopyLine" data-value="{{item}}">{{item}}</text>
+        <image wx:if="{{card.image}}" class="card-image" src="{{card.image}}" mode="widthFix" show-menu-by-longpress="true" />
+      </view>
+    </view>
+    <view class="contacts">
+      <text class="contacts-title">联系人</text>
+      <text class="contacts-sub">点击微信号可复制</text>
+      <view wx:for="{{contacts}}" wx:key="wechat" class="contact-row">
+        <view>
+          <text class="contact-name">{{item.name}}</text>
+          <text class="contact-role">{{item.role}}</text>
+        </view>
+        <text class="contact-wechat" bindtap="onCopyLine" data-value="{{item.wechat}}">{{item.wechat}}</text>
       </view>
     </view>
     <text class="footnote">零件号、价格与工时仅供参考；安全相关项目请以官方维修手册与专业人员复核为准。</text>

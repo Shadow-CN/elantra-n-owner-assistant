@@ -66,14 +66,15 @@
       </view>
     </view>
 
-    <!-- OBD Fusion (未实现) -->
-    <view class="app-card app-card-disabled">
+    <!-- LUFI XF (requires official templates) -->
+    <view class="app-card app-card-info" bindtap="onShowLufiInfo">
       <view class="app-info">
-        <view class="app-name">OBD Fusion</view>
-        <view class="app-desc">即将支持</view>
+        <view class="app-name">LUFI XF</view>
+        <view class="app-desc">基于官方模板生成二进制 .INI</view>
+        <view class="app-desc">已加入转换规范，待补充模板文件</view>
       </view>
       <view class="app-action">
-        <view class="badge-soon">敬请期待</view>
+        <view class="badge-info">需要模板</view>
       </view>
     </view>
 

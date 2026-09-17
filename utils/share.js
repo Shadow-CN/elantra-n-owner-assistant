@@ -5,9 +5,9 @@ var DEFAULT_SHARE = {
 
 var PAGE_SHARES = {
   index: DEFAULT_SHARE,
-  knowledge1: {
+  knowledge: {
     title: 'Elantra N 维护知识库',
-    path: '/pages/knowledge1/knowledge1',
+    path: '/pages/knowledge/knowledge',
   },
   filter: {
     title: 'Elantra N OBD 参数配置',
@@ -18,7 +18,7 @@ var PAGE_SHARES = {
     path: '/pages/params/params',
   },
   export: {
-    title: 'Elantra N Car Scanner 配置导出',
+    title: 'Elantra N OBD 配置导出',
     path: '/pages/export/export',
   },
 }

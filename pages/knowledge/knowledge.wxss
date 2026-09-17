@@ -20,6 +20,15 @@ page { display:flex; flex-direction:column; height:100vh; background:var(--bg-pa
 .card { overflow:hidden; margin-top:16rpx; padding:26rpx 28rpx 6rpx; border:1rpx solid var(--border-default); border-radius:18rpx; background:linear-gradient(180deg,var(--bg-card),var(--bg-page)); box-shadow:0 16rpx 36rpx rgba(0,0,0,.12); }
 .card-title { display:block; padding-bottom:14rpx; color:var(--text-primary); font-size:30rpx; font-weight:700; }
 .line { display:block; padding:16rpx 0; border-top:1rpx solid var(--border-item); color:var(--text-secondary); font-size:23rpx; line-height:1.58; }
+.card-image { display:block; width:100%; margin:18rpx 0 20rpx; border:1rpx solid var(--border-item); border-radius:14rpx; background:var(--bg-page); }
+.contacts { margin-top:58rpx; padding:28rpx; border:1rpx solid var(--border-default); border-radius:18rpx; background:var(--bg-card); }
+.contacts-title { display:block; color:var(--text-primary); font-size:32rpx; font-weight:800; }
+.contacts-sub { display:block; margin-top:6rpx; color:var(--text-hint); font-size:20rpx; }
+.contact-row { display:flex; align-items:center; justify-content:space-between; gap:18rpx; padding:20rpx 0; border-top:1rpx solid var(--border-item); }
+.contact-row:first-of-type { margin-top:16rpx; }
+.contact-name { display:block; color:var(--text-primary); font-size:26rpx; font-weight:700; }
+.contact-role { display:block; margin-top:4rpx; color:var(--text-hint); font-size:21rpx; }
+.contact-wechat { flex:none; max-width:320rpx; padding:8rpx 13rpx; border:1rpx solid var(--border-chip); border-radius:9rpx; color:var(--text-secondary); font-size:22rpx; word-break:break-all; text-align:right; }
 .footnote { display:block; margin-top:58rpx; padding-top:24rpx; border-top:1rpx solid var(--border-item); color:var(--text-hint); font-size:21rpx; line-height:1.7; }
 .converter { margin-top:44rpx; padding:26rpx; border:1rpx solid var(--border-default); border-radius:18rpx; background:var(--bg-card); }
 .converter-title { display:block; color:var(--text-primary); font-size:28rpx; font-weight:700; }.converter-title text{color:var(--text-secondary);font-size:18rpx;}

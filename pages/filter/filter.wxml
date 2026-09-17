@@ -9,6 +9,45 @@
 <scroll-view class="page-scroll" scroll-y>
   <view class="page-body">
 
+    <!-- 搜索 -->
+    <view class="section search-section">
+      <view class="section-title">搜索参数</view>
+      <view class="section-hint">可搜索中文名、英文名、ECU、单位、命令或 DID</view>
+      <view class="search-box">
+        <input
+          class="search-input"
+          value="{{searchQuery}}"
+          bindinput="onSearchInput"
+          placeholder="例如：油温、boost、wheel、rpm"
+          placeholder-class="search-placeholder"
+        />
+        <text wx:if="{{searchQuery}}" class="search-clear" bindtap="onClearSearch">清除</text>
+      </view>
+      <view wx:if="{{searchQuery && searchTotal === 0}}" class="search-empty">没有找到匹配参数</view>
+      <view wx:if="{{searchResults.length > 0}}" class="search-results">
+        <view class="search-summary">
+          找到 {{searchTotal}} 个，显示前 {{searchResults.length}} 个
+        </view>
+        <view
+          wx:for="{{searchResults}}"
+          wx:key="id"
+          class="search-item {{item.checked ? 'search-item-checked' : ''}}"
+          bindtap="onToggleSearchPid"
+          data-id="{{item.id}}"
+        >
+          <view class="search-check">{{item.checked ? '✓' : '+'}}</view>
+          <view class="search-info">
+            <view class="param-name-cn">{{item.display_name}}</view>
+            <view class="param-name-en">{{item.name_en}}</view>
+            <view class="param-meta">
+              <text class="param-ecu">{{item.ecu_label}}</text>
+              <text wx:if="{{item.unit}}" class="param-unit"> · {{item.unit}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
     <!-- ECU 分组 -->
     <view class="section">
       <view class="section-title">部件 / ECU</view>
