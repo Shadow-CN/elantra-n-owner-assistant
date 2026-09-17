@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/knowledge/knowledge",
+    "pages/tire/tire",
     "pages/filter/filter",
     "pages/params/params",
     "pages/export/export"

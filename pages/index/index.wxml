@@ -38,6 +38,18 @@
       <text class="tool-arrow">›</text>
     </view>
 
+    <view class="tool-card tool-card-spaced" bindtap="onOpenTireTool" aria-role="button" aria-label="打开胎压换算器">
+      <view class="tool-icon">PSI</view>
+      <view class="tool-info">
+        <view class="tool-title-row">
+          <text class="tool-title">胎压换算器</text>
+          <text class="tool-status">可用</text>
+        </view>
+        <text class="tool-desc">PSI、kPa、bar 快速换算，附 PS4S HN 胎压参考。</text>
+      </view>
+      <text class="tool-arrow">›</text>
+    </view>
+
     <view class="section-heading section-heading-more">更多工具</view>
     <view class="coming-card">
       <text class="coming-title">持续扩展中</text>

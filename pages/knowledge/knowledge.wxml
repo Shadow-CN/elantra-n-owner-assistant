@@ -12,7 +12,6 @@
       <view class="hero-chips"><text>CN7N</text><text>MAINTENANCE</text><text>LOCAL GUIDE</text></view>
       <input class="search" value="{{query}}" bindinput="onSearch" placeholder="搜索零件、机油、胎压或工程模式" placeholder-class="search-placeholder" />
     </view>
-    <view class="converter"><text class="converter-title">胎压换算器 <text>PSI · KPA · BAR</text></text><view class="converter-row"><view><text>PSI</text><input type="number" value="{{psi}}" bindinput="onPsi" /></view><view><text>kPa</text><input type="number" value="{{kpa}}" bindinput="onKpa" /></view><view><text>bar</text><input type="digit" value="{{bar}}" bindinput="onBar" /></view></view><view class="quick"><text>快速填入</text><text wx:for="{{[32,33,35,36,37]}}" wx:key="*this" bindtap="onQuickPsi" data-value="{{item}}">{{item}}</text></view></view>
     <view wx:for="{{sections}}" wx:key="id" class="section">
       <view class="section-head"><text class="section-id">{{item.id}}</text><view><text class="section-title">{{item.title}}</text><text class="section-sub">{{item.subtitle}}</text></view></view>
       <view wx:for="{{item.cards}}" wx:for-item="card" wx:key="title" class="card">

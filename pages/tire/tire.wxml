@@ -1,0 +1,45 @@
+<page-meta page-style="{{pageStyle}}" />
+<navigation-bar title="胎压换算器" back="{{true}}" color="{{navColor}}" background="{{navBg}}">
+  <view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题">
+    <view class="theme-icon theme-icon-{{themeMode}}"></view>
+  </view>
+</navigation-bar>
+
+<scroll-view class="tire-scroll" scroll-y>
+  <view class="body">
+    <view class="hero">
+      <text class="kicker">PSI · KPA · BAR</text>
+      <view class="hero-title">胎压换算器</view>
+      <text class="hero-desc">输入任意单位，自动换算另外两个单位。适合冷胎设定、热胎记录和赛道日微调。</text>
+    </view>
+
+    <view class="converter">
+      <view class="field">
+        <text class="label">PSI</text>
+        <input type="number" value="{{psi}}" bindinput="onPsi" />
+      </view>
+      <view class="field">
+        <text class="label">kPa</text>
+        <input type="number" value="{{kpa}}" bindinput="onKpa" />
+      </view>
+      <view class="field">
+        <text class="label">bar</text>
+        <input type="digit" value="{{bar}}" bindinput="onBar" />
+      </view>
+    </view>
+
+    <view class="quick">
+      <text class="quick-label">快速填入 PSI</text>
+      <view class="quick-values">
+        <text wx:for="{{quickValues}}" wx:key="*this" bindtap="onQuickPsi" data-value="{{item}}">{{item}}</text>
+      </view>
+    </view>
+
+    <view class="guide">
+      <text class="guide-title">PS4S HN 参考</text>
+      <text class="guide-line">冷胎起始：32-33 PSI / 220.6-227.5 kPa / 2.21-2.28 bar</text>
+      <text class="guide-line">热胎目标：35-37 PSI / 241-255 kPa / 2.41-2.55 bar</text>
+      <text class="guide-line">转向不足：后轮 +2 PSI；转向过度：前轮 +2 PSI</text>
+    </view>
+  </view>
+</scroll-view>

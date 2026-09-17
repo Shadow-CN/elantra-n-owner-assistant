@@ -3,7 +3,7 @@ var shareUtil = require('../../utils/share')
 
 Page({
   data: {
-    navBg: '#FFFFFF', navColor: 'black', themeMode: 'auto', pageStyle: '', query: '', psi: '35', kpa: '241', bar: '2.41',
+    navBg: '#FFFFFF', navColor: 'black', themeMode: 'auto', pageStyle: '', query: '',
     contacts: [
       { name: 'VP', role: '排气和改装件', wechat: 'R-35111' },
       { name: '刘玉玺', role: '原厂 / 副厂配件', wechat: 'L17515117183' },
@@ -85,10 +85,6 @@ Page({
     }).filter(function(section) { return section.cards.length })
     this.setData({ query: query, sections: sections })
   },
-  onPsi(e) { var v = Number(e.detail.value); this.setData({ psi: e.detail.value, kpa: isFinite(v) ? (v * 6.894757).toFixed(0) : '', bar: isFinite(v) ? (v * 0.06894757).toFixed(2) : '' }) },
-  onKpa(e) { var v = Number(e.detail.value); this.setData({ kpa: e.detail.value, psi: isFinite(v) ? (v / 6.894757).toFixed(1) : '', bar: isFinite(v) ? (v / 100).toFixed(2) : '' }) },
-  onBar(e) { var v = Number(e.detail.value); this.setData({ bar: e.detail.value, psi: isFinite(v) ? (v * 14.503774).toFixed(1) : '', kpa: isFinite(v) ? (v * 100).toFixed(0) : '' }) },
-  onQuickPsi(e) { var v = String(e.currentTarget.dataset.value); this.onPsi({ detail: { value: v } }) },
   onShareAppMessage() { return shareUtil.appMessage('knowledge') },
   onShareTimeline() { return shareUtil.timeline('knowledge') },
 })

@@ -60,29 +60,57 @@ Component({
   lifetimes: {
     attached() {
       const rect = wx.getMenuButtonBoundingClientRect()
-      wx.getSystemInfo({
-        success: (res) => {
-          const isAndroid = res.platform === 'android'
-          const isDevtools = res.platform === 'devtools'
-          const useExplicitSafeArea = isDevtools || isAndroid
-          this.setData({
-            ios: !isAndroid,
-            innerPaddingRight: `padding-right: ${res.windowWidth - rect.left}px`,
-            leftWidth: `width: ${res.windowWidth - rect.left }px`,
-            rightInset: `right: ${res.windowWidth - rect.left}px`,
-            safeAreaTop: useExplicitSafeArea ? `height: calc(var(--height) + ${res.safeArea.top}px); padding-top: ${res.safeArea.top}px` : ``,
-            navContentStyle: useExplicitSafeArea
-              ? `top: ${res.safeArea.top}px; height: var(--height);`
-              : `top: env(safe-area-inset-top); height: var(--height);`,
-          })
-        }
-      })
+      this._applySystemLayout(rect)
     },
   },
   /**
    * 组件的方法列表
    */
   methods: {
+    _getSystemLayoutInfo() {
+      if (typeof wx.getWindowInfo === 'function' && typeof wx.getDeviceInfo === 'function') {
+        var windowInfo = wx.getWindowInfo()
+        var deviceInfo = wx.getDeviceInfo()
+        return {
+          platform: deviceInfo.platform || '',
+          windowWidth: windowInfo.windowWidth,
+          safeArea: windowInfo.safeArea || { top: 0 },
+        }
+      }
+
+      try {
+        return wx.getSystemInfoSync()
+      } catch (e) {
+        return {
+          platform: '',
+          windowWidth: 0,
+          safeArea: { top: 0 },
+        }
+      }
+    },
+
+    _applySystemLayout(rect) {
+      var res = this._getSystemLayoutInfo()
+      var safeAreaTop = (res.safeArea && res.safeArea.top) || 0
+      var windowWidth = res.windowWidth || rect.right || 0
+      var rightWidth = windowWidth - rect.left
+      var platform = (res.platform || '').toLowerCase()
+      var isAndroid = platform === 'android'
+      var isDevtools = platform === 'devtools'
+      var useExplicitSafeArea = isDevtools || isAndroid
+
+      this.setData({
+        ios: !isAndroid,
+        innerPaddingRight: `padding-right: ${rightWidth}px`,
+        leftWidth: `width: ${rightWidth}px`,
+        rightInset: `right: ${rightWidth}px`,
+        safeAreaTop: useExplicitSafeArea ? `height: calc(var(--height) + ${safeAreaTop}px); padding-top: ${safeAreaTop}px` : ``,
+        navContentStyle: useExplicitSafeArea
+          ? `top: ${safeAreaTop}px; height: var(--height);`
+          : `top: env(safe-area-inset-top); height: var(--height);`,
+      })
+    },
+
     _showChange(show) {
       const animated = this.data.animated
       let displayStyle = ''

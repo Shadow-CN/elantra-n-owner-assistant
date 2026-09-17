@@ -47,6 +47,10 @@ Page({
     wx.navigateTo({ url: '/pages/knowledge/knowledge' })
   },
 
+  onOpenTireTool() {
+    wx.navigateTo({ url: '/pages/tire/tire' })
+  },
+
   onShareAppMessage() {
     return shareUtil.appMessage('index')
   },

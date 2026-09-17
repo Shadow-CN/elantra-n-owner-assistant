@@ -9,6 +9,10 @@ var PAGE_SHARES = {
     title: 'Elantra N 维护知识库',
     path: '/pages/knowledge/knowledge',
   },
+  tire: {
+    title: 'Elantra N 胎压换算器',
+    path: '/pages/tire/tire',
+  },
   filter: {
     title: 'Elantra N OBD 参数配置',
     path: '/pages/filter/filter',

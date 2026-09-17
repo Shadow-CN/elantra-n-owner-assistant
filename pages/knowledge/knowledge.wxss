@@ -30,7 +30,3 @@ page { display:flex; flex-direction:column; height:100vh; background:var(--bg-pa
 .contact-role { display:block; margin-top:4rpx; color:var(--text-hint); font-size:21rpx; }
 .contact-wechat { flex:none; max-width:320rpx; padding:8rpx 13rpx; border:1rpx solid var(--border-chip); border-radius:9rpx; color:var(--text-secondary); font-size:22rpx; word-break:break-all; text-align:right; }
 .footnote { display:block; margin-top:58rpx; padding-top:24rpx; border-top:1rpx solid var(--border-item); color:var(--text-hint); font-size:21rpx; line-height:1.7; }
-.converter { margin-top:44rpx; padding:26rpx; border:1rpx solid var(--border-default); border-radius:18rpx; background:var(--bg-card); }
-.converter-title { display:block; color:var(--text-primary); font-size:28rpx; font-weight:700; }.converter-title text{color:var(--text-secondary);font-size:18rpx;}
-.converter-row { display:flex; gap:12rpx; margin-top:22rpx; }.converter-row view{flex:1;min-width:0}.converter-row text{display:block;color:var(--text-hint);font-size:19rpx}.converter-row input{height:64rpx;margin-top:8rpx;padding:0 12rpx;border:1rpx solid var(--border-chip);border-radius:10rpx;color:var(--text-primary);font-size:27rpx;}
-.quick { display:flex; flex-wrap:wrap; gap:10rpx; margin-top:18rpx; }.quick text{padding:5rpx 12rpx;border:1rpx solid var(--border-chip);border-radius:8rpx;color:var(--text-secondary);font-size:20rpx;}
