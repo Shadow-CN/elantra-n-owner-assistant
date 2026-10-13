@@ -33,7 +33,7 @@
           <text class="tool-title">OBD 参数配置</text>
           <text class="tool-status">可用</text>
         </view>
-        <text class="tool-desc">筛选原厂 PID，选择参数并导出 Car Scanner 配置；LUFI 支持准备中。</text>
+        <text class="tool-desc">筛选原厂 PID，选择参数并导出 Car Scanner 或 LUFI 配置。</text>
       </view>
       <text class="tool-arrow">›</text>
     </view>

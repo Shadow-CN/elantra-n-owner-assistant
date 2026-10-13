@@ -4,7 +4,7 @@
  * Generates a Car Scanner custom PID file (.csp) from selected PIDs.
  *
  * CSP format: JSON array of PID objects.
- * Field reference derived from sample/custompids.csp:
+ * Field reference derived from docs/examples/car-scanner/custompids.csp:
  *
  *   CMD       - request command (no spaces, uppercase): "2201A5"
  *   HDR       - request header: "7E1"

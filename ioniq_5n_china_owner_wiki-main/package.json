@@ -1,0 +1,25 @@
+{
+  "name": "ioniq_5n_china_owner_wiki",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VitePress site for IONIQ 5 N China owner wiki",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntaresCorn/ioniq_5n_china_owner_wiki.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntaresCorn/ioniq_5n_china_owner_wiki/issues"
+  },
+  "homepage": "https://github.com/AntaresCorn/ioniq_5n_china_owner_wiki#readme",
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
+}

@@ -1,0 +1,68 @@
+:root {
+  /* VitePress 品牌主色，按钮、链接和高亮会优先引用它 */
+  --vp-c-brand: #80a5d1;
+  /* 主色的低饱和浅色版本，适合做柔和背景 */
+  --vp-c-brand-soft: rgba(170, 202, 230, 0.18);
+  /* 轻层级背景色，用于让页面不是纯白底 */
+  --vp-c-bg-soft: #f4f8fc;
+  /* 比 soft 再深一层的替代背景色 */
+  --vp-c-bg-alt: #edf4fb;
+  /* 首页 Hero 标题的文字颜色 */
+  --vp-home-hero-name-color: #80a5d1;
+  /* 关闭 Hero 标题的背景效果，例如渐变字 */
+  --vp-home-hero-name-background: none;
+  /* 关闭 Hero 图像区域的背景图层 */
+  --vp-home-hero-image-background-image: none;
+  /* 保留背景装饰模糊参数，供 Hero 装饰层使用 */
+  --vp-home-hero-image-filter: blur(44px);
+}
+
+.VPContent.is-home {
+  /* 首页主内容区底色 */
+  background: #f6f9fc;
+}
+
+.VPHomeHero .container {
+  /* 作为伪元素装饰块的绝对定位参照物 */
+  position: relative;
+}
+
+.VPHomeHero .container::after {
+  /* 创建一个纯装饰用途的伪元素，不需要真实 DOM */
+  content: '';
+  /* 相对 Hero 容器绝对定位到右上区域 */
+  position: absolute;
+  inset: auto 10% auto auto;
+  width: 300px;
+  height: 200px;
+  /* 使用车图作为装饰图层，并完整显示在容器内 */
+  background-image: url('./ioniq5n.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  /* 不拦截鼠标事件，避免挡住按钮或文字 */
+  pointer-events: none;
+}
+
+.VPHomeHero .name,
+.VPHomeHero .text {
+  /* 轻微拉开字距，让首页标题更干净 */
+  letter-spacing: 0.02em;
+}
+
+.VPSidebar {
+  /* 侧边栏整体背景色 */
+  background: #80a5d1;
+}
+
+@media (max-width: 960px) {
+  .VPNavBarHamburger {
+    /* 隐藏顶部导航里重复的移动端菜单按钮 */
+    display: none !important;
+  }
+
+  .VPHomeHero .container::after {
+    /* 小屏上移除装饰块，避免视觉拥挤 */
+    display: none;
+  }
+}

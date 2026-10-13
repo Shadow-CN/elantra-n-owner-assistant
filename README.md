@@ -2,7 +2,7 @@
 
 伊兰特 N / Avante N CN7N 车主助手微信小程序。
 
-这个项目把 Elantra N 车主常用的维护资料、零件信息和 OBD PID 配置工具整理到一个本地小程序里，方便在手机上快速查询，也可以选择 PID 并导出 Car Scanner 可用的 `.csp` 配置文件。LUFI XF `.INI` 支持已加入转换规范，待补充官方模板后开放生成。
+这个项目把 Elantra N 车主常用的维护资料、零件信息和 OBD PID 配置工具整理到一个本地小程序里，方便在手机上快速查询，也可以选择 PID 并导出 Car Scanner 可用的 `.csp` 配置文件，或导出 LUFI XF 可用的二进制 `.INI` 模板压缩包。
 
 ## 功能
 
@@ -10,7 +10,7 @@
 - OBD 参数筛选：按 ECU 和参数类型筛选内置 PID。
 - 参数选择清单：批量勾选、全选、移除和清空已选参数。
 - Car Scanner 导出：把已选 PID 生成 `custompids.csp` 并调用微信文件分享。
-- LUFI XF 支持准备中：按 `Infocar_CSV_to_LUFI_INI_AI_Guide_CN.md` 规范，需基于官方 `.INI` 模板生成。
+- LUFI XF 导出：把已选且有模板的 PID 打包成 `cn7n_lufi_xf.zip`。
 - 深色模式：支持 `auto / dark / light` 手动切换。
 - 小程序分享：支持分享到聊天和朋友圈。
 
@@ -32,7 +32,7 @@
 | 胎压换算器 | `pages/tire/tire` | PSI / kPa / bar 快速换算 |
 | OBD 筛选 | `pages/filter/filter` | 按 ECU / 类型筛选 |
 | 参数列表 | `pages/params/params` | 勾选 PID |
-| 导出配置 | `pages/export/export` | 生成并分享 `.csp`，展示 LUFI 支持状态 |
+| 导出配置 | `pages/export/export` | 生成并分享 `.csp` / LUFI `.zip` |
 
 ## 如何打开
 
@@ -49,7 +49,7 @@
 
 - `data/avante_n_cn7_profile_614_all_pids.csv`
 - `data/avante_n_cn7_profile_614_all_pids_cn.xlsx`
-- `readme/avante_n_cn7_custom_pid_conversion_guide_zh.md`
+- `docs/obd/reference/avante_n_cn7_custom_pid_conversion_guide_zh.md`
 
 更新 CSV / Excel 后，可运行转换脚本重新生成小程序使用的数据：
 
@@ -75,22 +75,23 @@ pages/knowledge/                   维护知识库
 pages/tire/                        胎压换算器
 pages/filter/                      OBD 参数筛选
 pages/params/                      参数选择列表
-pages/export/                      Car Scanner 配置导出 / LUFI 支持状态
+pages/export/                      Car Scanner 配置导出 / LUFI ZIP 导出
 utils/                             主题、PID 数据、公式解析、导出和分享工具
 data/                              源数据与生成后的 PID 数据
 scripts/                           数据转换脚本
-sample/                            Car Scanner 示例文件
-readme/                            规则说明与参考文档
+assets/                            小程序运行时静态资源
+docs/                              规则说明、历史记录、知识库来源资料
+docs/examples/                     Car Scanner / LUFI 示例文件
 ```
 
 ## 导出说明
 
 导出页会把已选 PID 转换成 Car Scanner 的 `.csp` 文件格式，并通过 `wx.shareFileMessage` 调起微信分享。
 
-LUFI XF 的 `.INI` 不是普通文本 INI，而是基于官方模板改写的二进制文件。项目中的 `Infocar_CSV_to_LUFI_INI_AI_Guide_CN.md` 记录了转换规范；在没有官方可导入模板文件前，不从零生成 LUFI `.INI`。
+LUFI XF 的 `.INI` 不是普通文本 INI，而是基于官方模板改写的二进制文件。当前内置 13 个 CN7N LUFI 模板，来源见 `docs/examples/lufi/avante_n_cn7_lufi_xf_13ch_v4_turbo/02_CN7_CHANNELS`；转换规范见 `docs/obd/Infocar_CSV_to_LUFI_INI_AI_Guide_CN.md`。
 
 `wx.shareFileMessage` 必须在用户点击事件的同步调用栈中触发，所以导出逻辑使用同步写文件再分享。开发者工具中可能出现分享界面不可用或 `shareSkipped`，真机表现以微信实际环境为准。
 
 ## 备注
 
-这个项目主要服务 Elantra N / Avante N CN7 车主个人使用场景。数据、零件号和维护信息请以车辆实际版本、当地经销商和官方维修资料为准。
+这个项目主要服务 Elantra N / Avante N CN7N 车主个人使用场景。数据、零件号和维护信息请以车辆实际版本、当地经销商和官方维修资料为准。

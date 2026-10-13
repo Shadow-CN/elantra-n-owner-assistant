@@ -50,7 +50,7 @@
         <view class="app-desc">支持数值型、位字段（GetBit）</view>
       </view>
       <view class="app-action">
-        <view wx:if="{{generating}}" class="loading-spin">…</view>
+        <view wx:if="{{generating && generatingTarget === 'carScanner'}}" class="loading-spin">…</view>
         <view wx:else class="arrow">→</view>
       </view>
     </view>
@@ -66,15 +66,16 @@
       </view>
     </view>
 
-    <!-- LUFI XF (requires official templates) -->
-    <view class="app-card app-card-info" bindtap="onShowLufiInfo">
+    <!-- LUFI XF -->
+    <view class="app-card" bindtap="onGenerateLufi">
       <view class="app-info">
         <view class="app-name">LUFI XF</view>
         <view class="app-desc">基于官方模板生成二进制 .INI</view>
-        <view class="app-desc">已加入转换规范，待补充模板文件</view>
+        <view class="app-desc">打包已选模板为 cn7n_lufi_xf.zip</view>
       </view>
       <view class="app-action">
-        <view class="badge-info">需要模板</view>
+        <view wx:if="{{generating && generatingTarget === 'lufi'}}" class="loading-spin">…</view>
+        <view wx:else class="arrow">→</view>
       </view>
     </view>
 

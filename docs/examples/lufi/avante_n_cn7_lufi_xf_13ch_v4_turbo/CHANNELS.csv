@@ -1,0 +1,14 @@
+﻿file,display_name,description,request_header,response_header,request,data_pos,data_size,formula,length,checksum,template
+DCTOIL1.INI,DCTOIL1,DCT control oil temperature,7E1,7E9,03 22 01 A5,10,1,DATA * 1 / 1 - 40,129,06AF,OILT4C.INI
+DCTOIL2.INI,DCTOIL2,DCT lubrication oil temperature,7E1,7E9,03 22 01 A5,11,1,DATA * 1 / 1 - 40,129,06B1,OILT4C.INI
+DCTCL1.INI,CLUTCH1,Clutch 1 temperature,7E1,7E9,03 22 01 A4,37,2,DATA * 1 / 1 - 0,146,06BD,CLUTCH1.INI
+DCTCL2.INI,CLUTCH2,Clutch 2 temperature,7E1,7E9,03 22 01 A4,39,2,DATA * 1 / 1 - 0,146,06C0,CLUTCH2.INI
+TPFLP.INI,FLKPA,Front-left tire pressure,7A0,7A8,03 22 C0 0B,8,1,DATA * 137.3 / 100 - 0,129,06DF,OILT4C.INI
+TPFLT.INI,FLT,Front-left tire temperature,7A0,7A8,03 22 C0 0B,9,1,DATA * 1 / 1 - 50,129,0707,OILT4C.INI
+TPFRP.INI,FRKPA,Front-right tire pressure,7A0,7A8,03 22 C0 0B,13,1,DATA * 137.3 / 100 - 0,129,06EA,OILT4C.INI
+TPFRT.INI,FRT,Front-right tire temperature,7A0,7A8,03 22 C0 0B,14,1,DATA * 1 / 1 - 50,129,0712,OILT4C.INI
+TPRLP.INI,RLKPA,Rear-left tire pressure,7A0,7A8,03 22 C0 0B,18,1,DATA * 137.3 / 100 - 0,129,06F5,OILT4C.INI
+TPRLT.INI,RLT,Rear-left tire temperature,7A0,7A8,03 22 C0 0B,19,1,DATA * 1 / 1 - 50,129,071D,OILT4C.INI
+TPRRP.INI,RRKPA,Rear-right tire pressure,7A0,7A8,03 22 C0 0B,23,1,DATA * 137.3 / 100 - 0,129,0700,OILT4C.INI
+TPRRT.INI,RRT,Rear-right tire temperature,7A0,7A8,03 22 C0 0B,24,1,DATA * 1 / 1 - 50,129,0728,OILT4C.INI
+TURBO1.INI,TURBO,Turbo boost gauge pressure (fixed 100 kPa atmospheric reference),7E0,7E8,03 22 E0 21,12,2,DATA * 82.91 / 10000 - 100,128,077D,Audi/TURBO1.INI
