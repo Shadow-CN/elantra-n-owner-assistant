@@ -25,6 +25,10 @@ var PAGE_SHARES = {
     title: 'Elantra N OBD 配置导出',
     path: '/pages/export/export',
   },
+  goods: {
+    title: '车友好物 · 联系方式',
+    path: '/pages/goods/goods',
+  },
 }
 
 function getConfig(pageKey) {

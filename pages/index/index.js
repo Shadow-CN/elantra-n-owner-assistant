@@ -51,6 +51,10 @@ Page({
     wx.navigateTo({ url: '/pages/tire/tire' })
   },
 
+  onOpenGoods() {
+    wx.navigateTo({ url: '/pages/goods/goods' })
+  },
+
   onShareAppMessage() {
     return shareUtil.appMessage('index')
   },

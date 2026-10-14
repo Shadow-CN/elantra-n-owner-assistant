@@ -1,0 +1,22 @@
+<page-meta page-style="{{pageStyle}}" />
+<navigation-bar title="车友好物" back="{{true}}" color="{{navColor}}" background="{{navBg}}">
+  <view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题">
+    <view class="theme-icon theme-icon-{{themeMode}}"></view>
+  </view>
+</navigation-bar>
+<scroll-view class="goods-scroll" scroll-y>
+  <view class="goods-body">
+    <text class="goods-copy-hint">点击微信号即可复制</text>
+    <view wx:for="{{goods}}" wx:key="id" class="goods-item">
+      <view class="goods-category">{{item.category}}</view>
+      <view class="goods-contact">
+        <text class="goods-name">{{item.name}}</text>
+        <view class="goods-wechat" hover-class="goods-wechat-active" bindtap="onCopyWechat" data-id="{{item.id}}" aria-role="button" aria-label="复制{{item.name}}的微信号">
+          <text>{{item.wechat}}</text>
+          <view class="goods-copy-icon" aria-hidden="true"></view>
+        </view>
+      </view>
+      <text wx:if="{{item.note}}" class="goods-note">{{item.note}}</text>
+    </view>
+  </view>
+</scroll-view>

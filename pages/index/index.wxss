@@ -135,3 +135,46 @@ page {
   font-size: 28rpx;
   font-weight: 600;
 }
+
+.credits {
+  margin-top: 36rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid var(--border-item);
+}
+
+.credits .section-heading {
+  font-size: 22rpx;
+  margin-bottom: 10rpx;
+  letter-spacing: 0;
+}
+
+.credits-intro {
+  display: block;
+  margin-bottom: 10rpx;
+  color: var(--text-hint);
+  font-size: 20rpx;
+  line-height: 1.6;
+}
+
+.credits-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24rpx;
+  padding: 8rpx 0;
+  font-size: 22rpx;
+  line-height: 1.6;
+}
+
+.credits-name {
+  flex: 1;
+  min-width: 0;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.credits-role {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  text-align: right;
+}

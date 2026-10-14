@@ -8,8 +8,8 @@
 <scroll-view class="home-scroll" scroll-y>
   <view class="home-body">
     <view class="home-hero">
-      <text class="home-kicker">ELANTRA N / AVANTE N CN7</text>
-      <view class="home-title">车主工具箱</view>
+      <text class="home-kicker">ELANTRA N / IONIQ 5N</text>
+      <view class="home-title">现代N车主助手</view>
       <text class="home-intro">本地运行的实用工具，按需要选择使用。</text>
     </view>
 
@@ -33,7 +33,7 @@
           <text class="tool-title">OBD 参数配置</text>
           <text class="tool-status">可用</text>
         </view>
-        <text class="tool-desc">筛选原厂 PID，选择参数并导出 Car Scanner 或 LUFI 配置。</text>
+        <text class="tool-desc">筛选原厂 PID，选择参数并导出 Car Scanner 或 RaceChrono 配置。</text>
       </view>
       <text class="tool-arrow">›</text>
     </view>
@@ -50,10 +50,43 @@
       <text class="tool-arrow">›</text>
     </view>
 
+    <view class="tool-card tool-card-spaced" bindtap="onOpenGoods" aria-role="button" aria-label="打开车友好物">
+      <view class="tool-icon">好物</view>
+      <view class="tool-info">
+        <view class="tool-title-row">
+          <text class="tool-title">车友好物</text>
+          <text class="tool-status">车友</text>
+        </view>
+        <text class="tool-desc">车机、设计、配件与改装联系信息。</text>
+      </view>
+      <text class="tool-arrow">›</text>
+    </view>
+
     <view class="section-heading section-heading-more">更多工具</view>
     <view class="coming-card">
       <text class="coming-title">持续扩展中</text>
       <text class="coming-desc">新的车主工具会在这里提供入口。</text>
+    </view>
+
+    <view class="credits">
+      <view class="section-heading">鸣谢</view>
+      <text class="credits-intro">感谢以下车友提供数据源、知识资料、技术支持与美术素材，排名不分先后</text>
+      <view class="credits-row">
+        <text class="credits-name">南鸵鸟</text>
+        <text class="credits-role">OBD 数据</text>
+      </view>
+      <view class="credits-row">
+        <text class="credits-name">羊驼 / 红脸 / 一吨98获奖者</text>
+        <text class="credits-role">EN 知识库</text>
+      </view>
+      <view class="credits-row">
+        <text class="credits-name">德国鸡腿堡</text>
+        <text class="credits-role">5N 知识库</text>
+      </view>
+      <view class="credits-row">
+        <text class="credits-name">薯条</text>
+        <text class="credits-role">美术素材</text>
+      </view>
     </view>
   </view>
 </scroll-view>

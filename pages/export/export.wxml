@@ -67,15 +67,13 @@
     </view>
 
     <!-- LUFI XF -->
-    <view class="app-card" bindtap="onGenerateLufi">
+    <view class="app-card app-card-disabled" aria-disabled="true">
       <view class="app-info">
         <view class="app-name">LUFI XF</view>
-        <view class="app-desc">基于官方模板生成二进制 .INI</view>
-        <view class="app-desc">打包已选模板为 cn7n_lufi_xf.zip</view>
+        <view class="app-desc">暂停支持</view>
       </view>
       <view class="app-action">
-        <view wx:if="{{generating && generatingTarget === 'lufi'}}" class="loading-spin">…</view>
-        <view wx:else class="arrow">→</view>
+        <view class="badge-soon">已暂停</view>
       </view>
     </view>
 

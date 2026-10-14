@@ -6,7 +6,8 @@
     "pages/filter/filter",
     "pages/params/params",
     "pages/export/export",
-    "pages/racechrono/racechrono"
+    "pages/racechrono/racechrono",
+    "pages/goods/goods"
   ],
   "darkmode": true,
   "window": {

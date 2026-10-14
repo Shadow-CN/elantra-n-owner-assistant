@@ -3,7 +3,6 @@ var themeUtil = require('../../utils/theme')
 var shareUtil = require('../../utils/share')
 var pidData = require('../../utils/pidData')
 var carScannerExporter = require('../../utils/carScannerExporter')
-var lufiExporter = require('../../utils/lufiExporter')
 var fileHelper = require('../../utils/fileHelper')
 
 Page({
@@ -182,79 +181,7 @@ Page({
   },
 
   onGenerateLufi() {
-    var pids = this.data.selectedPids
-    if (pids.length === 0) {
-      wx.showToast({ title: '请先选择参数', icon: 'none' })
-      return
-    }
-
-    this.setData({ generating: true, generatingTarget: 'lufi', errorMsg: '', lastResult: null })
-
-    var result
-    try {
-      result = lufiExporter.generateZip(pids)
-    } catch (e) {
-      console.error('[export] generate LUFI error:', e)
-      this.setData({
-        generating: false,
-        generatingTarget: '',
-        errorMsg: '生成失败: ' + (e.message || String(e)),
-      })
-      return
-    }
-
-    if (result.total === 0) {
-      this.setData({
-        generating: false,
-        generatingTarget: '',
-        errorMsg: '所选参数没有匹配的 LUFI XF 模板。当前支持 DCT 油温、离合器温度、四轮胎压/胎温、涡轮表压。',
-        lastResult: result,
-      })
-      return
-    }
-
-    var self = this
-    fileHelper.saveBinaryAndShare(
-      result.fileName,
-      result.content,
-      function(info) {
-        self.setData({
-          generating: false,
-          generatingTarget: '',
-          lastResult: result,
-        })
-
-        if (info.shareSkipped) {
-          wx.showModal({
-            title: 'LUFI 文件已生成',
-            content: '已打包 ' + result.total + ' 个 INI 文件。\n' +
-              '分享界面在当前环境不可用，文件已写入：\n' + info.filePath,
-            showCancel: false,
-          })
-        } else if (result.skipped > 0) {
-          wx.showModal({
-            title: 'LUFI 导出完成',
-            content: '已打包 ' + result.total + ' 个 INI 文件。\n' +
-              result.skipped + ' 个所选参数没有 LUFI 模板，已跳过。',
-            showCancel: false,
-          })
-        } else {
-          wx.showToast({ title: 'LUFI 导出 ' + result.total + ' 个', icon: 'success' })
-        }
-      },
-      function(err) {
-        self.setData({
-          generating: false,
-          generatingTarget: '',
-          errorMsg: err.message || 'LUFI 导出失败',
-        })
-        wx.showModal({
-          title: 'LUFI 导出失败',
-          content: err.message || '请检查存储权限',
-          showCancel: false,
-        })
-      }
-    )
+    wx.showToast({ title: 'LUFI 导出暂停支持', icon: 'none' })
   },
 
   onOpenRaceChrono() {
