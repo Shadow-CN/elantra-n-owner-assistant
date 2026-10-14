@@ -6,6 +6,30 @@
   "packOptions": {
     "ignore": [
       {
+        "type": "file",
+        "value": "data/avante_n_cn7_profile_614_all_pids.csv"
+      },
+      {
+        "type": "file",
+        "value": "data/avante_n_cn7_profile_614_all_pids_cn .xlsx"
+      },
+      {
+        "type": "file",
+        "value": "data/avante_n_cn7_parameter_english_chinese.xlsx"
+      },
+      {
+        "type": "folder",
+        "value": "ioniq_5n_china_owner_wiki-main"
+      },
+      {
+        "type": "folder",
+        "value": "scripts"
+      },
+      {
+        "type": "file",
+        "value": "debug.log"
+      },
+      {
         "type": "folder",
         "value": "docs"
       },

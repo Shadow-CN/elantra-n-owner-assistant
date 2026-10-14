@@ -5,7 +5,8 @@
     "pages/tire/tire",
     "pages/filter/filter",
     "pages/params/params",
-    "pages/export/export"
+    "pages/export/export",
+    "pages/racechrono/racechrono"
   ],
   "darkmode": true,
   "window": {

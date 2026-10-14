@@ -55,14 +55,14 @@
       </view>
     </view>
 
-    <!-- RaceChrono (未实现) -->
-    <view class="app-card app-card-disabled">
+    <!-- RaceChrono -->
+    <view class="app-card" bindtap="onOpenRaceChrono">
       <view class="app-info">
         <view class="app-name">RaceChrono</view>
-        <view class="app-desc">即将支持</view>
+        <view class="app-desc">查看参数配置</view>
       </view>
       <view class="app-action">
-        <view class="badge-soon">敬请期待</view>
+        <view class="arrow">→</view>
       </view>
     </view>
 

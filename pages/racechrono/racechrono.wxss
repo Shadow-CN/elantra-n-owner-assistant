@@ -1,0 +1,22 @@
+.rc-page { flex: 1; height: 0; min-height: 0; display: flex; flex-direction: column; background: var(--bg-page); }
+.rc-toolbar { padding: 24rpx 28rpx 16rpx; background: var(--bg-toolbar); flex-shrink: 0; }
+.rc-search { background: var(--bg-page); padding: 16rpx; height: 48rpx; margin-top: 18rpx; font-size: 26rpx; color: var(--text-primary); border-radius: 8rpx; }
+.rc-toolbar-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16rpx; margin-top: 12rpx; color: var(--text-secondary); font-size: 22rpx; }
+.rc-toolbar-bottom text { flex: 1; min-width: 0; }
+.rc-export { margin: 0; font-size: 22rpx; padding: 0 16rpx; color: var(--text-tag); background: var(--bg-card); border-radius: 8rpx; flex-shrink: 0; }
+.rc-scroll { flex: 1; height: 0; min-height: 0; }
+.rc-entry { background: var(--bg-card); margin-bottom: 20rpx; padding-bottom: 20rpx; }
+.rc-entry-head { padding: 24rpx 28rpx; border-bottom: 1rpx solid var(--border-item); }
+.rc-name { font-size: 28rpx; font-weight: 600; color: var(--text-primary); word-break: break-all; }
+.rc-name-en { font-size: 22rpx; color: var(--text-primary); margin-top: 8rpx; word-break: break-all; }
+.rc-meta { font-size: 22rpx; color: var(--text-secondary); margin-top: 8rpx; word-break: break-all; }
+.rc-field { display: flex; align-items: flex-start; gap: 16rpx; padding: 20rpx 28rpx; border-bottom: 1rpx solid var(--border-item); }
+.rc-field-hover { background: var(--bg-tag); }
+.rc-label { width: 190rpx; flex-shrink: 0; color: var(--text-secondary); font-size: 24rpx; line-height: 1.6; }
+.rc-value { flex: 1; min-width: 0; color: var(--text-primary); font-size: 24rpx; line-height: 1.6; word-break: break-all; font-family: monospace; }
+.rc-copy-icon { width: 22rpx; height: 26rpx; border: 2rpx solid var(--text-tag); flex-shrink: 0; position: relative; margin: 6rpx 4rpx 0 0; }
+.rc-copy-icon::before { content: ''; position: absolute; width: 18rpx; height: 22rpx; border-left: 2rpx solid var(--text-tag); border-top: 2rpx solid var(--text-tag); left: -8rpx; top: -8rpx; }
+.rc-rule, .rc-note { font-size: 22rpx; line-height: 1.6; color: var(--text-secondary); padding: 12rpx 28rpx 0; word-break: break-all; }
+.rc-empty { padding: 80rpx 28rpx; text-align: center; color: var(--text-secondary); font-size: 26rpx; }
+.rc-pagination { display: flex; align-items: center; justify-content: center; gap: 40rpx; padding: 16rpx 28rpx calc(16rpx + env(safe-area-inset-bottom)); background: var(--bg-toolbar); color: var(--text-primary); font-size: 24rpx; flex-shrink: 0; }
+.rc-page-button { margin: 0; padding: 0; width: 72rpx; height: 64rpx; line-height: 60rpx; border-radius: 8rpx; font-size: 36rpx; background: var(--bg-card); color: var(--text-tag); }

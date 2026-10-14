@@ -1,9 +1,15 @@
 var themeUtil = require('../../utils/theme')
 var shareUtil = require('../../utils/share')
+var knowledge5n = require('../../data/knowledge5n')
+var fileHelper = require('../../utils/fileHelper')
 
 Page({
   data: {
     navBg: '#FFFFFF', navColor: 'black', themeMode: 'auto', pageStyle: '', query: '',
+    model: 'elantra', modelName: '伊兰特 N', modelEnglish: 'ELANTRA N · CN7N',
+    modelDescription: '配件、保养规格、胎压与维护资料。',
+    searchPlaceholder: '搜索零件、机油、胎压或工程模式', scrollTop: 0,
+    sourceNote: '零件号、价格与工时仅供参考；安全相关项目请以官方维修手册与专业人员复核为准。',
     contacts: [
       { name: 'VP', role: '排气和改装件', wechat: 'R-35111' },
       { name: '刘玉玺', role: '原厂 / 副厂配件', wechat: 'L17515117183' },
@@ -58,7 +64,12 @@ Page({
     ],
   },
 
-  onLoad() { shareUtil.enableShareMenu(); this._allSections = this.data.sections; this._applyTheme() },
+  onLoad(options) {
+    shareUtil.enableShareMenu()
+    this._elantra = { sections: this.data.sections, contacts: this.data.contacts }
+    this._setModel(options && options.model === '5n' ? '5n' : 'elantra')
+    this._applyTheme()
+  },
   onShow() { this._applyTheme() },
   _applyTheme() {
     var app = getApp()
@@ -74,17 +85,49 @@ Page({
     this._applyTheme()
   },
   onCopyLine(e) { wx.setClipboardData({ data: e.currentTarget.dataset.value }) },
+  onModelChange(e) { this._setModel(e.currentTarget.dataset.model) },
+  _setModel(model) {
+    var is5n = model === '5n'
+    var content = is5n ? knowledge5n : this._elantra
+    this._allSections = content.sections
+    this.setData({
+      model: model, sections: content.sections, contacts: content.contacts, query: '',
+      modelName: is5n ? knowledge5n.name : '伊兰特 N',
+      modelEnglish: is5n ? knowledge5n.english : 'ELANTRA N · CN7N',
+      modelDescription: is5n ? knowledge5n.description : '配件、保养规格、胎压与维护资料。',
+      searchPlaceholder: is5n ? knowledge5n.placeholder : '搜索零件、机油、胎压或工程模式',
+      sourceNote: is5n ? knowledge5n.source : '零件号、价格与工时仅供参考；安全相关项目请以官方维修手册与专业人员复核为准。',
+      scrollTop: this.data.scrollTop === 0 ? 1 : 0,
+    })
+  },
+  onPreviewImage(e) {
+    var src = e.currentTarget.dataset.src
+    wx.previewImage({ current: src, urls: [src] })
+  },
+  onShareResource(e) {
+    var resource = e.currentTarget.dataset
+    try {
+      var content = wx.getFileSystemManager().readFileSync(resource.path.replace(/^\//, ''))
+      fileHelper.saveBinaryAndShare(resource.name, content, function(info) {
+        if (info.shareSkipped) wx.showModal({ title: '文件已保存', content: info.filePath, showCancel: false })
+      }, function(err) { wx.showToast({ title: err.message, icon: 'none' }) })
+    } catch (err) {
+      wx.showToast({ title: '文件读取失败，请重试', icon: 'none' })
+    }
+  },
   onSearch(e) {
     var query = (e.detail.value || '').trim().toLowerCase()
     var source = this._allSections || []
     var sections = !query ? source : source.map(function(section) {
       var cards = section.cards.filter(function(card) {
-        return (card.title + ' ' + card.lines.join(' ')).toLowerCase().indexOf(query) !== -1
+        return (section.title + ' ' + card.title + ' ' + card.lines.join(' ')).toLowerCase().indexOf(query) !== -1
       })
       return Object.assign({}, section, { cards: cards })
     }).filter(function(section) { return section.cards.length })
     this.setData({ query: query, sections: sections })
   },
-  onShareAppMessage() { return shareUtil.appMessage('knowledge') },
-  onShareTimeline() { return shareUtil.timeline('knowledge') },
+  onShareAppMessage() {
+    return { title: this.data.modelName + ' 维护知识库', path: '/pages/knowledge/knowledge?model=' + this.data.model }
+  },
+  onShareTimeline() { return { title: this.data.modelName + ' 维护知识库', query: 'model=' + this.data.model } },
 })

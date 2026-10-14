@@ -257,6 +257,10 @@ Page({
     )
   },
 
+  onOpenRaceChrono() {
+    wx.navigateTo({ url: '/pages/racechrono/racechrono' })
+  },
+
   onClearSelection() {
     wx.showModal({
       title: '清空选择',

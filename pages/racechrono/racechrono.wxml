@@ -1,0 +1,42 @@
+<page-meta page-style="{{pageStyle}}" />
+<navigation-bar style="flex-shrink:0;" title="RaceChrono 配置" back="{{true}}" color="{{navColor}}" background="{{navBg}}">
+  <view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题">
+    <view class="theme-icon theme-icon-{{themeMode}}"></view>
+  </view>
+</navigation-bar>
+<view class="rc-page">
+  <view class="rc-toolbar">
+    <input class="rc-search" placeholder="搜索名称、ID、ECU 或 PID" value="{{query}}" bindinput="onSearch" />
+    <view class="rc-toolbar-bottom">
+      <text>{{total}} 个参数 · 点击每一行即复制</text>
+      <button class="rc-export" bindtap="onShareFile" disabled="{{selectedCount === 0}}">导出清单</button>
+    </view>
+  </view>
+  <scroll-view class="rc-scroll" scroll-y scroll-top="{{scrollTop}}">
+    <view wx:if="{{total === 0}}" class="rc-empty">{{selectedCount === 0 ? '尚未选择参数' : '没有匹配的参数'}}</view>
+    <view wx:for="{{entries}}" wx:for-item="entry" wx:for-index="entryIndex" wx:key="id" class="rc-entry">
+      <view class="rc-entry-head">
+        <view class="rc-name">{{entry.name}}</view>
+        <view class="rc-name-en">{{entry.nameEn}}</view>
+        <view class="rc-meta">{{entry.id}} · {{entry.ecu}} · {{entry.verified ? '实车验证示例' : '待实测'}}</view>
+        <view class="rc-meta">公式输出：{{entry.inputUnit}} · 配置组 {{entry.profileGroup}}</view>
+        <view class="rc-meta">RC 标识：{{entry.channelIdentifier}}</view>
+        <view class="rc-meta">{{entry.mappingBasis}}</view>
+      </view>
+      <view wx:for="{{entry.fields}}" wx:for-item="field" wx:for-index="fieldIndex" wx:key="label"
+        class="rc-field" hover-class="rc-field-hover" bindtap="onCopy" data-entry="{{entryIndex}}" data-field="{{fieldIndex}}" aria-role="button" aria-label="复制{{field.label}}">
+        <text class="rc-label">{{field.label}}</text>
+        <text class="rc-value">{{field.value}}</text>
+        <view class="rc-copy-icon" aria-hidden="true"></view>
+      </view>
+      <view class="rc-rule">源规则：{{entry.sourceRule}}</view>
+      <view wx:for="{{entry.notes}}" wx:key="*this" class="rc-note">{{item}}</view>
+    </view>
+    <view wx:for="{{errors}}" wx:key="id" class="rc-note">{{item.id}} {{item.name}}：{{item.reason}}</view>
+  </scroll-view>
+  <view class="rc-pagination">
+    <button class="rc-page-button" bindtap="onPrevious" disabled="{{page === 1}}" aria-label="上一页">‹</button>
+    <text>{{page}} / {{pageCount}}</text>
+    <button class="rc-page-button" bindtap="onNext" disabled="{{page === pageCount}}" aria-label="下一页">›</button>
+  </view>
+</view>

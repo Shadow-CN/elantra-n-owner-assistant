@@ -2,25 +2,30 @@
 <navigation-bar title="维护知识库" back="{{true}}" color="{{navColor}}" background="{{navBg}}">
   <view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题"><view class="theme-icon theme-icon-{{themeMode}}"></view></view>
 </navigation-bar>
-<scroll-view class="knowledge-scroll" scroll-y>
+<view class="model-tabs">
+  <view class="model-tab {{model === 'elantra' ? 'model-tab-active' : ''}}" bindtap="onModelChange" data-model="elantra" aria-role="button" aria-label="伊兰特 N 知识库">伊兰特 N</view>
+  <view class="model-tab {{model === '5n' ? 'model-tab-active' : ''}}" bindtap="onModelChange" data-model="5n" aria-role="button" aria-label="IONIQ 5 N 知识库">IONIQ 5 N</view>
+</view>
+<scroll-view class="knowledge-scroll" scroll-y scroll-top="{{scrollTop}}">
   <view class="body">
     <view class="hero">
-      <text class="ghost">N</text>
-      <text class="kicker">ELANTRA N · CN7N</text>
-      <view class="hero-title">维护<text>知识库</text></view>
-      <text class="hero-desc">配件号、保养规格、胎压与维护资料速查。点击任意资料行可复制。</text>
-      <view class="hero-chips"><text>CN7N</text><text>MAINTENANCE</text><text>LOCAL GUIDE</text></view>
-      <input class="search" value="{{query}}" bindinput="onSearch" placeholder="搜索零件、机油、胎压或工程模式" placeholder-class="search-placeholder" />
+      <text class="kicker">{{modelEnglish}}</text>
+      <view class="hero-title">{{modelName}}</view>
+      <text class="hero-desc">{{modelDescription}}</text>
+      <input class="search" value="{{query}}" bindinput="onSearch" placeholder="{{searchPlaceholder}}" placeholder-class="search-placeholder" />
     </view>
     <view wx:for="{{sections}}" wx:key="id" class="section">
       <view class="section-head"><text class="section-id">{{item.id}}</text><view><text class="section-title">{{item.title}}</text><text class="section-sub">{{item.subtitle}}</text></view></view>
       <view wx:for="{{item.cards}}" wx:for-item="card" wx:key="title" class="card">
         <text class="card-title">{{card.title}}</text>
         <text wx:for="{{card.lines}}" wx:key="*this" class="line" bindtap="onCopyLine" data-value="{{item}}">{{item}}</text>
-        <image wx:if="{{card.image}}" class="card-image" src="{{card.image}}" mode="widthFix" show-menu-by-longpress="true" />
+        <image wx:if="{{card.image}}" class="card-image" src="{{card.image}}" mode="widthFix" show-menu-by-longpress="true" bindtap="onPreviewImage" data-src="{{card.image}}" />
+        <image wx:for="{{card.images}}" wx:for-item="src" wx:key="*this" class="card-image" src="{{src}}" mode="widthFix" show-menu-by-longpress="true" bindtap="onPreviewImage" data-src="{{src}}" />
+        <button wx:if="{{card.resource}}" class="resource-button" bindtap="onShareResource" data-path="{{card.resource.path}}" data-name="{{card.resource.name}}">分享 RC 配置文件</button>
       </view>
     </view>
-    <view class="contacts">
+    <view wx:if="{{sections.length === 0}}" class="empty-result">没有找到相关资料</view>
+    <view wx:if="{{contacts.length > 0}}" class="contacts">
       <text class="contacts-title">联系人</text>
       <text class="contacts-sub">点击微信号可复制</text>
       <view wx:for="{{contacts}}" wx:key="wechat" class="contact-row">
@@ -31,6 +36,6 @@
         <text class="contact-wechat" bindtap="onCopyLine" data-value="{{item.wechat}}">{{item.wechat}}</text>
       </view>
     </view>
-    <text class="footnote">零件号、价格与工时仅供参考；安全相关项目请以官方维修手册与专业人员复核为准。</text>
+    <text class="footnote">{{sourceNote}}</text>
   </view>
 </scroll-view>
