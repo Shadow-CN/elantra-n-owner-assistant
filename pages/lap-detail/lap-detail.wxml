@@ -1,0 +1,18 @@
+<page-meta page-style="{{pageStyle}}" />
+<navigation-bar title="成绩详情" back="{{true}}" color="{{navColor}}" background="{{navBg}}"><view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题"><view class="theme-icon theme-icon-{{themeMode}}"></view></view></navigation-bar>
+<scroll-view scroll-y class="scroll"><view class="body">
+  <view wx:if="{{loading}}" class="empty">正在加载成绩…</view>
+  <view wx:elif="{{error}}" class="card"><text class="hint">{{error}}</text><button bindtap="load">重新加载</button></view>
+  <block wx:elif="{{detail}}">
+    <view class="card media-section">
+      <view class="section-title">圈速视频</view>
+      <video wx:if="{{videoUrl}}" src="{{videoUrl}}" controls object-fit="contain" binderror="videoError" />
+      <text wx:if="{{videoLoading}}" class="hint">正在获取视频…</text>
+      <view wx:if="{{videoError}}"><text class="hint">{{videoError}}</text><button size="mini" bindtap="retryVideo" disabled="{{videoLoading}}">重新加载视频</button></view>
+      <view wx:if="{{detail.videoLink}}" class="external-video"><text class="label">视频链接</text><text class="video-link-text" selectable>{{detail.videoLink}}</text><view class="link-actions"><button wx:if="{{videoLinkCanOpen}}" size="mini" bindtap="openVideoLink">打开视频链接</button><button size="mini" bindtap="copyVideoLink">复制视频链接</button></view><text class="hint">{{videoLinkCanOpen?'将跳转到对应小程序，能否播放由对方平台决定。':'此类分享链接暂不支持直接跳转，复制后可到对应平台或浏览器打开。'}}</text></view>
+      <text wx:if="{{!detail.hasVideo && !detail.videoLink}}" class="hint">车主未提供视频或视频链接</text>
+    </view>
+    <view class="card basic-section"><view class="section-title">基础信息</view><view class="lap-time">{{detail.lap}}</view><text class="hint">车友自报成绩</text><view class="info-row" wx:for="{{basicFields}}" wx:key="label"><text class="label">{{item.label}}</text><text class="value" selectable>{{item.value}}</text></view></view>
+    <view class="card modification-section"><view class="section-title">改装项</view><text wx:if="{{detail.modifications==='原厂'}}" class="hint">原厂车辆</text><block wx:else><text wx:if="{{!modFields.length}}" class="hint">车主标记为改装，未填写具体改装信息</text><view class="info-row" wx:for="{{modFields}}" wx:key="label"><text class="label">{{item.label}}</text><text class="value" selectable>{{item.value}}</text></view></block></view>
+  </block>
+</view></scroll-view>

@@ -12,8 +12,8 @@
  *
  * Brand colors:
  *   N蓝  Performance Blue  #aacae6  (dark-theme text, chips, selected states)
- *   N红  Active Red        #e63312  (light-theme text, chips, selected states)
- */
+ *   N红  Active Red        #e63312  (light-theme text, chips, selected states)/*  */
+
 
 var N_BLUE = '#aacae6'
 var N_RED = '#e63312'

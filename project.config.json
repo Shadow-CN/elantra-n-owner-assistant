@@ -6,44 +6,76 @@
   "packOptions": {
     "ignore": [
       {
-        "type": "file",
-        "value": "data/avante_n_cn7_profile_614_all_pids.csv"
+        "value": "venv",
+        "type": "folder"
       },
       {
-        "type": "file",
-        "value": "data/avante_n_cn7_profile_614_all_pids_cn .xlsx"
+        "value": ".vscode",
+        "type": "folder"
       },
       {
-        "type": "file",
-        "value": "data/avante_n_cn7_parameter_english_chinese.xlsx"
+        "value": ".git",
+        "type": "folder"
       },
       {
-        "type": "folder",
-        "value": "ioniq_5n_china_owner_wiki-main"
+        "value": ".gitignore",
+        "type": "file"
       },
       {
-        "type": "folder",
-        "value": "scripts"
+        "value": "data/avante_n_cn7_profile_614_all_pids.csv",
+        "type": "file"
       },
       {
-        "type": "file",
-        "value": "debug.log"
+        "value": "data/avante_n_cn7_profile_614_all_pids_cn .xlsx",
+        "type": "file"
       },
       {
-        "type": "folder",
-        "value": "docs"
+        "value": "data/avante_n_cn7_parameter_english_chinese.xlsx",
+        "type": "file"
       },
       {
-        "type": "folder",
-        "value": ".cursor"
+        "value": "ioniq_5n_china_owner_wiki-main",
+        "type": "folder"
       },
       {
-        "type": "folder",
-        "value": ".idea"
+        "value": "scripts",
+        "type": "folder"
       },
       {
-        "type": "file",
-        "value": "README.md"
+        "value": "debug.log",
+        "type": "file"
+      },
+      {
+        "value": "docs",
+        "type": "folder"
+      },
+      {
+        "value": ".cursor",
+        "type": "folder"
+      },
+      {
+        "value": ".idea",
+        "type": "folder"
+      },
+      {
+        "value": "README.md",
+        "type": "file"
+      },
+      {
+        "value": "cloudfunctions",
+        "type": "folder"
+      },
+      {
+        "value": "HANDOFF.md",
+        "type": "file"
+      },
+      {
+        "value": "project.private.config.json",
+        "type": "file"
+      },
+      {
+        "value": "node_modules",
+        "type": "folder"
       }
     ],
     "include": []
@@ -66,7 +98,7 @@
     "packNpmManually": false,
     "minifyWXSS": true,
     "localPlugins": false,
-    "condition": false,
+    "condition": true,
     "compileWorklet": false,
     "disableUseStrict": false,
     "minifyWXML": true,
@@ -77,5 +109,9 @@
     "tabIndent": "auto",
     "tabSize": 2
   },
-  "simulatorPluginLibVersion": {}
+  "simulatorPluginLibVersion": {
+    "wxext14566970e7e9f62": "2.27.3"
+  },
+  "cloudfunctionRoot": "cloudfunctions/",
+  "projectArchitecture": "multiPlatform"
 }

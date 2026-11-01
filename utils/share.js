@@ -7,10 +7,14 @@ var PAGE_SHARES = {
   index: DEFAULT_SHARE,
   knowledge: {
     title: 'Elantra N 维护知识库',
-    path: '/pages/knowledge/knowledge',
+    path: '/packages/knowledge/knowledge/knowledge',
+  },
+  tools: {
+    title: 'Elantra N 实用工具',
+    path: '/pages/tools/tools',
   },
   tire: {
-    title: 'Elantra N 胎压换算器',
+    title: 'Elantra N 压力换算',
     path: '/pages/tire/tire',
   },
   filter: {

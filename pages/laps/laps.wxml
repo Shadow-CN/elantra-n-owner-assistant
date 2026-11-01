@@ -1,0 +1,54 @@
+<page-meta page-style="{{pageStyle}}" />
+<navigation-bar title="赛道圈速榜" back="{{true}}" color="{{navColor}}" background="{{navBg}}">
+  <view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题"><view class="theme-icon theme-icon-{{themeMode}}"></view></view>
+</navigation-bar>
+<scroll-view scroll-y class="scroll" scroll-into-view="{{scrollTarget}}" scroll-with-animation><view class="body">
+  <view class="hero"><text class="kicker">N / LAP BOARD</text><view class="title">每一圈，都有记录。</view><text class="hint">车友自报成绩 · 视频选填 · 提交即上榜</text></view>
+  <view class="tabs"><button size="mini" data-tab="board" bindtap="changeTab" disabled="{{busy}}" class="{{tab==='board'?'active':''}}">圈速榜</button><button size="mini" data-tab="submit" bindtap="changeTab" disabled="{{busy}}" class="{{tab==='submit'?'active':''}}">提交成绩</button><button size="mini" data-tab="mine" bindtap="changeTab" disabled="{{busy}}" class="{{tab==='mine'?'active':''}}">我的成绩</button></view>
+  <view class="card" wx:if="{{tab!=='mine'}}">
+    <text class="hint" wx:if="{{locationHint}}">{{locationHint}}</text>
+    <text class="label">地区</text><picker range="{{regions}}" value="{{region}}" bindchange="regionChange" disabled="{{busy}}"><view class="picker">{{regions[region]}} ›</view></picker>
+    <text class="label">赛道</text><picker range="{{trackOptions}}" value="{{regionTrack}}" bindchange="trackChange" disabled="{{busy}}"><view class="picker">{{tracks[track]}} ›</view></picker>
+  </view>
+  <block wx:if="{{tab!=='submit'}}">
+    <view class="hint">{{tab==='mine'?'你的全部成绩，按圈速排序':'当前赛道的全部成绩，按圈速排序'}}</view>
+    <view class="card error" wx:if="{{error}}"><text>{{error}}</text><button size="mini" bindtap="search">重新加载</button></view>
+    <view class="empty" wx:if="{{!loading && !error && !rows.length}}">还没有成绩，来记录第一圈。</view>
+    <view class="card row" wx:for="{{rows}}" wx:key="_id" data-id="{{item._id}}" bindtap="openDetail"><text class="rank">{{item.rank}}</text><view class="row-main"><view class="time">{{item.lap}}</view><view>{{item.driver}} · {{item.vehicle}}</view><text class="hint">{{item.date}} · {{item.temperatureLabel}} · {{item.condition}}</text><text class="hint" wx:if="{{tab==='mine'}}">{{item.trackName}}</text><text wx:if="{{item.modifications==='改装'}}" class="mod-badge">改装</text><text wx:else class="stock-badge">原厂</text></view><text>›</text><view wx:if="{{tab==='mine'}}" class="row-actions"><button size="mini" data-id="{{item._id}}" catchtap="edit" disabled="{{busy}}">编辑</button><button size="mini" data-id="{{item._id}}" catchtap="remove" disabled="{{busy}}">删除</button></view></view>
+    <view class="empty" wx:if="{{loading}}">正在加载…</view><button wx:if="{{hasMore && !error}}" bindtap="more" loading="{{loading}}" disabled="{{loading}}">加载更多</button>
+  </block>
+  <view id="lap-form" class="card form" wx:else><view wx:if="{{editId}}" class="hint">正在编辑成绩 <button size="mini" bindtap="cancelEdit" disabled="{{busy}}">取消编辑</button></view>
+    <text class="label">车手昵称 *</text><input type="nickname" data-field="driver" value="{{form.driver}}" bindinput="formInput" bindblur="formInput" maxlength="30" disabled="{{busy}}" placeholder="可选择微信昵称，也可自行填写" /><text class="hint">点击输入框，可在键盘上选择“用微信昵称”。</text>
+    <text class="label">日期 *</text><picker mode="date" value="{{form.date}}" end="{{today}}" data-field="date" bindchange="formInput" disabled="{{busy}}"><view class="picker">{{form.date}} ›</view></picker>
+    <text class="label">气温（℃，选填）</text><input data-field="temperature" value="{{form.temperature}}" bindinput="formInput" maxlength="6" disabled="{{busy}}" placeholder="例如：23 或 -2" />
+    <text class="label">圈速 *</text>
+    <view class="lap-inputs">
+      <view class="lap-part"><view class="lap-input-frame"><input type="number" data-part="minutes" value="{{lapParts.minutes}}" bindinput="lapPartInput" maxlength="2" disabled="{{busy}}" placeholder="00" aria-label="圈速分钟" /></view><text class="lap-unit">分</text></view>
+      <text class="lap-separator">:</text>
+      <view class="lap-part"><view class="lap-input-frame"><input type="number" data-part="seconds" value="{{lapParts.seconds}}" bindinput="lapPartInput" maxlength="2" disabled="{{busy}}" placeholder="00" aria-label="圈速秒数，0至59" /></view><text class="lap-unit">秒</text></view>
+      <text class="lap-separator">.</text>
+      <view class="lap-part lap-milliseconds"><view class="lap-input-frame"><input type="number" data-part="milliseconds" value="{{lapParts.milliseconds}}" bindinput="lapPartInput" maxlength="3" disabled="{{busy}}" placeholder="000" aria-label="圈速毫秒，可留空" /></view><text class="lap-unit">毫秒（选填）</text></view>
+    </view>
+    <text class="hint">只填数字，毫秒留空按 000 记录。</text><text class="lap-input-error" wx:if="{{lapError}}">{{lapError}}</text>
+    <text class="label">车辆名称 *</text><input data-field="vehicle" value="{{form.vehicle}}" bindinput="formInput" maxlength="60" disabled="{{busy}}" placeholder="例如：伊兰特 N 2024" />
+    <text class="label">路面条件 *</text><picker range="{{conditions}}" bindchange="conditionChange" disabled="{{busy}}"><view class="picker">{{form.condition}} ›</view></picker>
+    <text class="label">车辆状态 *</text><picker range="{{modTypes}}" value="{{form.modifications==='改装'?1:0}}" bindchange="modTypeChange" disabled="{{busy}}"><view class="picker">{{form.modifications}} ›</view></picker>
+    <view class="mod-form" wx:if="{{form.modifications==='改装'}}"><text class="hint">以下均为选填，可以只标记改装，不填写详情。</text><view wx:for="{{modFields}}" wx:key="key"><text class="label">{{item.label}}（选填）</text><input data-field="{{item.key}}" value="{{form.modificationDetails[item.key]}}" placeholder="{{item.key==='wheelSize'?'19×9J ET43':''}}" bindinput="modInput" maxlength="200" disabled="{{busy}}" /></view><view wx:if="{{form.modificationDetails.brakes}}"><text class="label">刹车（旧记录，选填）</text><input data-field="brakes" value="{{form.modificationDetails.brakes}}" bindinput="modInput" maxlength="200" disabled="{{busy}}" /><text class="hint">原有信息会保留，也可整理到刹车卡钳、刹车皮两项后清空这里。</text></view></view>
+    <text class="label">圈速视频（选填）</text><button bindtap="choose" disabled="{{busy}}">{{video?'重新选择视频':(editId && existingVideo && !removeVideo?'更换视频':'从相册选择 / 拍摄视频')}}</button><text class="hint" wx:if="{{video}}">已选择 {{video.sizeLabel}} · 原视频上传</text>
+    <text class="hint" wx:if="{{editId && existingVideo && !video && !removeVideo}}">保留原视频</text><button size="mini" wx:if="{{video || (existingVideo && !removeVideo)}}" bindtap="clearVideo" disabled="{{busy}}">{{video?'取消所选视频':'移除视频'}}</button><text class="hint" wx:if="{{removeVideo}}">本次保存不附带视频</text>
+    <text class="label">视频链接（选填）</text><textarea class="video-link-input" data-field="videoLink" value="{{form.videoLink}}" bindinput="formInput" maxlength="4096" disabled="{{busy}}" placeholder="粘贴视频网页链接、微信小程序链接或分享文案" /><text class="hint">已有社交平台视频可直接填链接，无需重复上传。只填链接或上传视频均可，也可全部跳过。</text>
+    <progress wx:if="{{busy && video}}" percent="{{progress}}" show-info activeColor="#aacae6" /><text class="hint" wx:if="{{busy}}">{{!video || progress===100?'正在保存成绩，请稍候':'上传中，请保持小程序在前台'}}</text>
+    <text class="hint">提交后，填写的成绩、车辆信息、视频和视频链接将公开展示。请确认视频与成绩一致。</text>
+    <button class="primary" bindtap="submit" disabled="{{busy}}" loading="{{busy}}">{{busy?'正在保存':(editId?'保存修改':'提交并上榜')}}</button>
+  </view>
+</view></scroll-view>
+
+<view wx:if="{{showPrivacy}}" class="privacy-mask" catchtouchmove="stopPrivacyTap">
+  <view class="privacy-card">
+    <view class="privacy-title">{{privacyTitle}}</view>
+    <view class="privacy-copy">{{privacyCopy}}</view>
+    <button class="privacy-link" bindtap="openPrivacy">阅读{{privacyContractName}}</button>
+    <button class="primary" id="agree-lap-media-privacy" open-type="agreePrivacyAuthorization" bindagreeprivacyauthorization="agreePrivacy">{{privacyAgreeText}}</button>
+    <button bindtap="declinePrivacy">暂不使用</button>
+  </view>
+</view>

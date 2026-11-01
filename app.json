@@ -1,14 +1,30 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/tools/tools",
     "pages/knowledge/knowledge",
     "pages/tire/tire",
     "pages/filter/filter",
     "pages/params/params",
     "pages/export/export",
     "pages/racechrono/racechrono",
-    "pages/goods/goods"
+    "pages/goods/goods",
+    "pages/laps/laps",
+    "pages/lap-detail/lap-detail"
   ],
+  "subPackages": [
+    {
+      "name": "knowledge",
+      "root": "packages/knowledge",
+      "pages": [
+        "knowledge/knowledge",
+        "article/article"
+      ]
+    }
+  ],
+  "networkTimeout": {
+    "uploadFile": 600000
+  },
   "darkmode": true,
   "window": {
     "navigationBarTextStyle": "black",
@@ -16,5 +32,13 @@
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.userFuzzyLocation": {
+      "desc": "用于在设备本地识别省份，优先推荐同省或附近地区赛道；拒绝后仍可手动选择。"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getFuzzyLocation"
+  ]
 }

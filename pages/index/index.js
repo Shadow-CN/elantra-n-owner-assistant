@@ -44,11 +44,15 @@ Page({
   },
 
   onOpenKnowledge() {
-    wx.navigateTo({ url: '/pages/knowledge/knowledge' })
+    wx.navigateTo({ url: '/packages/knowledge/knowledge/knowledge' })
   },
 
-  onOpenTireTool() {
-    wx.navigateTo({ url: '/pages/tire/tire' })
+  onOpenTools() {
+    wx.navigateTo({ url: '/pages/tools/tools' })
+  },
+
+  onOpenLaps() {
+    wx.navigateTo({ url: '/pages/laps/laps' })
   },
 
   onOpenGoods() {

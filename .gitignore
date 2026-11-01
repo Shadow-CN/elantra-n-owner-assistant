@@ -12,3 +12,13 @@ $RECYCLE.BIN/
 
 # Node.js
 node_modules/
+
+# Local tooling and credentials
+__pycache__/
+*.pyc
+*.log
+scripts/*.local.*
+project.private.config.json
+.env
+.env.*
+!.env.example

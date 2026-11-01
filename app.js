@@ -3,6 +3,7 @@ var themeUtil = require('./utils/theme')
 
 App({
   onLaunch() {
+    if (wx.cloud) wx.cloud.init({ env: 'hn-owner-asst-d7gufu33n85700993', traceUser: true })
     var mode = themeUtil.loadMode()
     this.globalData.themeMode = mode
 

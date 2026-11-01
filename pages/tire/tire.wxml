@@ -1,5 +1,5 @@
 <page-meta page-style="{{pageStyle}}" />
-<navigation-bar title="胎压换算器" back="{{true}}" color="{{navColor}}" background="{{navBg}}">
+<navigation-bar title="压力换算" back="{{true}}" color="{{navColor}}" background="{{navBg}}">
   <view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题">
     <view class="theme-icon theme-icon-{{themeMode}}"></view>
   </view>
@@ -9,7 +9,7 @@
   <view class="body">
     <view class="hero">
       <text class="kicker">PSI · KPA · BAR</text>
-      <view class="hero-title">胎压换算器</view>
+      <view class="hero-title">压力换算</view>
       <text class="hero-desc">输入任意单位，自动换算另外两个单位。适合冷胎设定、热胎记录和赛道日微调。</text>
     </view>
 

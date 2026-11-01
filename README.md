@@ -28,8 +28,9 @@
 | 页面 | 路径 | 说明 |
 |---|---|---|
 | 首页 | `pages/index/index` | 工具入口 |
-| 维护知识库 | `pages/knowledge/knowledge` | 维护资料与补充信息 |
-| 胎压换算器 | `pages/tire/tire` | PSI / kPa / bar 快速换算 |
+| 实用工具 | `pages/tools/tools` | 实用小工具入口：压力换算、轮毂模拟器（开发中） |
+| 维护知识库 | `packages/knowledge/knowledge/knowledge` | 伊兰特 N / IONIQ 5 N 资料；按需加载分包 |
+| 压力换算 | `pages/tire/tire` | PSI / kPa / bar 快速换算 |
 | OBD 筛选 | `pages/filter/filter` | 按 ECU / 类型筛选 |
 | 参数列表 | `pages/params/params` | 勾选 PID |
 | 导出配置 | `pages/export/export` | 生成并分享 `.csp` / LUFI `.zip` |
@@ -71,8 +72,10 @@ data/pids.js
 app.js / app.json / app.wxss       小程序入口与全局样式
 components/navigation-bar/         自定义导航栏
 pages/index/                       首页
-pages/knowledge/                   维护知识库
-pages/tire/                        胎压换算器
+pages/tools/                       实用工具入口页（压力转换器、轮毂模拟器占位）
+pages/knowledge/                   旧知识库链接的兼容跳转
+packages/knowledge/                知识库分包：页面、5N 数据与全部知识库图片
+pages/tire/                        压力转换器
 pages/filter/                      OBD 参数筛选
 pages/params/                      参数选择列表
 pages/export/                      Car Scanner 配置导出 / LUFI ZIP 导出
@@ -83,6 +86,16 @@ assets/                            小程序运行时静态资源
 docs/                              规则说明、历史记录、知识库来源资料
 docs/examples/                     Car Scanner / LUFI 示例文件
 ```
+
+## 包体检查
+
+知识库作为普通分包按需加载，仍可引用主包中的主题、导航栏和分享工具。主包不直接引用知识库数据或图片，首页跳转到分包页面；旧的 `pages/knowledge/knowledge` 分享链接保留兼容跳转。
+
+`project.config.json` 的 `packOptions.ignore` 排除 `venv`、原始 Wiki、CSV/Excel、文档、开发脚本和编辑器目录。不要用“忽略未使用文件”代替这些打包规则，也不要通过放宽调试包大小掩盖发布包问题。
+
+可运行 `node scripts/check_package_size.js` 检查按项目规则计算的包内文件大小、路由、静态引用和资源路径。该检查不包含开发者工具编译开销；发布前仍需以微信开发者工具“代码依赖分析 / 包大小”及实际预览结果为准。
+
+参考：[微信官方分包配置与引用规则](https://developers.weixin.qq.com/miniprogram/dev/framework/subpackages/basic.html)。
 
 ## 导出说明
 
@@ -95,3 +108,7 @@ LUFI XF 的 `.INI` 不是普通文本 INI，而是基于官方模板改写的二
 ## 备注
 
 这个项目主要服务 Elantra N / Avante N CN7N 车主个人使用场景。数据、零件号和维护信息请以车辆实际版本、当地经销商和官方维修资料为准。
+
+## 开发交接
+
+继续开发请先阅读 [HANDOFF.md](HANDOFF.md)。历史过程保存在 `docs/HANDOFF-history.md`。本机配置、日志、缓存和工具访问密钥不提交。

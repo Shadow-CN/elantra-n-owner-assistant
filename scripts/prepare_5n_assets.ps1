@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
-$assetRoot = Join-Path $PSScriptRoot '../assets/knowledge/ioniq5n'
+$assetRoot = Join-Path $PSScriptRoot '../packages/knowledge/assets/knowledge/ioniq5n'
 [IO.Directory]::CreateDirectory($assetRoot) | Out-Null
 $encoder = [Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() | Where-Object { $_.MimeType -eq 'image/jpeg' }
 $parameters = [Drawing.Imaging.EncoderParameters]::new(1)

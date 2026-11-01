@@ -1,0 +1,44 @@
+<page-meta page-style="{{pageStyle}}" />
+<navigation-bar title="实用工具" back="{{true}}" color="{{navColor}}" background="{{navBg}}">
+  <view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题">
+    <view class="theme-icon theme-icon-{{themeMode}}"></view>
+  </view>
+</navigation-bar>
+
+<scroll-view class="tools-scroll" scroll-y>
+  <view class="tools-body">
+    <view class="tools-hero">
+      <text class="tools-kicker">UTILITIES</text>
+      <view class="tools-title">实用工具</view>
+      <text class="tools-desc">压力换算、轮毂配置等用车小工具，按需要取用。</text>
+    </view>
+
+    <view class="tools-card" bindtap="onOpenTire" aria-role="button" aria-label="打开压力转换器">
+      <view class="tools-icon">PConv</view>
+      <view class="tools-info">
+        <view class="tools-title-row">
+          <text class="tools-name">压力换算</text>
+          <!-- <text class="tools-status"></text> -->
+        </view>
+        <text class="tools-card-desc">PSI、kPa、bar 快速换算，附 PS4S HN 胎压参考。</text>
+      </view>
+      <text class="tools-arrow">›</text>
+    </view>
+
+    <view class="tools-card tools-card-spaced" bindtap="onOpenWheel" aria-role="button" aria-label="轮毂模拟器，开发中">
+      <view class="tools-icon tools-icon-soon">轮毂</view>
+      <view class="tools-info">
+        <view class="tools-title-row">
+          <text class="tools-name">轮毂模拟器</text>
+          <text class="tools-status tools-status-soon">开发中</text>
+        </view>
+        <text class="tools-card-desc">选择轮毂尺寸与轮胎规格，预览装车效果。功能开发中，先占个入口。</text>
+      </view>
+      <text class="tools-arrow tools-arrow-soon">›</text>
+    </view>
+
+    <view class="tools-note">
+      <text>更多实用工具会陆续加到这里。</text>
+    </view>
+  </view>
+</scroll-view>

@@ -1,0 +1,52 @@
+<page-meta page-style="{{pageStyle}}" />
+<navigation-bar title="车主 Wiki" back="{{true}}" delta="{{0}}" bind:back="onNavBack" color="{{navColor}}" background="{{navBg}}">
+	<view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题">
+		<view class="theme-icon theme-icon-{{themeMode}}"></view>
+	</view>
+</navigation-bar>
+<view class="model-tabs">
+	<view class="model-tab {{model==='elantra'?'model-tab-active':''}}" bindtap="onModelChange" data-model="elantra">伊兰特 N · Elantra N</view>
+	<view class="model-tab {{model==='5n'?'model-tab-active':''}}" bindtap="onModelChange" data-model="5n">艾尼氪 5 N · IONIQ 5 N</view>
+</view>
+<scroll-view class="knowledge-scroll" scroll-y scroll-top="{{scrollTop}}">
+	<view class="wiki-body {{model==='5n'?'wiki-5n':''}}">
+		<view class="wiki-hero"><text class="eyebrow">N OWNER / WIKI</text>
+			<view class="wiki-title">{{modelName}}<text>车主知识库</text></view><text class="description">{{modelDescription}}</text>
+			<view wx:if="{{sourceLink}}" class="source-link" bindtap="onSourceLinkTap" aria-role="button" aria-label="复制来源链接"><text class="source-link-label">{{sourceLink.label}}：</text><text class="source-link-url" selectable>{{sourceLink.url}}</text></view><text class="stats">{{categories.length}} 个分类 · {{articleCount}} 篇词条</text>
+		</view>
+		<view class="search-row"><input class="search" value="{{query}}" bindinput="onSearch" placeholder="{{searchPlaceholder}}" confirm-type="search" placeholder-class="search-placeholder" /><text wx:if="{{query}}" class="clear-search" bindtap="onClearSearch">清除</text></view>
+		<view class="breadcrumb"><text bindtap="onAllCategories" class="wiki-link">知识库首页</text><text wx:if="{{activeCategory}}"> / {{categoryTitle}}</text><text wx:if="{{query}}"> / 搜索</text></view>
+		<block wx:if="{{!activeCategory && !query}}">
+			<view class="heading-row"><text class="heading">分类目录</text><text class="subtle">按主题查阅</text></view>
+			<view class="category-grid">
+				<view wx:for="{{categories}}" wx:key="id" class="category-entry {{model==='5n' && item.id==='05'?'category-entry-wide':''}}" bindtap="onCategory" data-id="{{item.id}}" aria-role="button"><text class="category-name">{{item.title}}</text><text class="category-count">{{item.count}} 篇 ›</text></view>
+			</view>
+		</block>
+		<block wx:if="{{showEntries}}">
+			<view class="heading-row entries-heading"><text class="heading">{{query?'搜索结果':categoryTitle}}</text><text class="subtle">{{resultCount}} 篇</text></view>
+			<view wx:if="{{activeCategory}}" class="category-nav"><text class="wiki-link" bindtap="onAllCategories">‹ 查看全部分类</text></view>
+			<view wx:if="{{categoryLink}}" class="external-document"><text class="category-name">{{categoryLink.label}}</text><text class="category-count">在线文档 · 在腾讯文档小程序中查看</text><text class="source-link-url" selectable>{{categoryLink.url}}</text><button wx:if="{{categoryLink.shortLink}}" size="mini" bindtap="onCategoryLinkOpen">打开腾讯文档</button><button size="mini" bindtap="onCategoryLinkCopy">复制腾讯文档链接</button></view>
+			<view wx:for="{{sections}}" wx:key="id" class="wiki-section">
+				<view wx:if="{{!activeCategory}}" class="section-heading" bindtap="onCategory" data-id="{{item.id}}"><text>{{item.title}}</text><text class="subtle">查看分类 ›</text></view>
+				<view wx:for="{{item.cards}}" wx:for-item="card" wx:key="id" class="entry" bindtap="onOpenArticle" data-id="{{card.id}}" aria-role="button" aria-label="阅读{{card.title}}">
+					<view class="entry-title">{{card.title}}<text class="entry-arrow">›</text></view>
+					<view wx:if="{{card.primaryCode}}" class="index-code"><text class="code-label">编号参考</text><text class="code-value" catchtap="onCopyLine" data-value="{{card.primaryCode}}">{{card.primaryCode}}</text><text class="copy-label" catchtap="onCopyLine" data-value="{{card.primaryCode}}">复制</text></view><text wx:if="{{model!=='5n'}}" class="entry-summary">{{card.summary}}</text>
+					<view wx:if="{{model!=='5n' || card.imageCount || card.resource || card.document}}" class="entry-tags"><text wx:if="{{model!=='5n'}}">{{item.title}}</text><text wx:if="{{card.document}}">PDF 手册</text><text wx:if="{{card.imageCount}}">含 {{card.imageCount}} 张参考图</text><text wx:if="{{card.resource}}">含配置文件</text></view>
+				</view>
+			</view>
+			<view wx:if="{{!sections.length}}" class="empty-result">没有找到相关词条<text>试试零件号、功能名，或切换车型与分类。</text><text class="wiki-link" bindtap="onClearSearch" wx:if="{{query}}">清除搜索</text></view>
+		</block>
+		<view wx:if="{{supplementalCategories.length && !query && !activeCategory}}" class="supplemental-section">
+			<view wx:for="{{supplementalCategories}}" wx:key="id" class="supplemental-entry" bindtap="onCategory" data-id="{{item.id}}" aria-role="button">
+				<view><text class="category-name">{{item.title}}</text><text class="category-count">{{item.description}} · {{item.count}} 篇</text></view><text>›</text>
+			</view>
+		</view>
+		<view wx:if="{{contacts.length && !query && !activeCategory}}" class="contacts">
+			<view class="heading">资料与配件联系</view><text class="subtle">点击微信号复制</text>
+			<view wx:for="{{contacts}}" wx:key="wechat" class="contact-row">
+				<view><text class="contact-name">{{item.name}}</text><text class="subtle">{{item.role}}</text></view><text class="wiki-link" bindtap="onCopyLine" data-value="{{item.wechat}}">{{item.wechat}}</text>
+			</view>
+		</view>
+		<text class="source-note">{{sourceNote}}</text>
+	</view>
+</scroll-view>
