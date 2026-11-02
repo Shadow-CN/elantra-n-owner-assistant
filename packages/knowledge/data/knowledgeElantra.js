@@ -364,13 +364,126 @@ module.exports = {
           "aliases": []
         },
         {
+          "title": "N Performance 迎宾灯",
+          "summary": "车友实装：门板开孔位置、取电记录与投影效果",
+          "parts": [
+            {
+              "name": "N Performance 迎宾灯",
+              "brand": "",
+              "codes": [
+                "预留"
+              ],
+              "note": ""
+            }
+          ],
+          "lines": [
+            "N Performance 迎宾灯 0101",
+            "N Performance Door Spot Lamp，开门时向地面投射 N Performance 标识。以下为车友在伊兰特 N 上的实装记录。",
+            "两扇前门的开孔位置均在门板水杯槽下方，具体上下位置见实拍图；尺寸、孔径及定位距离未提供，安装前需结合灯体与门板实际空间确认。",
+            "该实装车辆从车门把手线束取电：两侧橘黄色线作为正极，主驾驶侧蓝色线作为负极，副驾驶侧灰色线作为负极。此为该车的接线记录，施工时应核对对应车辆电路并实测确认，不能只凭线色直接接线。",
+            "该车安装完成后，两侧迎宾灯随对应车门开启而点亮、关闭而熄灭。",
+            "灯体背部有金属板，车友反馈用于散热；实拍投影文字清晰。"
+          ],
+          "partLineIndexes": [
+            0
+          ],
+          "blocks": [
+            {
+              "type": "heading",
+              "text": "产品与效果"
+            },
+            {
+              "type": "text",
+              "text": "N Performance Door Spot Lamp，开门时向地面投射 N Performance 标识。以下为车友在伊兰特 N 上的实装记录。"
+            },
+            {
+              "type": "image",
+              "src": "/packages/knowledge/assets/knowledge/en-welcome-light/package.jpg"
+            },
+            {
+              "type": "image",
+              "src": "/packages/knowledge/assets/knowledge/en-welcome-light/projection.jpg"
+            },
+            {
+              "type": "image",
+              "src": "/packages/knowledge/assets/knowledge/en-welcome-light/projection-wide.jpg"
+            },
+            {
+              "type": "image",
+              "src": "/packages/knowledge/assets/knowledge/en-welcome-light/projection-close.jpg"
+            },
+            {
+              "type": "heading",
+              "text": "门板安装位置"
+            },
+            {
+              "type": "text",
+              "text": "两扇前门的开孔位置均在门板水杯槽下方，具体上下位置见实拍图；尺寸、孔径及定位距离未提供，安装前需结合灯体与门板实际空间确认。"
+            },
+            {
+              "type": "image",
+              "src": "/packages/knowledge/assets/knowledge/en-welcome-light/mount-inside.jpg"
+            },
+            {
+              "type": "image",
+              "src": "/packages/knowledge/assets/knowledge/en-welcome-light/mount-outside.jpg"
+            },
+            {
+              "type": "heading",
+              "text": "取电与开关效果"
+            },
+            {
+              "type": "text",
+              "text": "该实装车辆从车门把手线束取电：两侧橘黄色线作为正极，主驾驶侧蓝色线作为负极，副驾驶侧灰色线作为负极。此为该车的接线记录，施工时应核对对应车辆电路并实测确认，不能只凭线色直接接线。"
+            },
+            {
+              "type": "text",
+              "text": "该车安装完成后，两侧迎宾灯随对应车门开启而点亮、关闭而熄灭。"
+            },
+            {
+              "type": "image",
+              "src": "/packages/knowledge/assets/knowledge/en-welcome-light/wiring.jpg"
+            },
+            {
+              "type": "heading",
+              "text": "灯体实拍"
+            },
+            {
+              "type": "text",
+              "text": "灯体背部有金属板，车友反馈用于散热；实拍投影文字清晰。"
+            },
+            {
+              "type": "image",
+              "src": "/packages/knowledge/assets/knowledge/en-welcome-light/lamp-back.jpg"
+            },
+            {
+              "type": "heading",
+              "text": "资料说明"
+            },
+            {
+              "type": "text",
+              "text": "资料来源：车友蟹黄包秘方提供的安装交流与实拍照片。"
+            }
+          ],
+          "images": [
+            "/packages/knowledge/assets/knowledge/en-welcome-light/package.jpg",
+            "/packages/knowledge/assets/knowledge/en-welcome-light/projection.jpg",
+            "/packages/knowledge/assets/knowledge/en-welcome-light/projection-wide.jpg",
+            "/packages/knowledge/assets/knowledge/en-welcome-light/projection-close.jpg",
+            "/packages/knowledge/assets/knowledge/en-welcome-light/mount-inside.jpg",
+            "/packages/knowledge/assets/knowledge/en-welcome-light/mount-outside.jpg",
+            "/packages/knowledge/assets/knowledge/en-welcome-light/wiring.jpg",
+            "/packages/knowledge/assets/knowledge/en-welcome-light/lamp-back.jpg"
+          ]
+        },
+        {
           "title": "钥匙",
           "parts": [
             {
               "name": "改款钥匙",
               "brand": "",
               "codes": [
-                "95440-IB500YPN"
+                "95440IB701"
               ],
               "note": ""
             },
@@ -378,14 +491,15 @@ module.exports = {
               "name": "旧款钥匙",
               "brand": "",
               "codes": [
-                "95440-IB701"
+                "95770IB700YPN"
               ],
               "note": ""
             }
           ],
           "lines": [
-            "改款钥匙 95440 IB500 YPN",
-            "旧款钥匙 95440 IB000"
+            "新款遥控器 95440IB701",
+            "老款遥控器 95770IB700YPN",
+            "订配钥匙时，请提供车辆识别代号（VIN／车架号），由配件供应方核对适配型号后再订购。以上编号仅供参考，请勿仅凭新老款外观判断，以免无法匹配车辆。"
           ],
           "partLineIndexes": [
             0,
@@ -394,10 +508,10 @@ module.exports = {
           "aliases": []
         },
         {
-          "title": "地毯卡子",
+          "title": "脚垫卡扣",
           "parts": [
             {
-              "name": "地毯卡子",
+              "name": "脚垫卡扣",
               "brand": "",
               "codes": [
                 "84270 F2100"
@@ -406,12 +520,18 @@ module.exports = {
             }
           ],
           "lines": [
-            "地毯卡子 84270 F2100"
+            "脚垫卡扣 84270 F2100",
+              "安装示意：将卡扣下端套入原车地板预留方孔，再按图示方向压入并卡进卡槽。实拍图展示卡扣与脚垫固定孔的配合位置；安装示意图仅供参考，具体以车辆预留孔位及卡子结构为准。"
           ],
           "partLineIndexes": [
             0
           ],
-          "image": "/packages/knowledge/assets/knowledge/carpet-clip.jpg",
+          "images": [
+            "/packages/knowledge/assets/knowledge/en-carpet-clip/installation.jpg",
+            "/packages/knowledge/assets/knowledge/carpet-clip.jpg",
+            "/packages/knowledge/assets/knowledge/en-carpet-clip/close-up.jpg",
+            "/packages/knowledge/assets/knowledge/en-carpet-clip/installed.jpg"
+          ],
           "aliases": [
             "s01-uabvpk"
           ]

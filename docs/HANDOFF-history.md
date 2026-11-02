@@ -280,3 +280,72 @@ node scripts/check_package_size.js
 ## 11. 下一聊天最短启动方式
 
 读取本文件 → 看最新用户要求 → 查看相关数据/页面 → 先 git status 保护现有改动 → 做必要修改与对应测试。若只改 EN 配件数据，入口就是 knowledgeElantra.js 的 lines 和 parts.codes，不需要改5N生成脚本或部署成绩云函数。
+
+
+# 2026-11-03 交接重整前记录
+
+# 项目交接
+
+更新：2026-11-03。本文优先于 docs/HANDOFF-history.md 的历史描述。
+
+## 2026-11-03 最新：云资源与汇率
+- README已重写为详细维护指南：内容/页面/云函数/数据库/赛道/图片顺序/零件号/部署的文件索引。
+- Wiki的32个图片/RC附件已整体上传knowledge/assets/media-20261103，逐文件大小与MD5核对通过；云端路径及SHA256清单在docs/wiki-assets-manifest.json，上传验证在docs/wiki-assets-upload-verification.json。
+- packages/knowledge/assets/knowledge下的本地文件全部保留并排除打包。数据中的本地路径作为逻辑资源key保留；cloudfunctions/wikiFiles/assets.json负责映射fileID，wikiFiles新增keys批量白名单访问。PDF的files.json和key接口保持兼容。
+- packages/knowledge/lib/media.js解析图片链接、缓存临时URL、下载并缓存RC附件。article页面按词条加载，失败有重试；RC先下载完成，再由用户点击同步分享。不是删除图片或直接把临时URL写到正文。
+- 新增scripts/build_wiki_assets.cjs生成云资源清单，不改写用户维护的EN/5N正文；新增本地资源必须上传、更新映射、部署wikiFiles。不要直接运行5N正文生成器覆盖用户内容。
+- 新增实用工具→汇率换算，pages/exchange，utils/exchange.js，cloudfunctions/exchangeRates。9币种：CNY/KRW/USD/JPY/TWD/HKD/AUD/CAD/EUR。Frankfurter v2每日参考汇率，无Key，API请求固定且不传用户金额。
+- 服务端6小时缓存，exchange_rates/latest由云端维护；失败最多回退7天缓存并显示状态，前端可使用7天以内本地缓存；显示日期与来源，不冒充银行实时汇率。
+- 实用工具右上角白色晕影来自tools.wxss中radial-gradient，现已删除。
+- Wiki新云接口与汇率新增回归脚本test_wiki_cloud.cjs、test_exchange.cjs。用户将“地毯卡子”改名“脚垫卡扣”，原始迁移测试按确认名称兼容，不回滚用户数据。
+- 本轮未自动提交/推送；云部署与真实运行验证结果见后续补充。
+
+## 开发约定
+- 仓库：https://github.com/Shadow-CN/elantra-n-owner-assistant；目录 D:/WeChatProjects/Elantra N OBD stats；当前 main。
+- 用户已确认其手工修改正确，保留最新代码，尤其 pages/tools、新首页入口、胎压页和文案。轮毂模拟器目前为提示占位。
+- 不删除用户原始视频、PDF、Excel、本地Wiki。测试视频在H:盘，PDF在用户Downloads，不在本轮清理范围。
+- AppID wx113792b30d798c93；云环境 hn-owner-asst-d7gufu33n85700993。
+- 开发工具此前端口44890；scripts/wechat_mcp.cjs从环境变量WECHAT_DEVTOOLS_CLI_TOKEN读取访问密钥，密钥不提交。脚本可重新生成已忽略的工具元数据。
+
+## 知识库
+- 首页/分类：packages/knowledge/knowledge/knowledge.*；详情：packages/knowledge/article/article.*；搜索和旧链接：packages/knowledge/lib/wiki.js。
+- EN正文：packages/knowledge/data/knowledgeElantra.js，33词条；价格与渠道已进入六宫格，故障与经验在下方整行。
+- 5N正文：packages/knowledge/data/knowledge5n.js，25词条；目录与EN同样双列，05“手册与资料”占整行。RaceChrono配置附件已并入“常见问题 → RaceChrono读取不到OBD数据流”，旧词条链接兼容。
+- scripts/build_5n_wiki.py从ioniq_5n_china_owner_wiki-main/docs生成5N数据。运行会覆盖JS，重建前必须保留用户手工修改；本轮未运行生成器。
+- 首页只显示目录，分类/搜索才显示列表；5N不显示正文节选；已移除重复快捷入口。
+- 返回：搜索先清搜索，分类回当前车型目录，目录离开Wiki；详情返回原分类。
+- 两车型来源URL可复制。EN故障与经验已接腾讯文档shortLink，失败可复制网页链接，主动取消不弹错误。尚待真机确认直达文档。
+- 中文PDF通过cloudfunctions/wikiFiles读取；英文维修手册提供链接；原PDF保留。零件号点击复制。
+- EN泵35320 2GTA0、垫片35320 2GTA1，勿反置。报价与技术资料分开；历史技术信息未重新核实。
+
+## 圈速榜与云端
+- pages/laps：榜单、地区/赛道、提交与我的成绩；pages/lap-detail：视频/链接→基础信息→改装详情。
+- cloudfunctions/lapBoard处理lap_records、所有权和公开字段，wikiFiles提供PDF临时URL；此前已部署。本轮仅整理并推送Git，不重新部署或发布小程序。
+- 圈速分/秒/毫秒分栏，空毫秒000；气温、视频、链接与改装细节选填。视频wx.chooseMedia，无业务500MB限制。
+- 刹车卡钳/刹车皮拆分，旧brakes兼容；轮毂提示19×9J ET43。
+- 自动模糊定位用本地省界匹配，拒绝可手动选地区；不需要腾讯地图Key。赛道含鄂尔多斯及纽北整圈/BTG。
+- 普通HTTP视频链接复制，#小程序://尝试跳转；未实现外站视频抓取或通用网页内嵌。
+- 部署/权限：docs/lap-board-setup.md；外链限制：docs/lap-video-links.md。
+
+## 检查和清理
+- scripts/test_*.js及test_*.cjs覆盖Wiki、附件/复制、返回、圈速上传校验、位置、RaceChrono导出；node scripts/check_package_size.js检查包体/路由/引用。
+- 本轮仅清理明确未引用的自动darkmode样式、骨架屏、日志、Python缓存、MCP可再生元数据；多平台配置及用户新代码保留。
+- project.private.config.json保留本地但停止跟踪，缓存/日志/本地工具数据加入.gitignore；HANDOFF不进入小程序包。
+- 历史细节在docs/HANDOFF-history.md；EN重组前快照docs/en-wiki-before-reorg.json。旧截图仅供参考。
+
+## 本轮检查结果
+- 10个现有回归脚本及包体检查通过。EN迁移测试已按用户确认修正的钥匙/支架编号更新期望值，没有回滚正文。
+- Git提交包含此前功能开发与用户最新修改；本轮清理不代表云函数或微信版本已发布。
+
+## 2026-11-02 赛道扩充与分享
+- 圈速榜已补分享菜单/好友/朋友圈回调，分享带track编号，打开指定赛道时不自动定位覆盖。
+- 新赛道编号11–18：天津V1、株洲、武汉国际赛道、珠海、广东国际、山东菏泽、河北首钢、天津GOGOGO；旧0–10编号保留。共19选项，地区新增天津/湖南/湖北/山东/河北；天津包含11和18，广东包含7/14/15。
+- 修改列表需要同步utils/laps.js和cloudfunctions/lapBoard/validation.js、pages/laps/laps.js地区映射及utils/trackLocation.js地区顺序，并部署lapBoard。
+
+- V1 layouts: ID11 = 2.4km; new ID19 = 4.29km; Tianjin mapping [11,19,18]. Cloud published list for old ID11 was empty before change. No record migration.
+
+- 2026-11-03: Region/track picker display sorted by pinyin via REGION_PINYIN/TRACK_PINYIN in pages/laps/laps.js. Stable REGIONS/TRACKS IDs unchanged; regionPicker maps sorted display to stable region, GPS/shared links/editing retain stable IDs. Maintain pinyin keys when adding tracks. Frontend-only; no cloud deployment required.
+
+- 实际云端调用exchangeRates已返回全部9币种；wikiFiles批量图片与RC链接获取成功，下载状态200，RC大小591字节。新增JSON的BOM已修复；包体检查现在解析包内JSON以避免再次发生。
+
+- 最终验证：wikiFiles与exchangeRates已部署，32个云文件大小/MD5一致；实际云端9币种取数、图片与RC下载200通过；模拟器金额201250 KRW→1000.00 CNY验证通过。12个回归脚本和包体/JSON检查通过。知识库分包约0.13MiB；真实图片长按/RC分享仍建议手机体验。汇率截图docs/exchange-cloud-preview.png。脚垫卡扣旧sparts-3v455l在lib/wiki.js保留兼容，避免用户编辑数据文件时丢掉alias。

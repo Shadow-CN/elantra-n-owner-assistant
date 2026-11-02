@@ -28,7 +28,7 @@ assert.equal(validation.validate({...base,modifications:'改装',modificationDet
 assert.deepEqual(validation.validate({...base,modifications:'原厂',modificationDetails:{ecu:'Stage 1'}}).modificationDetails,{})
 assert.throws(()=>validation.validate({...base,modifications:'改装',modificationDetails:{ecu:'a'.repeat(201)}}))
 assert.throws(()=>validation.validate({...base,modifications:'其他'}))
-assert.equal(validation.TRACKS.length,11)
+assert.equal(validation.TRACKS.length,20)
 assert.equal(validation.TRACKS[10],'鄂尔多斯国际赛车场')
 assert.equal(validation.validate({...base,track:10}).track,10)
 assert.equal(fs.readFileSync(path.join(__dirname,'../utils/laps.js'),'utf8'),fs.readFileSync(path.join(__dirname,'../cloudfunctions/lapBoard/validation.js'),'utf8'))
@@ -131,3 +131,5 @@ async function run(){
  console.log('PASS: validation, ownership, optional video, edit/delete, stale-write protection, replacement cleanup, deletion failure recovery, board isolation and private projection')
 }
 run().catch(e=>{console.error(e);process.exitCode=1})
+
+assert(validation.TRACKS[11].includes("2.4km"));assert(validation.TRACKS[19].includes("4.29km"))

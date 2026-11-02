@@ -1,4 +1,4 @@
-const TRACKS = ["北京锐思赛车场", "北京易车金港赛车场", "浙江国际赛车场", "宁波国际赛车场", "上海天马赛车场", "上海国际赛车场", "成都天府国际赛车场", "广东竞速国际赛车场（麻涌）", "纽博格林北环（完整圈 20.832km）", "纽博格林北环（BTG 桥到龙门架）", "鄂尔多斯国际赛车场"]
+const TRACKS = ["北京锐思赛车场", "北京易车金港赛车场", "浙江国际赛车场", "宁波国际赛车场", "上海天马赛车场", "上海国际赛车场", "成都天府国际赛车场", "广东竞速国际赛车场（麻涌）", "纽博格林北环（完整圈 20.832km）", "纽博格林北环（BTG 桥到龙门架）", "鄂尔多斯国际赛车场", "天津V1国际赛车场（2.4km）", "株洲国际赛车场", "武汉国际赛道", "珠海国际赛车场", "广东国际赛车场", "山东菏泽国际赛车场", "首钢赛车场", "天津GOGOGO赛车场", "天津V1国际赛车场（4.29km）"]
 const MOD_FIELDS = [{"key": "tires", "label": "轮胎"}, {"key": "wheelSize", "label": "轮毂尺寸"}, {"key": "brakeCalipers", "label": "刹车卡钳"}, {"key": "brakePads", "label": "刹车皮"}, {"key": "suspension", "label": "避震"}, {"key": "intake", "label": "进气"}, {"key": "turbo", "label": "涡轮"}, {"key": "exhaust", "label": "排气"}, {"key": "ecu", "label": "ECU"}, {"key": "tcu", "label": "TCU"}, {"key": "lightweight", "label": "轻量化"}]
 // Accept phone keyboards' full-width punctuation; store one canonical lap format.
 function lapMs(value) {

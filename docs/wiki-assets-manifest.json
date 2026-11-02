@@ -1,0 +1,194 @@
+[
+  {
+    "path": "packages/knowledge/assets/knowledge/carpet-clip.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/carpet-clip.jpg",
+    "bytes": 120947,
+    "sha256": "7e24ebedcd7a59df890c74a4e79981ddb6a8edc2c7dc296a9fdeef3754b84878"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/en-carpet-clip/close-up.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/en-carpet-clip/close-up.jpg",
+    "bytes": 71690,
+    "sha256": "4e09031f029a291394d6ee3e7eda5ca1bf6d60f57e7e661d23558536c0d6b306"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/en-carpet-clip/installation.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/en-carpet-clip/installation.jpg",
+    "bytes": 52149,
+    "sha256": "188b8fb3b6fcee0963e91cd9365b3becd4b55b2aeb86732e9e7db74f819c533a"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/en-carpet-clip/installed.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/en-carpet-clip/installed.jpg",
+    "bytes": 26937,
+    "sha256": "f5447d2063bc3764fe1961bb8c9fab9a7b234fc4e6e8c4bfac6714245c4da51b"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/en-welcome-light/lamp-back.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/en-welcome-light/lamp-back.jpg",
+    "bytes": 49137,
+    "sha256": "55beb0706e9d107a10c70c525ffe16b0f62af17555527d41ee51d78ae6470cd4"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/en-welcome-light/mount-inside.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/en-welcome-light/mount-inside.jpg",
+    "bytes": 54409,
+    "sha256": "136c0262b5ac17b097bc489378aa0e529fb4c79d9ce9f1c779295625fd50f769"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/en-welcome-light/mount-outside.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/en-welcome-light/mount-outside.jpg",
+    "bytes": 41786,
+    "sha256": "31f701002cf2f5d2425e79dfde9be7ada10fef0e092a48f507d1d26b9a4fbd12"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/en-welcome-light/package.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/en-welcome-light/package.jpg",
+    "bytes": 73376,
+    "sha256": "88703d337321f9e72ad79054ef235c7186cc7b7bc824a8ad365db35468e12cbb"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/en-welcome-light/projection-close.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/en-welcome-light/projection-close.jpg",
+    "bytes": 142452,
+    "sha256": "c8624d769c5120f997c160738cd1112de6b0d8234e8900dc637d479d42c624dc"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/en-welcome-light/projection-wide.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/en-welcome-light/projection-wide.jpg",
+    "bytes": 147685,
+    "sha256": "89ab474258e6a69664be1b1bee05e71dab9affacf051e6d8f7c10abf93adccb3"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/en-welcome-light/projection.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/en-welcome-light/projection.jpg",
+    "bytes": 129691,
+    "sha256": "d497d360627c2f38816af5199d03d6e11e3608c41fb99afc04962ef9bc39f0a5"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/en-welcome-light/wiring.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/en-welcome-light/wiring.jpg",
+    "bytes": 42394,
+    "sha256": "4367917d44e696f70fb206260f65b91e429842a300ff8abdbcdf0a6023707664"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/charging-p1.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/charging-p1.jpg",
+    "bytes": 29826,
+    "sha256": "f562acc69a470837081e250a1ff3ee23c1a266d3004157685417963dcfcf4a64"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/charging-p2.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/charging-p2.jpg",
+    "bytes": 99766,
+    "sha256": "af6719e2453e4fbea9be5fdec1afecc3454c312fa86a607c8891cb673e3a65ff"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/charging-p3.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/charging-p3.jpg",
+    "bytes": 77723,
+    "sha256": "a6e0fb9639a15611152cb690dfc8038b2d5a017dcbf9ec0a633f25e397018349"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/faq-p1.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/faq-p1.jpg",
+    "bytes": 17635,
+    "sha256": "aa0248d5162b88a1bea9f6cf11d292f9b02d602445d7d9d285e387aff47820f7"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/faq-p2.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/faq-p2.jpg",
+    "bytes": 1526,
+    "sha256": "ec04b5186e7d3167f1d8f5b47f6dc3c603e0fa1e82865b4803251424e0a30b36"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/faq-p3.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/faq-p3.jpg",
+    "bytes": 77723,
+    "sha256": "a6e0fb9639a15611152cb690dfc8038b2d5a017dcbf9ec0a633f25e397018349"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/faq-p4.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/faq-p4.jpg",
+    "bytes": 6140,
+    "sha256": "2d171308e281eb34d732d758dcca553299b81f6527758f7c98613c2f30a9c898"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/faq-p5.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/faq-p5.jpg",
+    "bytes": 47579,
+    "sha256": "51ab2bda5abc890187a3a888644e48d56202bcecacd4e2aee4e5baa40ab97cd8"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/faq-p6.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/faq-p6.jpg",
+    "bytes": 46236,
+    "sha256": "67e60bd85a1e5f748d1141eacd250817f1fc9aefa1be9ff8069b167903be3f72"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/faq-p7.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/faq-p7.jpg",
+    "bytes": 154762,
+    "sha256": "a56b9f20a08d3b561fa9f064cb38717928fa801fa9b06bd03e80214dc1cea881"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/faq-p8.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/faq-p8.jpg",
+    "bytes": 136237,
+    "sha256": "411970aac298d85f3c7f21175a49cfadc32a420894130827775990f1f5e8271f"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/infotainment-p1.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/infotainment-p1.jpg",
+    "bytes": 16614,
+    "sha256": "68ba93f2cd63fef5447b249450c9f968cd14c3727a55a5c22108e8d1e209b5ab"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/infotainment-p2.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/infotainment-p2.jpg",
+    "bytes": 17271,
+    "sha256": "fed3263fd2ef09ad2059774fc9d65887a6bd2c848b390eb21a37ddbebc05cd39"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/infotainment-p3.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/infotainment-p3.jpg",
+    "bytes": 16987,
+    "sha256": "b029b829c86d53dabb5cb22280a06af698b3b0b187cdb8c1b7d50b41689fe1c4"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/infotainment-p4.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/infotainment-p4.jpg",
+    "bytes": 18501,
+    "sha256": "e245b6340e95e9c267411635664be7a4530aed5ec0990207f8d41730d973e066"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/infotainment-p5.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/infotainment-p5.jpg",
+    "bytes": 15485,
+    "sha256": "2134e11a14687a067fb5f6db99852eeb5bd837962acfb88d6e1a5fac038c0214"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/infotainment-p6.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/infotainment-p6.jpg",
+    "bytes": 17976,
+    "sha256": "2827b6497651c9e1dbe0cbe2b48208367e5db6f70317b3789dc87cca443dabce"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/maintenance-p1.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/maintenance-p1.jpg",
+    "bytes": 14128,
+    "sha256": "c88b3cb60fdcc7b2b5b122cbb733b566ead94a61f921a70f4ebe1cde88f4f0f3"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/maintenance-p2.jpg",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/maintenance-p2.jpg",
+    "bytes": 20687,
+    "sha256": "1f7772ae3b2fe13824fe1de1eb9595e8a6a7f807f29ab42a81f8812454a6b9d3"
+  },
+  {
+    "path": "packages/knowledge/assets/knowledge/ioniq5n/vehicle_i5n.rcz",
+    "cloudPath": "knowledge/assets/media-20261103/ioniq5n/vehicle_i5n.rcz",
+    "bytes": 591,
+    "sha256": "de1e2fc158037820015e31340451742df84461e33a31d772665a6895272e5456"
+  }
+]

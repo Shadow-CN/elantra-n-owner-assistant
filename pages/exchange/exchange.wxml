@@ -1,0 +1,11 @@
+<page-meta page-style="{{pageStyle}}" />
+<navigation-bar title="汇率换算" back="{{true}}" color="{{navColor}}" background="{{navBg}}"><view slot="right" class="theme-toggle" bindtap="onThemeToggle" aria-role="button" aria-label="切换主题"><view class="theme-icon theme-icon-{{themeMode}}"></view></view></navigation-bar>
+<scroll-view class="exchange-scroll" scroll-y><view class="exchange-body">
+ <text class="kicker">CURRENCY CONVERTER</text><view class="title">汇率换算</view><text class="description">查询配件价格，估算外币金额。</text>
+ <view class="currency-row"><picker range="{{options}}" value="{{from}}" bindchange="onFrom"><view class="currency">{{options[from]}} ›</view></picker><button class="swap" size="mini" bindtap="onSwap" aria-label="交换币种">⇄</button><picker range="{{options}}" value="{{to}}" bindchange="onTo"><view class="currency">{{options[to]}} ›</view></picker></view>
+ <view class="field"><text class="label">金额 · {{currencies[from].code}}</text><input type="digit" maxlength="17" value="{{amount}}" bindinput="onAmount" placeholder="请输入金额" placeholder-class="placeholder" /></view>
+ <view class="result-card"><text class="label">约合 · {{currencies[to].name}}</text><text class="result" selectable>{{result || '—'}}</text><text class="rate">{{rateLabel}}</text></view>
+ <text wx:if="{{inputError}}" class="error">{{inputError}}</text><text wx:if="{{error}}" class="error">{{error}}</text>
+ <view class="rate-info"><text wx:if="{{rateDate}}">汇率日期：{{rateDate}}</text><text wx:if="{{source}}">来源：{{source}}</text><text wx:if="{{cached || stale}}">当前使用{{stale?'上次成功获取的':'本地缓存'}}参考汇率</text><button size="mini" bindtap="refresh" loading="{{loading}}" disabled="{{loading}}">{{loading?'正在获取汇率':'刷新汇率'}}</button></view>
+ <text class="note">每日参考汇率，非银行实时买入／卖出价；实际支付金额还可能包含银行点差、手续费和平台费用。</text>
+</view></scroll-view>

@@ -76,6 +76,10 @@
       {
         "value": "node_modules",
         "type": "folder"
+      },
+      {
+        "value": "packages/knowledge/assets/knowledge",
+        "type": "folder"
       }
     ],
     "include": []

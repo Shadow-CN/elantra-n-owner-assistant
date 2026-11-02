@@ -4,7 +4,6 @@ page { display:flex; flex-direction:column; height:100vh; background:var(--bg-pa
 
 .tools-body {
   padding: 42rpx 32rpx 72rpx;
-  background-image: radial-gradient(circle at 88% 0, rgba(170, 202, 230, 0.16), transparent 38%);
 }
 
 .tools-hero { padding: 28rpx 0 48rpx; }

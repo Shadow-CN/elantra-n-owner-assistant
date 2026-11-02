@@ -10,7 +10,8 @@
     "pages/racechrono/racechrono",
     "pages/goods/goods",
     "pages/laps/laps",
-    "pages/lap-detail/lap-detail"
+    "pages/lap-detail/lap-detail",
+    "pages/exchange/exchange"
   ],
   "subPackages": [
     {

@@ -49,3 +49,25 @@ let opened='';wx.navigateTo=o=>opened=o.url
 p.openDetail({currentTarget:{dataset:{id:'test/id'}}});assert.equal(opened,'/pages/lap-detail/lap-detail?id=test%2Fid')
 assert(!fs.readFileSync('pages/laps/laps.wxml','utf8').includes('id="lap-detail"'))
 console.log('PASS: result and modification badge route to standalone detail page')
+
+// Shared track selection must survive automatic location and never share an edit form.
+let located=0,loaded=0,shareMenus=0
+wx.showShareMenu=()=>{shareMenus++}
+p.locate=()=>{located++};p.load=()=>{loaded++}
+p.onLoad({track:'10'});assert.equal(p.data.track,10);assert.equal(p.data.region,6);assert.equal(located,0);assert.equal(loaded,1);assert.equal(shareMenus,1)
+assert.equal(p.onShareAppMessage().path,'/pages/laps/laps?track=10');assert.equal(p.onShareTimeline().query,'track=10')
+p.onLoad({track:'999'});assert.equal(located,1)
+p.onLoad({});assert.equal(located,2)
+console.log('PASS: share menu, track-specific links, shared track selection without location override, invalid link fallback')
+
+// Picker positions are display-only; cloud/share/edit IDs stay stable.
+assert.deepEqual(p.data.regionOptions,[0,5,4,11,9,8,6,10,2,3,7,1].map(i=>p.data.regions[i]))
+p.data.tab='submit'
+for(const [region,ids] of [[1,[3,2]],[2,[5,4]],[4,[15,7,14]],[7,[18,11,19]]]){
+ p.regionChange({detail:{value:p.data.regionOptions.indexOf(p.data.regions[region])}})
+ assert.equal(p.data.region,region);assert.equal(p.data.regionOptions[p.data.regionPicker],p.data.regions[region])
+ assert.deepEqual(Array.from(p.data.trackOptions),ids.map(i=>p.data.tracks[i]))
+ p.trackChange({detail:{value:ids.length-1}});assert.equal(p.data.track,ids.at(-1))
+}
+p.onLoad({track:'19'});assert.equal(p.data.track,19);assert.equal(p.data.regionTrack,2);assert.equal(p.data.regionOptions[p.data.regionPicker],p.data.regions[7])
+console.log('PASS: pinyin order, picker-to-stable-ID mapping and shared V1 layout selection')

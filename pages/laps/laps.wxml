@@ -7,7 +7,7 @@
   <view class="tabs"><button size="mini" data-tab="board" bindtap="changeTab" disabled="{{busy}}" class="{{tab==='board'?'active':''}}">圈速榜</button><button size="mini" data-tab="submit" bindtap="changeTab" disabled="{{busy}}" class="{{tab==='submit'?'active':''}}">提交成绩</button><button size="mini" data-tab="mine" bindtap="changeTab" disabled="{{busy}}" class="{{tab==='mine'?'active':''}}">我的成绩</button></view>
   <view class="card" wx:if="{{tab!=='mine'}}">
     <text class="hint" wx:if="{{locationHint}}">{{locationHint}}</text>
-    <text class="label">地区</text><picker range="{{regions}}" value="{{region}}" bindchange="regionChange" disabled="{{busy}}"><view class="picker">{{regions[region]}} ›</view></picker>
+    <text class="label">地区</text><picker range="{{regionOptions}}" value="{{regionPicker}}" bindchange="regionChange" disabled="{{busy}}"><view class="picker">{{regions[region]}} ›</view></picker>
     <text class="label">赛道</text><picker range="{{trackOptions}}" value="{{regionTrack}}" bindchange="trackChange" disabled="{{busy}}"><view class="picker">{{tracks[track]}} ›</view></picker>
   </view>
   <block wx:if="{{tab!=='submit'}}">

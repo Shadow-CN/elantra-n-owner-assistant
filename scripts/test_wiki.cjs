@@ -4,7 +4,7 @@ for(const model of ['elantra','5n']){
  const entries=wiki.articles(model);assert.equal(new Set(entries.map(a=>a.id)).size,entries.length)
  for(const a of entries){assert.equal(wiki.find(model,a.id).title,a.title);assert(wiki.url(model,a.id).includes(encodeURIComponent(a.id)));assert.deepEqual(a.lines,wiki.content(model).sections.find(s=>s.id===a.sectionId).cards.find(c=>c.title===a.title).lines);for(const rel of wiki.related(model,a)){if(!a.relatedIds)assert.equal(rel.sectionId,a.sectionId);assert.notEqual(rel.id,a.id)}}
 }
-assert.equal(wiki.articles('elantra').length,33)
+assert.equal(wiki.articles('elantra').length,34)
 const model=wiki.content('elantra'),original=model.sections[0].cards.slice(),id=wiki.sections('elantra')[0].cards[0].id
 try{model.sections[0].cards.reverse();assert.equal(wiki.find('elantra',id).title,original[0].title)}finally{model.sections[0].cards=original}
 assert.equal(wiki.filter(wiki.sections('elantra'),'OC523','01')[0].cards.length,1)

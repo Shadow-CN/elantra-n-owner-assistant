@@ -1,7 +1,15 @@
 const theme = require('../../utils/theme')
 const laps = require('../../utils/laps')
-const REGIONS = ['北京','浙江','上海','四川','广东','德国','内蒙古']
-const REGION_TRACKS = [[0,1],[2,3],[4,5],[6],[7],[8,9],[10]]
+const share = require('../../utils/share')
+const REGIONS = ['北京','浙江','上海','四川','广东','德国','内蒙古','天津','湖南','湖北','山东','河北']
+const REGION_TRACKS = [[0,1],[2,3],[4,5],[6],[7,14,15],[8,9],[10],[11,19,18],[12],[13],[16],[17]]
+// Sort picker options by explicit pinyin keys, independent of platform locale support.
+// Stable region/track IDs remain unchanged for GPS, saved records and shared links.
+const REGION_PINYIN = ['beijing','zhejiang','shanghai','sichuan','guangdong','deguo','neimenggu','tianjin','hunan','hubei','shandong','hebei']
+const TRACK_PINYIN = ['beijingruisi','beijingyichejingang','zhejiangguoji','ningboguoji','shanghaitianma','shanghaiguoji','chengdutianfuguoji','guangdongjingsuguoji','niubogelinbeihuan-full','niubogelinbeihuan-btg','eerduosiguoji','tianjinv1-2.4','zhuzhouguoji','wuhanguoji','zhuhaiguoji','guangdongguoji','shandonghezeguoji','shougang','tianjingogogo','tianjinv1-4.29']
+function compareKey(a,b){return a<b?-1:a>b?1:0}
+const REGION_ORDER = REGIONS.map((_,i)=>i).sort((a,b)=>compareKey(REGION_PINYIN[a],REGION_PINYIN[b]))
+REGION_TRACKS.forEach(ids=>ids.sort((a,b)=>compareKey(TRACK_PINYIN[a]||laps.TRACKS[a],TRACK_PINYIN[b]||laps.TRACKS[b])))
 function call(data) {
   if (!wx.cloud) return Promise.reject(new Error('当前微信版本不支持云开发，请升级微信'))
   return wx.cloud.callFunction({name:'lapBoard',data}).then(res => {
@@ -10,16 +18,24 @@ function call(data) {
   })
 }
 Page({
-  data:{themeMode:'auto',tracks:laps.TRACKS,regions:REGIONS,region:0,regionTrack:0,trackOptions:REGION_TRACKS[0].map(i=>laps.TRACKS[i]),track:0,tab:'board',rows:[],hasMore:false,loading:false,error:'',busy:false,showPrivacy:false,locating:false,locationHint:'',privacyTitle:'选择视频前，请阅读隐私指引',privacyCopy:'圈速榜会使用你主动选择或拍摄的视频。只有提交成绩时才会上传，上传后其他用户可查看。视频为选填，不同意也可继续提交成绩。',privacyAgreeText:'同意并选择视频',privacyContractName:'隐私保护指引',editId:'',editVersion:0,existingVideo:false,removeVideo:false,progress:0,video:null,lapParts:{minutes:'',seconds:'',milliseconds:''},lapError:'',conditions:['干地','湿地'],modTypes:['原厂','改装'],modFields:laps.MOD_FIELDS,form:{driver:'',vehicle:'',date:'',temperature:'',videoLink:'',lap:'',modifications:'原厂',modificationDetails:{},condition:'干地'}},
-  onLoad() {
+  data:{themeMode:'auto',tracks:laps.TRACKS,regions:REGIONS,regionOptions:REGION_ORDER.map(i=>REGIONS[i]),regionPicker:0,region:0,regionTrack:0,trackOptions:REGION_TRACKS[0].map(i=>laps.TRACKS[i]),track:0,tab:'board',rows:[],hasMore:false,loading:false,error:'',busy:false,showPrivacy:false,locating:false,locationHint:'',privacyTitle:'选择视频前，请阅读隐私指引',privacyCopy:'圈速榜会使用你主动选择或拍摄的视频。只有提交成绩时才会上传，上传后其他用户可查看。视频为选填，不同意也可继续提交成绩。',privacyAgreeText:'同意并选择视频',privacyContractName:'隐私保护指引',editId:'',editVersion:0,existingVideo:false,removeVideo:false,progress:0,video:null,lapParts:{minutes:'',seconds:'',milliseconds:''},lapError:'',conditions:['干地','湿地'],modTypes:['原厂','改装'],modFields:laps.MOD_FIELDS,form:{driver:'',vehicle:'',date:'',temperature:'',videoLink:'',lap:'',modifications:'原厂',modificationDetails:{},condition:'干地'}},
+  onLoad(options) {
+    share.enableShareMenu()
     this._alive = true
     this._applyTheme()
     const now = new Date(Date.now()+8*3600000).toISOString().slice(0,10)
     this.setData({'form.date':now,today:now})
+    const value=options&&options.track
+    const track=typeof value==='string'&&/^\d+$/.test(value)?Number(value):-1
+    const region=REGION_TRACKS.findIndex(ids=>ids.includes(track))
+    const sharedTrack=region>=0
+    if(sharedTrack)this.setData({region,regionPicker:REGION_ORDER.indexOf(region),regionTrack:REGION_TRACKS[region].indexOf(track),track,trackOptions:REGION_TRACKS[region].map(i=>laps.TRACKS[i])})
+    this._selectionRevision=sharedTrack?1:0
     this.load(true)
-    this._selectionRevision=0
-    this.locate(true)
+    if(!sharedTrack)this.locate(true)
   },
+  onShareAppMessage(){return {title:laps.TRACKS[this.data.track]+' · 圈速榜',path:'/pages/laps/laps?track='+this.data.track}},
+  onShareTimeline(){return {title:laps.TRACKS[this.data.track]+' · 圈速榜',query:'track='+this.data.track}},
   onShow(){this._visible=true;this._applyTheme()},
   onHide(){this._visible=false;if(this._task)this._uploadHidden=true},
   _applyTheme(){const mode=getApp().globalData.themeMode||'auto';this.setData(Object.assign({themeMode:mode,pageStyle:theme.getPageStyle(mode)},theme.navColors(theme.isDarkEffective(mode))))},
@@ -33,7 +49,7 @@ Page({
   onUnload(){this._alive=false;if(this._task)this._task.abort()},
   notify(e){if(this._alive)wx.showModal({title:'提示',content:e.message || '网络异常，请重试',showCancel:false})},
   changeTab(e){if(this.data.busy)return;this._loadId=(this._loadId||0)+1;if(this.data.editId)this.cancelEdit();this.setData({tab:e.currentTarget.dataset.tab,loading:false});if(this.data.tab!=='submit')this.load(true)},
-  regionChange(e){if(this.data.busy)return;this._selectionRevision=(this._selectionRevision||0)+1;const region=Number(e.detail.value);this.setData({region,regionTrack:0,track:REGION_TRACKS[region][0],trackOptions:REGION_TRACKS[region].map(i=>laps.TRACKS[i])});if(this.data.tab!=='submit')this.load(true)},
+  regionChange(e){if(this.data.busy)return;this._selectionRevision=(this._selectionRevision||0)+1;const region=REGION_ORDER[Number(e.detail.value)];this.setData({region,regionPicker:REGION_ORDER.indexOf(region),regionTrack:0,track:REGION_TRACKS[region][0],trackOptions:REGION_TRACKS[region].map(i=>laps.TRACKS[i])});if(this.data.tab!=='submit')this.load(true)},
   trackChange(e){if(this.data.busy)return;this._selectionRevision=(this._selectionRevision||0)+1;const regionTrack=Number(e.detail.value);this.setData({regionTrack,track:REGION_TRACKS[this.data.region][regionTrack]});if(this.data.tab!=='submit')this.load(true)},
   formInput(e){if(!this.data.busy)this.setData({['form.'+e.currentTarget.dataset.field]:e.detail.value})},
   lapPartInput(e){
@@ -115,7 +131,7 @@ Page({
       const result=require('../../utils/trackLocation').recommend(position.latitude,position.longitude)
       if(!result){this.setData({locating:false,locationHint:'暂未识别所在省份，请手动选择地区和赛道'});return}
       const region=result.region
-      this.setData({region,track:REGION_TRACKS[region][0],regionTrack:0,trackOptions:REGION_TRACKS[region].map(i=>laps.TRACKS[i]),locating:false,locationHint:result.province+' · '+(result.sameProvince?'优先推荐同省赛道':'按省份推荐附近地区赛道')})
+      this.setData({region,regionPicker:REGION_ORDER.indexOf(region),track:REGION_TRACKS[region][0],regionTrack:0,trackOptions:REGION_TRACKS[region].map(i=>laps.TRACKS[i]),locating:false,locationHint:result.province+' · '+(result.sameProvince?'优先推荐同省赛道':'按省份推荐附近地区赛道')})
       if(this.data.tab==='board')this.load(true)
     },fail:()=>{if(this._alive)this.setData({locating:false,locationHint:'未获取到位置，可手动选择地区和赛道'})}})
   },
@@ -229,7 +245,7 @@ Page({
     const region=REGION_TRACKS.findIndex(ids=>ids.includes(row.track))
     const form={};['driver','vehicle','date','temperature','lap','condition'].forEach(k=>{form[k]=row[k]});form.videoLink=row.videoLink||'';form.modifications=row.modifications==='原厂'?'原厂':'改装';form.modificationDetails=Object.assign({},row.modificationDetails||{})
     this._pending=null
-    this.setData({tab:'submit',editId:row._id,editVersion:row.version||0,form,lapParts:this._lapParts(row.lap),lapError:'',region,regionTrack:REGION_TRACKS[region].indexOf(row.track),track:row.track,trackOptions:REGION_TRACKS[region].map(i=>laps.TRACKS[i]),existingVideo:!!row.hasVideo,removeVideo:false,video:null,scrollTarget:''})
+    this.setData({tab:'submit',editId:row._id,editVersion:row.version||0,form,lapParts:this._lapParts(row.lap),lapError:'',region,regionPicker:REGION_ORDER.indexOf(region),regionTrack:REGION_TRACKS[region].indexOf(row.track),track:row.track,trackOptions:REGION_TRACKS[region].map(i=>laps.TRACKS[i]),existingVideo:!!row.hasVideo,removeVideo:false,video:null,scrollTarget:''})
   },
   clearVideo(){if(!this.data.busy){this._pending=null;this.setData({video:null,removeVideo:!this.data.video && this.data.existingVideo,progress:0})}},
   cancelEdit(){

@@ -37,6 +37,8 @@ Page({
     this._applyTheme()
   },
 
+  onOpenExchange() { wx.navigateTo({url:'/pages/exchange/exchange'}) },
+
   onOpenTire() {
     wx.navigateTo({ url: '/pages/tire/tire' })
   },

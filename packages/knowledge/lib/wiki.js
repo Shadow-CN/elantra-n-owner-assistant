@@ -8,7 +8,8 @@ function sections(model){return content(model).sections.map(function(section){
   })})
 })}
 function articles(model){return sections(model).reduce(function(all,s){return all.concat(s.cards)},[])}
-function find(model,id){return articles(model).find(function(card){return card.id===id||(card.aliases||[]).includes(id)})||null}
+// Keep the previous carpet-clip URL compatible with the user-renamed article.
+function find(model,id){if(model!=='5n'&&id==='sparts-3v455l')id='sparts-kyq87y';return articles(model).find(function(card){return card.id===id||(card.aliases||[]).includes(id)})||null}
 function url(model,id){return '/packages/knowledge/article/article?model='+encodeURIComponent(model)+'&id='+encodeURIComponent(id)}
 function filter(source,query,category){
   var text=String(query||'').trim().toLowerCase()

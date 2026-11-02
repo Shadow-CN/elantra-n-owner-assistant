@@ -35,6 +35,8 @@ function walk(folder) {
 }
 walk('')
 
+files.filter(function(f){return f.path.endsWith('.json')}).forEach(function(f){JSON.parse(fs.readFileSync(path.join(root,f.path),'utf8'))})
+
 var totals = { main: 0 }
 files.forEach(function(file) { totals[file.owner] = (totals[file.owner] || 0) + file.bytes })
 Object.keys(totals).forEach(function(name) {
@@ -73,15 +75,18 @@ files.filter(function(file) { return file.path.endsWith('.js') }).forEach(functi
   }
 })
 
-var wiki = require('../packages/knowledge/data/knowledge5n')
-wiki.sections.forEach(function(section) {
-  section.cards.forEach(function(card) {
-    ;(card.images || []).concat(card.resource ? [card.resource.path] : []).forEach(function(resource) {
-      var relative = resource.replace(/^\//, '')
-      assert(files.some(function(file) { return file.path === relative }), 'Missing/ignored resource: ' + relative)
-      assert.equal(owner(relative), 'packages/knowledge')
-    })
+var assetMap = require('../cloudfunctions/wikiFiles/assets.json')
+;['knowledge5n','knowledgeElantra'].forEach(function(name){
+ var wiki=require('../packages/knowledge/data/'+name)
+ wiki.sections.forEach(function(section){section.cards.forEach(function(card){
+  var resources=(card.image?[card.image]:[]).concat(card.images||[],(card.blocks||[]).filter(function(b){return b.type==='image'}).map(function(b){return b.src}),card.resource?[card.resource.path]:[])
+  resources.forEach(function(resource){
+   var relative=resource.replace(/^\//,'')
+   assert(fs.existsSync(path.join(root,relative)),'Missing local source asset: '+relative)
+   assert(ignored(relative),'Cloud asset still bundled: '+relative)
+   assert(assetMap[resource]&&assetMap[resource].startsWith('cloud://'),'Missing cloud mapping: '+relative)
   })
+ })})
 })
 assert(ignored('venv/Lib/site-packages/example.py'))
 assert(ignored('ioniq_5n_china_owner_wiki-main/docs/public/manual/5n manual.pdf'))
