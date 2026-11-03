@@ -1,7 +1,6 @@
 var themeUtil = require('../../../utils/theme')
 var shareUtil = require('../../../utils/share')
 var wiki = require('../lib/wiki')
-var fileHelper = require('../../../utils/fileHelper')
 Page({
   data:{navBg:'#FFFFFF',navColor:'black',themeMode:'auto',pageStyle:'',query:'',model:'elantra',modelName:'伊兰特 N',modelEnglish:'ELANTRA N',modelDescription:'',sourceLink:null,categoryLink:null,searchPlaceholder:'搜索词条',sourceNote:'',contacts:[],sections:[],categories:[],supplementalCategories:[],showEntries:true,activeCategory:'',categoryTitle:'全部词条',articleCount:0,resultCount:0,scrollTop:0},
   onLoad(options){shareUtil.enableShareMenu();this._setModel(options&&options.model==='5n'?'5n':'elantra');if(options&&options.category&&this._allSections.some(function(s){return s.id===options.category||(s.aliases||[]).includes(options.category)}))this._setCategory(options.category);this._applyTheme()},
@@ -45,8 +44,6 @@ Page({
     if(link&&link.url)wx.setClipboardData({data:link.url,fail:function(){wx.showToast({title:'复制失败，请长按链接复制',icon:'none'})}})
   },
   onCopyLine(e){wx.setClipboardData({data:e.currentTarget.dataset.value})},
-  onPreviewImage(e){var src=e.currentTarget.dataset.src;wx.previewImage({current:src,urls:[src]})},
-  onShareResource(e){var resource=e.currentTarget.dataset;try{var content=wx.getFileSystemManager().readFileSync(resource.path.replace(/^\//,''));fileHelper.saveBinaryAndShare(resource.name,content,function(info){if(info.shareSkipped)wx.showModal({title:'文件已保存',content:info.filePath,showCancel:false})},function(err){wx.showToast({title:err.message,icon:'none'})})}catch(err){wx.showToast({title:'文件读取失败，请重试',icon:'none'})}},
   onShareAppMessage(){return {title:this.data.modelName+' 车主 Wiki',path:'/packages/knowledge/knowledge/knowledge?model='+this.data.model+(this.data.activeCategory?'&category='+encodeURIComponent(this.data.activeCategory):'')}},
   onShareTimeline(){return {title:this.data.modelName+' 车主 Wiki',query:'model='+this.data.model+(this.data.activeCategory?'&category='+encodeURIComponent(this.data.activeCategory):'')}}
 })

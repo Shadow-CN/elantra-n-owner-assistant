@@ -88,6 +88,15 @@ data={
  'source':'资料来源：德国鸡腿堡整理的Wiki（见页面顶部链接），维护规格与故障处理请结合随车手册及售后诊断确认。',
  'contacts':[], 'sections':sections
 }
-Path('packages/knowledge/data/knowledge5n.js').write_text('// Generated from the local source Wiki. Rebuild with scripts/build_5n_wiki.py.\nmodule.exports = '+json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+for section in sections:
+ for card in section['cards']:
+  card['id']='s'+section['id']+'-'+article_hash(card['title'])
+  if 'blocks' in card:
+   card.pop('lines',None)
+   card.pop('images',None)
+# Generate an import candidate; never overwrite owner-maintained runtime content.
+candidate=Path('docs/generated/knowledge5n.import.js')
+candidate.parent.mkdir(parents=True,exist_ok=True)
+candidate.write_text('// Import candidate only. Review and merge into knowledge5n.js.\nmodule.exports = '+json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 Path('docs/5n-wiki-source-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
-print('5N categories:',[s['title'] for s in sections]);print('articles:',sum(len(s['cards']) for s in sections))
+print('Import candidate:',candidate);print('5N categories:',[s['title'] for s in sections]);print('articles:',sum(len(s['cards']) for s in sections))

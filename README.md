@@ -1,5 +1,7 @@
 # 现代 N 车主助手：开发与内容维护指南
 
+本轮开发分支：`codex/rcz-obd-wiki`。稳定分支 `main` 保留在 `c4a004c`；本轮功能须验证后再决定是否合并。
+
 原生微信小程序，服务伊兰特 N（EN / CN7N）和 IONIQ 5 N（5N）车主。包含车主 Wiki、圈速榜、OBD 配置导出、压力换算和汇率换算。
 
 **先找文件：不确定改哪里时，先查下面的表格。继续开发请同时阅读 [HANDOFF.md](HANDOFF.md)。**
@@ -19,7 +21,8 @@
 | Wiki 首页标题、分类目录布局、搜索框 | [knowledge.wxml](packages/knowledge/knowledge/knowledge.wxml)、[knowledge.wxss](packages/knowledge/knowledge/knowledge.wxss) | 5N“手册与资料”通过分类05的样式占整行 |
 | Wiki 搜索、分类选择、返回行为 | [knowledge.js](packages/knowledge/knowledge/knowledge.js) | 搜索→分类→Wiki目录→上一页；分享直达时提供首页回退 |
 | 词条详情页面排版、图片、复制按钮 | [article.wxml](packages/knowledge/article/article.wxml)、[article.wxss](packages/knowledge/article/article.wxss) | 行为在同目录 `article.js` |
-| Wiki 词条ID、搜索匹配、关联文章 | [wiki.js](packages/knowledge/lib/wiki.js) | ID由分类ID和文章标题生成；改标题需要保留旧ID到 `aliases` |
+| Wiki 搜索匹配、关联文章 | [wiki.js](packages/knowledge/lib/wiki.js) | 文章使用显式固定ID，改标题保留id即可；aliases兼容更早链接 |
+| Wiki 自动生成搜索／复制文字、图片列表 | [content.js](packages/knowledge/lib/content.js) | parts生成零件文字，blocks生成富文本及图库；不用重复填写 |
 | 知识库图片加载、临时链接缓存、附件下载 | [media.js](packages/knowledge/lib/media.js) | 从云函数获取链接；图片失败可重试；附件先下载再点击分享 |
 | 图片和RC附件的云端位置 | [assets.json](cloudfunctions/wikiFiles/assets.json) | 逻辑路径→永久cloud fileID白名单；不要写临时签名URL |
 | PDF手册文件名和资料入口 | EN/5N数据文件的 `document` | `name` 为文件名，`key` 对应下方PDF白名单 |
@@ -28,10 +31,11 @@
 | 圈速榜页面、表单文字、成绩列表布局 | [pages/laps/laps.wxml](pages/laps/laps.wxml) | 样式在 `laps.wxss`，行为在 `laps.js` |
 | 圈速输入、上传、编辑、删除、分享 | [pages/laps/laps.js](pages/laps/laps.js) | 分／秒／毫秒；毫秒选填；视频和视频链接选填 |
 | 成绩详情页 | [pages/lap-detail/lap-detail.wxml](pages/lap-detail/lap-detail.wxml) | 视频／外链→基础信息→改装项；行为在同目录JS |
-| 赛道名称、改装字段、输入校验 | [utils/laps.js](utils/laps.js) | `TRACKS`、`MOD_FIELDS`、`validate` |
-| 云端成绩校验 | [validation.js](cloudfunctions/lapBoard/validation.js) | 必须与 `utils/laps.js` 一致，改后部署 `lapBoard` |
-| 地区、地区包含哪些赛道、拼音顺序 | [pages/laps/laps.js](pages/laps/laps.js) | `REGIONS`、`REGION_TRACKS`、`REGION_PINYIN`、`TRACK_PINYIN` |
-| 自动定位推荐 | [trackLocation.js](utils/trackLocation.js) | 本地省界匹配，不上传坐标；地区编号与圈速页保持一致 |
+| 赛道名称、地区归属、拼音排序 | [data/tracks.js](data/tracks.js) | 唯一手工维护入口，保留已有ID；修改后运行生成命令 |
+| 改装字段、输入校验 | [utils/laps.js](utils/laps.js) | `MOD_FIELDS`、`validate`；修改后运行生成命令 |
+| 云端成绩校验 | [validation.js](cloudfunctions/lapBoard/validation.js) | 自动生成，不直接编辑；源文件为 `utils/laps.js`，生成后部署 `lapBoard` |
+| 赛道配置生成、地区下拉顺序 | [build_lap_config.cjs](scripts/build_lap_config.cjs)、[trackCatalog.js](utils/trackCatalog.js) | 前者生成云端文件，后者从统一配置计算下拉选项 |
+| 自动定位推荐 | [trackLocation.js](utils/trackLocation.js) | 本地省界匹配，不上传坐标；地区自动读取统一赛道配置 |
 | 成绩数据库查询／权限／视频清理 | [lapBoard/index.js](cloudfunctions/lapBoard/index.js) | 操作 `lap_records`，归属检查由云端执行 |
 | 压力换算内容、默认参考值 | [pages/tire/tire.js](pages/tire/tire.js)、[tire.wxml](pages/tire/tire.wxml) | 不是圈速榜温度字段 |
 | 汇率页面和交互 | [pages/exchange/exchange.js](pages/exchange/exchange.js)、[exchange.wxml](pages/exchange/exchange.wxml) | 金额、币种、交换、刷新、缓存提示 |
@@ -39,9 +43,10 @@
 | 汇率API与数据校验 | [rates.js](cloudfunctions/exchangeRates/rates.js) | 固定从Frankfurter取每日参考汇率，不接受用户传任意URL |
 | 汇率缓存、失败回退 | [exchangeRates/index.js](cloudfunctions/exchangeRates/index.js) | 服务端6小时缓存，本地保留最近成功数据，最多7天；界面显示缓存状态 |
 | OBD中文名、PID、单位等运行时数据 | [data/pids.js](data/pids.js) | 大文件，先搜索参数名；数据生成说明见下文 |
-| OBD筛选、参数选择 | `pages/filter/`、`pages/params/` | 数据工具代码位于 `utils/` |
+| OBD车型标签、筛选、参数选择 | `pages/filter/`、`pages/params/` | EN现有功能保留；5N页签先展示数据整理中，不能导出EN数据 |
 | Car Scanner / LUFI导出 | `pages/export/` | `.csp`与LUFI二进制INI压缩包 |
-| RaceChrono导出工具 | `pages/racechrono/`、[raceChronoExporter.js](utils/raceChronoExporter.js) | 与5N Wiki内的RC附件入口是两个用途 |
+| RaceChrono参数转换 | `pages/racechrono/`、[raceChronoExporter.js](utils/raceChronoExporter.js) | 页面保留七项逐项复制；导出已改为RCZ |
+| RCZ车辆配置打包 | [raceChronoProfile.js](utils/raceChronoProfile.js)、[zip.js](utils/zip.js) | 通道数字ID、快慢分组、JSON及ZIP封装 |
 | 全局颜色和深浅模式 | [app.wxss](app.wxss)、[theme.js](utils/theme.js) | auto→dark→light；页面通过主题变量取色 |
 | 页面最上面的标题 | 对应页面 `.wxml` 中的 `<navigation-bar title="…">` | 例如“车主 Wiki”“赛道圈速榜”，不是数据文件里的车型名称 |
 | 顶部导航栏、左上角箭头 | `components/navigation-bar/` | Wiki用delta=0由页面处理返回；其他页面通常默认原生返回 |
@@ -53,36 +58,63 @@
 
 ## 2. 修改知识库正文和零件号
 
-EN直接修改 `packages/knowledge/data/knowledgeElantra.js`。5N运行时数据在同目录 `knowledge5n.js`。
+EN修改 `packages/knowledge/data/knowledgeElantra.js`，5N修改同目录 `knowledge5n.js`。两份文件都可以直接维护。**同一内容只写一次，搜索和全文复制会自动同步。**
+
+### 修改配件、编号和备注
+
+只改 `parts` 对应字段，不需要再改一份搜索文字：
 
 ```js
 {
+  "id": "已有词条的固定ID请保留",
   "title": "词条标题",
-  "summary": "列表中显示的简短介绍",
+  "summary": "列表中的简短介绍（可选）",
   "parts": [{
     "name": "配件名称",
-    "brand": "品牌（没有可留空）",
+    "brand": "品牌（可选）",
     "codes": ["零件编号"],
-    "note": "适配或订购备注"
+    "note": "订购／适配备注（可选）"
   }],
-  "lines": ["配件名称 零件编号", "正文说明"],
-  "partLineIndexes": [0]
+  "lines": ["配件下方额外说明（可选）；这里不用重复配件名称、编号或备注"]
 }
 ```
 
-- `codes` 是点击复制的编号；`lines` 用于全文复制和搜索，也要同步更新。
-- `partLineIndexes: [0]` 表示正文不重复显示第0行，因为上方已单独展示零件号。
-- 简单词条显示 `lines`；存在 `blocks` 时，正文按 `blocks` 排版。所以有图文排版的文章，改文字需同步 `lines` 和对应 `blocks[].text`。
-- `images` 数组按顺序展示；若另有 `image`，该单图会先展示。
-- 图文交错词条按 `blocks` 中 `type: 'image'` 的顺序显示，`images` 也要维护同一浏览顺序。
-- 目前迎宾灯按“产品与效果／门板安装位置／取电与开关效果／灯体实拍”排列；脚垫卡扣按安装示意→原参考图→特写→安装实拍排列。
-- 分类ID不要随意改变。文章改名时，把原分享ID放入 `aliases`，避免旧链接失效。
+只有配件信息时可省略 `lines`。运行时会自动将配件名称、品牌、编号、备注加入搜索及全文复制。原来的 `partLineIndexes` 已不需要。
 
-### 5N生成脚本有什么用？
+### 修改普通文字词条
 
-`scripts/build_5n_wiki.py` 读取本地 `ioniq_5n_china_owner_wiki-main/docs` 的Markdown，生成小程序JS数据和来源清单。小程序本身不运行Python。
+没有复杂排版的文章仍用 `lines`，一行一个字符串；这些文字同时用于显示、搜索和复制。没有 `parts`、`blocks` 时保持现有写法即可。
 
-**它会覆盖 `knowledge5n.js`。如果你直接改过JS，先保存并核对这些修改，不能直接运行脚本重建。** 本次云资源迁移保留了数据中的逻辑图片路径，因此不需要重新生成5N正文。
+### 修改图文、表格词条
+
+**有 `blocks` 的文章只编辑 `blocks`**，不要再填写 `lines`、`images` 或 `image`。文字、表格和图片顺序都按 `blocks` 从上到下排列：
+
+```js
+{
+  "id": "已有词条的固定ID请保留",
+  "title": "安装说明",
+  "blocks": [
+    {"type": "heading", "text": "安装位置"},
+    {"type": "text", "text": "这里写正文说明", "indent": 0},
+    {"type": "image", "src": "/packages/knowledge/assets/knowledge/你的图片.jpg"},
+    {"type": "table", "headers": ["项目", "规格"], "rows": [["轮毂", "19×9J ET43"]]}
+  ]
+}
+```
+
+图片浏览顺序自动跟随正文顺序，全文复制自动包含文字、标题及表格。带 `resource` 的附件名称也会自动加入搜索和复制。云图片新增／替换仍需按第3节上传并更新白名单。
+
+普通文章若需要末尾图片组，仍可使用 `images`，按数组顺序展示；这种文章不需要 `blocks`。脚垫卡扣仍是安装示意→原参考图→特写→安装实拍；迎宾灯按 `blocks` 中顺序显示。
+
+### 修改标题、分类和分享链接
+
+所有现有词条已写入固定 `id`，改标题或将词条搬到另一个分类时**保留这个id**即可保持分享地址和关联条目有效。不要改动已有分类ID或删除旧 `aliases`。新增词条可以省略id，程序会按分类和标题生成；确认上线前建议固定下来，整个知识库内必须唯一。
+
+### 5N上游资料导入脚本
+
+`scripts/build_5n_wiki.py` 用于从本地上游Markdown整理候选资料，小程序不运行Python。现在输出到 **`docs/generated/knowledge5n.import.js`**，供人工对照合并，**不会覆盖运行中的 knowledge5n.js**。生成的候选资料也使用 `blocks` 单处维护结构。
+
+合并时保留现有词条id及aliases，并核对你已经手工修改的内容，不要整份替换运行时文件。云资源清单脚本 `build_wiki_assets.cjs` 仍只生成资源映射，不改正文。
 
 ## 3. 图片、文档、视频现在放在哪里？
 
@@ -129,16 +161,33 @@ EN直接修改 `packages/knowledge/data/knowledgeElantra.js`。5N运行时数据
 
 ## 4. 新增赛道与地区
 
-成绩数据库保存的是赛道数组编号，**只能追加，不要重排或复用已有编号**。
+**只编辑 [data/tracks.js](data/tracks.js)**。成绩、分享链接和定位使用稳定编号，只能在数组末尾追加，不要重排、删除或复用已有ID。
 
-1. `utils/laps.js` 的 `TRACKS` 末尾追加赛道名称。
-2. `cloudfunctions/lapBoard/validation.js` 同步完全相同的内容。
-3. `pages/laps/laps.js` 的 `REGION_TRACKS` 把新编号归入对应地区。
-4. 同文件 `TRACK_PINYIN` 增加对应拼音键，决定下拉选项顺序。
-5. 新增地区时，在 `REGIONS` 与 `REGION_PINYIN` 末尾追加，并同步 `utils/trackLocation.js` 的地区数组；编号顺序必须一致。
-6. 部署 `lapBoard` 并编译。
+文件分两部分：
 
-现有V1：编号11为2.4km，编号19为4.29km。界面按拼音排序，存储编号不随显示顺序变化。分享链接带赛道编号，自动定位不会覆盖分享指定的赛道。
+- `regions`：地区的 `id`、`name`、`pinyin`。
+- `tracks`：赛道的 `id`、`name`、`region`（所属地区ID）、`pinyin`。
+
+例如，目前下一个赛道ID为20，天津地区ID为7，可在 `tracks` 末尾追加（示例名称，按实际赛道修改）：
+
+```js
+{ "id": 20, "name": "天津示例赛车场", "region": 7, "pinyin": "tianjinshili" }
+```
+
+新增地区时先在 `regions` 末尾追加，再让新赛道引用它的ID。两类ID均须与数组位置相同，拼音键用于展示排序；展示顺序不会改变存储编号。
+
+修改后执行：
+
+```powershell
+node scripts/build_lap_config.cjs
+node scripts/check_all.cjs
+```
+
+生成器从 `data/tracks.js` 和 `utils/laps.js` 生成云函数内的 `tracks.js`、`validation.js`，不修改数据库，也不会自动部署。检查通过后部署整个 `lapBoard` 云函数，再编译、预览小程序。仅检查是否同步可运行 `node scripts/build_lap_config.cjs --check`。
+
+**修改改装字段或输入校验**仍编辑 `utils/laps.js`，然后执行同样的生成、检查与部署步骤。不要直接编辑自动生成的云端文件。
+
+现有V1：编号11为2.4km，编号19为4.29km。分享指定赛道时仍不会被定位覆盖。已发布ID和地区归属由 `scripts/test_track_catalog.cjs` 检查，不能为了让测试通过而随意改动旧编号。
 
 ## 5. 汇率换算
 
@@ -183,7 +232,32 @@ CLI/MCP访问密钥只在本机使用，不写进README、代码或Git。`script
 - Car Scanner导出 `.csp`，LUFI导出二进制INI压缩包；模板与规则在 `docs/examples/`、`docs/obd/`。
 - `utils/fileHelper.js` 处理同步保存与分享；云端附件需要先下载，之后再由用户点击触发分享。
 
+### RaceChrono RCZ 导出
+
+OBD选好参数→导出→RaceChrono→“导出 RCZ”。生成 `vehicle_cn7n.rcz`，其中是 `vehicleProfile.json`，可在RaceChrono导入车辆配置。页面七个配置字段仍可单独复制。
+
+- 只导出勾选参数；搜索和分页不会改变导出范围。
+- 生成EN自己的PID、OBD请求标头和公式，不复制5N配置的数值。
+- 通道编号使用官方数值编码，保留轮位和同类序号。某类通道超过64个编号时分为多个配置，分享 `vehicle_cn7n_profiles.zip`；解压后分别导入各个RCZ。
+- 默认协议为11-bit CAN / 500 kbit，快／慢通道按参数类别预设；导入后按实际记录需求调整。设备配对、会话／保活命令和实际读数仍需实车验证。
+- `utils/raceChronoExporter.js` 仍提供Markdown生成函数，供开发者生成本地参考文档；小程序按钮不再导出MD。
+- 5N页签当前只做入口，尚未接入完整OBD数据；知识库原有 `vehicle_i5n.rcz` 保持原样。
+- 格式研究与验证说明：[docs/racechrono-profile-format.md](docs/racechrono-profile-format.md)。
+
+
 ## 8. 验证命令
+
+推荐用一个命令完成全部本地检查：
+
+```powershell
+node scripts/check_all.cjs
+```
+
+RCZ独立解包验证需要本机安装Python并可执行 `python`。
+
+自动发现 `scripts/test_*.js` 与 `scripts/test_*.cjs`，最后检查包体、JSON编码、路由和资源引用。只检查，不生成正文、不上传文件、不部署云函数；失败会列出脚本并返回非零退出码。当前共18项（含版本提示、OBD车型、RCZ和知识库单处维护测试）。
+
+只改某个功能时，也可运行对应脚本：
 
 ```powershell
 node scripts/test_wiki.cjs
@@ -191,12 +265,16 @@ node scripts/test_knowledge.js
 node scripts/test_en_reorg.cjs
 node scripts/test_wiki_cloud.cjs
 node scripts/test_laps.js
+node scripts/test_track_catalog.cjs
 node scripts/test_lap_form.cjs
 node scripts/test_lap_upload.cjs
 node scripts/test_lap_detail.cjs
 node scripts/test_location.cjs
 node scripts/test_media.cjs
 node scripts/test_racechrono.js
+node scripts/test_rcz.cjs
+node scripts/test_obd_models.cjs
+node scripts/test_wiki_content.cjs
 node scripts/test_exchange.cjs
 node scripts/check_package_size.js
 ```
@@ -217,7 +295,7 @@ node scripts/check_package_size.js
 | 分享链接打开到错误赛道 | 是否重排了TRACKS；不得直接调整数据库编号 |
 | 圈速不接受冒号格式 | 现在采用数字分栏，分、秒、毫秒分别填写，毫秒可空 |
 | 视频上传中断 | 网络、页面切后台、文件临时路径和云存储权限；详见上传回归与交接记录 |
-| 修改5N文字被覆盖 | 是否运行了build_5n_wiki.py；从Git/备份找回后同步生成规则 |
+| 从上游重新整理5N资料 | build_5n_wiki.py现在只生成docs/generated内候选文件；人工对照合并到knowledge5n.js |
 | 页面标题文字没变 | 改的是数据里的name还是页面navigation-bar的title；查第1节 |
 
 项目变化与尚未完成的真机验证见 [HANDOFF.md](HANDOFF.md)，历史记录在 `docs/HANDOFF-history.md`。

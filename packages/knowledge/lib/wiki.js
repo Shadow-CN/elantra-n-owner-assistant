@@ -1,12 +1,8 @@
 var elantra = require('../data/knowledgeElantra')
 var ioniq = require('../data/knowledge5n')
-function hash(text){var n=2166136261;for(var i=0;i<text.length;i++){n^=text.charCodeAt(i);n=Math.imul(n,16777619)}return (n>>>0).toString(36)}
-function content(model){return model==='5n'?ioniq:elantra}
-function sections(model){return content(model).sections.map(function(section){
-  return Object.assign({},section,{cards:section.cards.map(function(card){
-    return Object.assign({},card,{id:'s'+section.id+'-'+hash(card.title),sectionId:section.id,sectionTitle:section.title,summary:card.summary||(card.parts?('原厂与替换型号 · '+card.parts.length+' 条参考'):(card.lines[0]||'')),displayLines:card.lines.filter(function(line,index){return !(card.partLineIndexes||[]).includes(index)}),primaryCode:card.parts&&card.parts[0]&&card.parts[0].codes[0],imageCount:(card.image?1:0)+(card.images||[]).length})
-  })})
-})}
+var normalize = require('./content').normalize
+function content(model){return normalize(model==='5n'?ioniq:elantra)}
+function sections(model){return content(model).sections}
 function articles(model){return sections(model).reduce(function(all,s){return all.concat(s.cards)},[])}
 // Keep the previous carpet-clip URL compatible with the user-renamed article.
 function find(model,id){if(model!=='5n'&&id==='sparts-3v455l')id='sparts-kyq87y';return articles(model).find(function(card){return card.id===id||(card.aliases||[]).includes(id)})||null}

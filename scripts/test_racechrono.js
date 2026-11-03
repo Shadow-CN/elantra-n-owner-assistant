@@ -130,7 +130,7 @@ var app = { globalData: { selectedIds: ['179849', '179854'], themeMode: 'light' 
 var pagePath = path.join(__dirname, '../pages/racechrono/racechrono.js')
 vm.runInNewContext(fs.readFileSync(pagePath, 'utf8'), {
   require: function(name) {
-    if (name === '../../utils/fileHelper') return { saveAndShare: function(filename, content) { sharedContent = content } }
+    if (name === '../../utils/fileHelper') return { saveBinaryAndShare: function(filename, content) { assert.equal(filename, 'vehicle_cn7n.rcz'); sharedContent = content } }
     return require(path.resolve(path.dirname(pagePath), name))
   },
   Page: function(config) { page = config }, getApp: function() { return app },
@@ -149,8 +149,13 @@ page.onNext(); assert.equal(page.data.page, 2)
 page.onSearch({ detail: { value: '215243' } })
 assert.equal(page.data.total, 1); assert.equal(page.data.entries[0].id, '215243')
 page.onShareFile()
-assert(sharedContent.includes('共 25 条配置'))
-assert(!sharedContent.includes('## 215353 '))
+assert(sharedContent instanceof ArrayBuffer)
+const bytes = Buffer.from(sharedContent)
+assert.equal(bytes.readUInt32LE(0), 0x04034b50)
+const start = 30 + bytes.readUInt16LE(26) + bytes.readUInt16LE(28)
+const profile = JSON.parse(bytes.subarray(start, start + bytes.readUInt32LE(18)).toString('utf8'))
+assert.equal(profile.customChannels.length, 25, 'exports all selected parameters, independent of the search filter')
+assert(!profile.customChannels.some(channel => channel.pid === parseInt(pids.find(pid => pid.id === '215353').cmd, 16) && channel.obdHeader === parseInt(pids.find(pid => pid.id === '215353').rh, 16) && channel.equation === exporter.pidToEntry(pids.find(pid => pid.id === '215353')).values[6]))
 page.onSearch({ detail: { value: '215353' } })
 assert.equal(page.data.total, 0)
 page.onSearch({ detail: { value: 'not-a-real-pid' } })

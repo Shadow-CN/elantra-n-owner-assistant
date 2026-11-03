@@ -9,9 +9,10 @@
     <input class="rc-search" placeholder="搜索名称、ID、ECU 或 PID" value="{{query}}" bindinput="onSearch" />
     <view class="rc-toolbar-bottom">
       <text>{{total}} 个参数 · 点击每一行即复制</text>
-      <button class="rc-export" bindtap="onShareFile" disabled="{{selectedCount === 0}}">导出清单</button>
+      <button class="rc-export" bindtap="onShareFile" disabled="{{selectedCount === 0}}">导出 RCZ</button>
     </view>
   </view>
+  <view class="rc-note">RCZ 可导入 RaceChrono 车辆配置；通道较多时会打包为多个 RCZ。导入后请核对快／慢通道，仅启用需要记录的参数。</view>
   <scroll-view class="rc-scroll" scroll-y scroll-top="{{scrollTop}}">
     <view wx:if="{{total === 0}}" class="rc-empty">{{selectedCount === 0 ? '尚未选择参数' : '没有匹配的参数'}}</view>
     <view wx:for="{{entries}}" wx:for-item="entry" wx:for-index="entryIndex" wx:key="id" class="rc-entry">

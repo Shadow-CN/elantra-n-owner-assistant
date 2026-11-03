@@ -1,5 +1,11 @@
 /* pages/filter/filter.wxss */
 
+.model-tabs { display: flex; flex-shrink: 0; border-bottom: 1rpx solid var(--border-item); background: var(--bg-card); padding: 0 30rpx; }
+.model-tab { flex: 1; padding: 26rpx 8rpx; text-align: center; font-size: 26rpx; color: var(--text-primary); border-bottom: 4rpx solid transparent; }
+.model-tab-active { color: var(--text-secondary); border-bottom-color: var(--text-secondary); font-weight: 700; }
+.obd-pending { padding: 48rpx 32rpx; }
+.obd-pending .section-hint { margin-top: 20rpx; }
+
 page {
   display: flex;
   flex-direction: column;

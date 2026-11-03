@@ -33,6 +33,7 @@ module.exports = {
       "supplemental": false,
       "cards": [
         {
+          "id": "smaintenance-1ym7iu3",
           "title": "机油规格参考",
           "summary": "原资料收录的机油型号、黏度与认证规格",
           "lines": [
@@ -57,6 +58,7 @@ module.exports = {
           ]
         },
         {
+          "id": "smaintenance-1p3drfb",
           "title": "DCT 油液与更换说明",
           "lines": [
             "BHB0005R · 自动变速器油更换",
@@ -71,6 +73,7 @@ module.exports = {
           ]
         },
         {
+          "id": "smaintenance-9uqtf3",
           "title": "NP 滤芯维护记录",
           "lines": [
             "NP 滤芯：每 10,000 km 清理，每 40,000 km 更换"
@@ -84,6 +87,7 @@ module.exports = {
           ]
         },
         {
+          "id": "smaintenance-5zuvfi",
           "title": "常用紧固扭矩",
           "lines": [
             "放油螺丝：34.3–44.1 N·m，建议 40 N·m",
@@ -105,15 +109,8 @@ module.exports = {
       "supplemental": false,
       "cards": [
         {
+          "id": "sparts-1sa5nsv",
           "title": "空调滤芯",
-          "lines": [
-            "原厂 K 97133 L1100",
-            "马勒 LAK1840 / LA1840",
-            "曼牌 CUK21028 / CUK21032",
-            "博世 0986AF4636",
-            "科德宝 CF105 / BL507",
-            "索菲玛 S4514CA1 / MC3294C"
-          ],
           "parts": [
             {
               "name": "空调滤芯",
@@ -168,29 +165,13 @@ module.exports = {
               "note": ""
             }
           ],
-          "partLineIndexes": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
           "aliases": [
             "s01-1sa5nsv"
           ]
         },
         {
+          "id": "sparts-1eirfp",
           "title": "机油滤芯",
-          "lines": [
-            "原厂 K 26300 35505N",
-            "马勒 OC523 · 曼牌 W811/80 / W8054",
-            "博世 0986AF0047 / 0986AF1150",
-            "科德宝 OF014 · 汉格斯特 H13WO1",
-            "索菲玛 S6902R / S6902R1",
-            "K&N HP1004 · FRAM FPS9688",
-            "斯巴鲁短机滤 15208 AA100"
-          ],
           "parts": [
             {
               "name": "机油滤芯",
@@ -276,27 +257,13 @@ module.exports = {
               "note": ""
             }
           ],
-          "partLineIndexes": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5,
-            6
-          ],
           "aliases": [
             "s01-1eirfp"
           ]
         },
         {
+          "id": "sparts-18qb07h",
           "title": "火花塞",
-          "lines": [
-            "原厂 18857 09085",
-            "NGK SILZKR8H9G / 94595",
-            "改装参考：ILKR9Q7G / 97312",
-            "改装参考：R2556G-9"
-          ],
           "parts": [
             {
               "name": "火花塞",
@@ -333,17 +300,12 @@ module.exports = {
               "note": ""
             }
           ],
-          "partLineIndexes": [
-            0,
-            1,
-            2,
-            3
-          ],
           "aliases": [
             "s01-18qb07h"
           ]
         },
         {
+          "id": "sparts-m573eu",
           "title": "空气滤芯",
           "parts": [
             {
@@ -355,15 +317,10 @@ module.exports = {
               "note": ""
             }
           ],
-          "lines": [
-            "空气滤芯 28113 IB000"
-          ],
-          "partLineIndexes": [
-            0
-          ],
           "aliases": []
         },
         {
+          "id": "sparts-hruyoe",
           "title": "N Performance 迎宾灯",
           "summary": "车友实装：门板开孔位置、取电记录与投影效果",
           "parts": [
@@ -375,17 +332,6 @@ module.exports = {
               ],
               "note": ""
             }
-          ],
-          "lines": [
-            "N Performance 迎宾灯 0101",
-            "N Performance Door Spot Lamp，开门时向地面投射 N Performance 标识。以下为车友在伊兰特 N 上的实装记录。",
-            "两扇前门的开孔位置均在门板水杯槽下方，具体上下位置见实拍图；尺寸、孔径及定位距离未提供，安装前需结合灯体与门板实际空间确认。",
-            "该实装车辆从车门把手线束取电：两侧橘黄色线作为正极，主驾驶侧蓝色线作为负极，副驾驶侧灰色线作为负极。此为该车的接线记录，施工时应核对对应车辆电路并实测确认，不能只凭线色直接接线。",
-            "该车安装完成后，两侧迎宾灯随对应车门开启而点亮、关闭而熄灭。",
-            "灯体背部有金属板，车友反馈用于散热；实拍投影文字清晰。"
-          ],
-          "partLineIndexes": [
-            0
           ],
           "blocks": [
             {
@@ -465,18 +411,9 @@ module.exports = {
               "text": "资料来源：车友蟹黄包秘方提供的安装交流与实拍照片。"
             }
           ],
-          "images": [
-            "/packages/knowledge/assets/knowledge/en-welcome-light/package.jpg",
-            "/packages/knowledge/assets/knowledge/en-welcome-light/projection.jpg",
-            "/packages/knowledge/assets/knowledge/en-welcome-light/projection-wide.jpg",
-            "/packages/knowledge/assets/knowledge/en-welcome-light/projection-close.jpg",
-            "/packages/knowledge/assets/knowledge/en-welcome-light/mount-inside.jpg",
-            "/packages/knowledge/assets/knowledge/en-welcome-light/mount-outside.jpg",
-            "/packages/knowledge/assets/knowledge/en-welcome-light/wiring.jpg",
-            "/packages/knowledge/assets/knowledge/en-welcome-light/lamp-back.jpg"
-          ]
         },
         {
+          "id": "sparts-1ga1f3v",
           "title": "钥匙",
           "parts": [
             {
@@ -497,17 +434,12 @@ module.exports = {
             }
           ],
           "lines": [
-            "新款遥控器 95440IB701",
-            "老款遥控器 95770IB700YPN",
             "订配钥匙时，请提供车辆识别代号（VIN／车架号），由配件供应方核对适配型号后再订购。以上编号仅供参考，请勿仅凭新老款外观判断，以免无法匹配车辆。"
-          ],
-          "partLineIndexes": [
-            0,
-            1
           ],
           "aliases": []
         },
         {
+          "id": "sparts-kyq87y",
           "title": "脚垫卡扣",
           "parts": [
             {
@@ -520,11 +452,7 @@ module.exports = {
             }
           ],
           "lines": [
-            "脚垫卡扣 84270 F2100",
-              "安装示意：将卡扣下端套入原车地板预留方孔，再按图示方向压入并卡进卡槽。实拍图展示卡扣与脚垫固定孔的配合位置；安装示意图仅供参考，具体以车辆预留孔位及卡子结构为准。"
-          ],
-          "partLineIndexes": [
-            0
+            "安装示意：将卡扣下端套入原车地板预留方孔，再按图示方向压入并卡进卡槽。实拍图展示卡扣与脚垫固定孔的配合位置；安装示意图仅供参考，具体以车辆预留孔位及卡子结构为准。"
           ],
           "images": [
             "/packages/knowledge/assets/knowledge/en-carpet-clip/installation.jpg",
@@ -537,6 +465,7 @@ module.exports = {
           ]
         },
         {
+          "id": "sparts-1yeymtg",
           "title": "前翼子板支架",
           "parts": [
             {
@@ -549,15 +478,10 @@ module.exports = {
               // "note": "保留原资料组合写法"
             }
           ],
-          "lines": [
-            "前翼子板支架 86551 / 86552 AAAA0"
-          ],
-          "partLineIndexes": [
-            0
-          ],
           "aliases": []
         },
         {
+          "id": "sparts-1a0ql3u",
           "title": "高压油泵与垫片",
           "parts": [
             {
@@ -577,17 +501,10 @@ module.exports = {
               "note": ""
             }
           ],
-          "lines": [
-            "G70 高压油泵 35320 2GTA0",
-            "高压油泵垫片 35320 2GTA1"
-          ],
-          "partLineIndexes": [
-            0,
-            1
-          ],
           "aliases": []
         },
         {
+          "id": "sparts-l1xrbx",
           "title": "排气垫片",
           "parts": [
             {
@@ -599,15 +516,10 @@ module.exports = {
               "note": ""
             }
           ],
-          "lines": [
-            "排气垫片 28751 3J000"
-          ],
-          "partLineIndexes": [
-            0
-          ],
           "aliases": []
         },
         {
+          "id": "sparts-7ksz4b",
           "title": "放油螺丝垫片",
           "parts": [
             {
@@ -619,15 +531,10 @@ module.exports = {
               "note": "尺寸规格"
             }
           ],
-          "lines": [
-            "放油螺丝垫片 M14 × 22 × 1.5"
-          ],
-          "partLineIndexes": [
-            0
-          ],
           "aliases": []
         },
         {
+          "id": "sparts-tk7xwg",
           "title": "其他零件索引",
           "summary": "空气滤芯、钥匙、卡子、支架、油泵与垫片",
           "lines": [
@@ -647,6 +554,7 @@ module.exports = {
           ]
         },
         {
+          "id": "sparts-13xv4bz",
           "title": "雨刮器尺寸与接口",
           "lines": [
             "雨刮器：24″ / 18″，U 型接口"
@@ -657,13 +565,8 @@ module.exports = {
           ]
         },
         {
+          "id": "sparts-k5f5wy",
           "title": "DCT 油液与相关零件",
-          "lines": [
-            "润滑冷却油 04300 2N100 · 液压控制油 04300 2N110",
-            "磁性放油螺丝 00810 17121 · 放油垫片 45323 39000",
-            "加油口螺丝 43121 11000 · 加油垫片 17511 16000",
-            "磁性塞 45324 23100 · 油塞密封垫 21513 23001"
-          ],
           "parts": [
             {
               "name": "润滑冷却油",
@@ -730,12 +633,6 @@ module.exports = {
               "note": ""
             }
           ],
-          "partLineIndexes": [
-            0,
-            1,
-            2,
-            3
-          ],
           "aliases": [
             "s03-yfsp4m"
           ],
@@ -744,12 +641,8 @@ module.exports = {
           ]
         },
         {
+          "id": "sparts-qmx51",
           "title": "ECU 与 TCU 编号",
-          "lines": [
-            "韩版 ECU 39160 2G554 · TCU 954A1 2N530",
-            "美版 ECU 39116 2G561 · TCU 954A1 2N541",
-            "中规 ECU 39160 2G558 · TCU 954A1 2N550"
-          ],
           "parts": [
             {
               "name": "ECU",
@@ -800,11 +693,6 @@ module.exports = {
               "note": ""
             }
           ],
-          "partLineIndexes": [
-            0,
-            1,
-            2
-          ],
           "aliases": [
             "s03-1hc31mp"
           ]
@@ -820,6 +708,7 @@ module.exports = {
       "supplemental": false,
       "cards": [
         {
+          "id": "strack-1x73tcn",
           "title": "胎压与调整",
           "lines": [
             "热胎最佳：35–37 PSI / 241–255 kPa / 2.41–2.55 bar",
@@ -843,6 +732,7 @@ module.exports = {
       "supplemental": false,
       "cards": [
         {
+          "id": "selectronics-12k35lu",
           "title": "CarPlay 解锁与第三方 App",
           "summary": "原资料中的功能与方案说明，服务报价见关联词条",
           "lines": [
@@ -861,6 +751,7 @@ module.exports = {
           ]
         },
         {
+          "id": "selectronics-1tgo8vl",
           "title": "车机工程模式",
           "lines": [
             "车机开机 → 收音机 → 音量 2 → 设置 / 通用",
@@ -873,6 +764,7 @@ module.exports = {
           ]
         },
         {
+          "id": "selectronics-1d2q2gj",
           "title": "行车记录仪与存储卡",
           "lines": [
             "原资料收录的单录与双录型号、功能和历史价格见关联词条。",
@@ -896,6 +788,7 @@ module.exports = {
       "supplemental": false,
       "cards": [
         {
+          "id": "sservices-5ezhz7",
           "title": "机油历史报价与渠道",
           "lines": [
             "历史资料：报价日期未记录，价格及服务承诺以渠道实际确认为准。",
@@ -912,6 +805,7 @@ module.exports = {
           ]
         },
         {
+          "id": "sservices-1sl5zud",
           "title": "DCT 换油工时参考",
           "lines": [
             "历史资料：报价日期未记录，价格及服务承诺以渠道实际确认为准。",
@@ -924,6 +818,7 @@ module.exports = {
           ]
         },
         {
+          "id": "sservices-5syeod",
           "title": "雨刮器历史报价",
           "lines": [
             "历史资料：报价日期未记录，价格及服务承诺以渠道实际确认为准。",
@@ -935,6 +830,7 @@ module.exports = {
           ]
         },
         {
+          "id": "sservices-19i4zqf",
           "title": "CarPlay 服务与历史报价",
           "lines": [
             "历史资料：报价日期未记录，价格及服务承诺以渠道实际确认为准。",
@@ -953,6 +849,7 @@ module.exports = {
           ]
         },
         {
+          "id": "sservices-1tllba3",
           "title": "单录行车记录仪历史参考",
           "lines": [
             "历史资料：报价日期未记录，价格及服务承诺以渠道实际确认为准。",
@@ -969,6 +866,7 @@ module.exports = {
           ]
         },
         {
+          "id": "sservices-1dk1w0s",
           "title": "双录行车记录仪历史参考",
           "lines": [
             "历史资料：报价日期未记录，价格及服务承诺以渠道实际确认为准。",
@@ -984,6 +882,7 @@ module.exports = {
           ]
         },
         {
+          "id": "sservices-1rzr1br",
           "title": "京现荣华 · 4S 店",
           "lines": [
             "前刹车皮 ¥1200，工时 ¥300 · 后刹车皮 ¥1000，工时 ¥300",
@@ -995,9 +894,9 @@ module.exports = {
           ]
         },
         {
+          "id": "sservices-169xvp5",
           "title": "610 · 奥星越秀",
           "lines": [
-            "前盘式制动器摩擦块套件 58101-IBA00：¥1652.05，需订货，工时 ¥500",
             "空气滤芯原厂 ¥115 · 空调滤芯原厂 ¥425 / 副厂 ¥95，工时 ¥50",
             "历史资料：报价日期未记录，价格及服务承诺以渠道实际确认为准。"
           ],
@@ -1010,9 +909,6 @@ module.exports = {
               ],
               "note": "¥1652.05，需订货，工时 ¥500"
             }
-          ],
-          "partLineIndexes": [
-            0
           ],
           "aliases": [
             "s08-169xvp5"
@@ -1029,6 +925,7 @@ module.exports = {
       "supplemental": false,
       "cards": [
         {
+          "id": "smanuals-1mnel8",
           "title": "车主手册（中文 PDF）",
           "lines": [
             "伊兰特 N 车主手册（使用说明书），中文 PDF。",
@@ -1044,6 +941,7 @@ module.exports = {
           ]
         },
         {
+          "id": "smanuals-1vw70ih",
           "title": "23款英文维修手册",
           "lines": [
             "Elantra N / CN7N 英文维修资料，23款按车友提供信息标注。",
@@ -1068,6 +966,7 @@ module.exports = {
       "supplemental": true,
       "cards": [
         {
+          "id": "sexperience-rex04a",
           "title": "加装法兰异响",
           "lines": [
             "加装法兰之后轮圈轴头出现“搁楞搁楞”异响，可在法兰合头之间垫一层铜皮处理。"

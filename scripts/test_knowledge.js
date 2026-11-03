@@ -2,16 +2,14 @@ var assert = require('assert/strict')
 var fs = require('fs')
 var path = require('path')
 var vm = require('vm')
-var wiki = require('../packages/knowledge/data/knowledge5n')
+var wiki = require('../packages/knowledge/lib/wiki').content('5n')
 var page
 var pageDepth=2,backCount=0,homeUrl=null
 var jumpResult="success",jumpLink=null,modalCount=0
-var fileShared = false
 var sourceCopied = null
 var filePath = path.join(__dirname, '../packages/knowledge/knowledge/knowledge.js')
 vm.runInNewContext(fs.readFileSync(filePath, 'utf8'), {
   require: function(name) {
-    if (name === '../../../utils/fileHelper') return { saveBinaryAndShare: function(name, data) { assert.equal(name, 'vehicle_i5n.rcz'); assert(data.byteLength > 0); fileShared = true } }
     return require(path.resolve(path.dirname(filePath), name))
   },
   getCurrentPages: function(){return Array(pageDepth).fill({})},
@@ -36,8 +34,6 @@ assert.equal(page.data.sections.length, 0)
 page.onSearch({ detail: { value: 'ICCU' } })
 assert(page.data.sections.length > 0)
 assert(page.onShareAppMessage().path.endsWith('model=5n'))
-page.onShareResource({ currentTarget: { dataset: wiki.sections[3].cards.find(function(c){return c.resource}).resource } })
-assert(fileShared)
 page.onModelChange({ currentTarget: { dataset: { model: 'elantra' } } })
 assert.equal(page.data.sections.map(function(s) { return s.title }).join('|'), elantraTitles)
 assert.equal(page.data.contacts.length, 2)
@@ -54,7 +50,7 @@ wiki.sections.forEach(function(section) {
   })
 })
 assert.equal(images.length, 19)
-console.log('PASS: model tabs, isolated content/search/contacts, share route, RC attachment, 19 images, five sections')
+console.log('PASS: model tabs, isolated content/search/contacts, share route, 19 images, five sections')
 
 page.onModelChange({currentTarget:{dataset:{model:'elantra'}}});assert.equal(page.data.sourceLink.url,'https://carplay.66ir.com/cn7n.html#manual');page.onSourceLinkTap();assert.equal(sourceCopied,'https://carplay.66ir.com/cn7n.html#manual')
 page.onModelChange({currentTarget:{dataset:{model:'5n'}}});assert.equal(page.data.sourceLink.url,'https://5nwiki.antarescorn.fyi/');page.onSourceLinkTap();assert.equal(sourceCopied,'https://5nwiki.antarescorn.fyi/')

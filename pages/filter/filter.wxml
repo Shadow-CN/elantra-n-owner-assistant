@@ -5,9 +5,18 @@
     <view class="theme-icon theme-icon-{{themeMode}}"></view>
   </view>
 </navigation-bar>
+<view class="model-tabs">
+  <view class="model-tab {{model === 'elantra' ? 'model-tab-active' : ''}}" bindtap="onModelChange" data-model="elantra">伊兰特 N · Elantra N</view>
+  <view class="model-tab {{model === '5n' ? 'model-tab-active' : ''}}" bindtap="onModelChange" data-model="5n">艾尼氪 5 N · IONIQ 5 N</view>
+</view>
 
 <scroll-view class="page-scroll" scroll-y>
-  <view class="page-body">
+  <view wx:if="{{model === '5n'}}" class="obd-pending">
+    <view class="section-title">IONIQ 5 N OBD 参数</view>
+    <view class="section-hint">参数数据整理中，后续将支持筛选与导出。</view>
+    <view class="section-hint">可先在车主 Wiki 的“RaceChrono读取不到OBD数据流”词条查看现有配置资料。</view>
+  </view>
+  <view wx:else class="page-body">
 
     <!-- 搜索 -->
     <view class="section search-section">
@@ -92,7 +101,7 @@
 </scroll-view>
 
 <!-- 底部：已选购物车 + 查看列表 -->
-<view class="cart-sheet {{cartOpen ? '' : 'is-hidden'}}">
+<view wx:if="{{model === 'elantra'}}" class="cart-sheet {{cartOpen ? '' : 'is-hidden'}}">
   <view class="cart-sheet-head">
     <text class="cart-sheet-title">已选参数</text>
     <text class="cart-sheet-clear" bindtap="onClearCart">清空</text>
@@ -120,7 +129,7 @@
   </scroll-view>
 </view>
 
-<view class="bottom-bar">
+<view wx:if="{{model === 'elantra'}}" class="bottom-bar">
   <view class="result-hint">共 {{totalCount}} 个参数</view>
   <view class="btn-row">
     <view class="cart-entry" bindtap="onToggleCart">

@@ -1,15 +1,7 @@
 const theme = require('../../utils/theme')
 const laps = require('../../utils/laps')
 const share = require('../../utils/share')
-const REGIONS = ['北京','浙江','上海','四川','广东','德国','内蒙古','天津','湖南','湖北','山东','河北']
-const REGION_TRACKS = [[0,1],[2,3],[4,5],[6],[7,14,15],[8,9],[10],[11,19,18],[12],[13],[16],[17]]
-// Sort picker options by explicit pinyin keys, independent of platform locale support.
-// Stable region/track IDs remain unchanged for GPS, saved records and shared links.
-const REGION_PINYIN = ['beijing','zhejiang','shanghai','sichuan','guangdong','deguo','neimenggu','tianjin','hunan','hubei','shandong','hebei']
-const TRACK_PINYIN = ['beijingruisi','beijingyichejingang','zhejiangguoji','ningboguoji','shanghaitianma','shanghaiguoji','chengdutianfuguoji','guangdongjingsuguoji','niubogelinbeihuan-full','niubogelinbeihuan-btg','eerduosiguoji','tianjinv1-2.4','zhuzhouguoji','wuhanguoji','zhuhaiguoji','guangdongguoji','shandonghezeguoji','shougang','tianjingogogo','tianjinv1-4.29']
-function compareKey(a,b){return a<b?-1:a>b?1:0}
-const REGION_ORDER = REGIONS.map((_,i)=>i).sort((a,b)=>compareKey(REGION_PINYIN[a],REGION_PINYIN[b]))
-REGION_TRACKS.forEach(ids=>ids.sort((a,b)=>compareKey(TRACK_PINYIN[a]||laps.TRACKS[a],TRACK_PINYIN[b]||laps.TRACKS[b])))
+const { REGIONS, REGION_TRACKS, REGION_ORDER } = require('../../utils/trackCatalog')
 function call(data) {
   if (!wx.cloud) return Promise.reject(new Error('当前微信版本不支持云开发，请升级微信'))
   return wx.cloud.callFunction({name:'lapBoard',data}).then(res => {

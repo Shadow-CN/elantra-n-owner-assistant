@@ -1,6 +1,7 @@
 var theme = require('../../utils/theme')
 var pidData = require('../../utils/pidData')
 var exporter = require('../../utils/raceChronoExporter')
+var profileExporter = require('../../utils/raceChronoProfile')
 var fileHelper = require('../../utils/fileHelper')
 var PAGE_SIZE = 1
 
@@ -68,8 +69,11 @@ Page({
 
   onShareFile() {
     if (!this._result.total) { wx.showToast({ title: '没有可导出的参数', icon: 'none' }); return }
-    fileHelper.saveAndShare('racechrono_cn7.md', exporter.toMarkdown(this._result), function(info) {
-      if (info.shareSkipped) wx.showModal({ title: '配置清单已生成', content: info.filePath, showCancel: false })
-    }, function(err) { wx.showToast({ title: err.message, icon: 'none' }) })
+    try {
+      var output = profileExporter.generate(this._result)
+      fileHelper.saveBinaryAndShare(output.fileName, output.buffer, function(info) {
+        if (info.shareSkipped) wx.showModal({ title: 'RC 配置已生成', content: info.filePath, showCancel: false })
+      }, function(err) { wx.showToast({ title: err.message, icon: 'none' }) })
+    } catch (err) { wx.showToast({ title: err.message || '配置生成失败，请重试', icon: 'none' }) }
   },
 })

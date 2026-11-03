@@ -1,5 +1,5 @@
 const provinces = require('../data/location/provinces')
-const REGIONS = ['北京','浙江','上海','四川','广东','德国','内蒙古','天津','湖南','湖北','山东','河北']
+const { REGIONS } = require('./trackCatalog')
 function normalize(name){return name.replace(/省|市|特别行政区|壮族自治区|回族自治区|维吾尔自治区|自治区/g,'')}
 function inRing(x,y,ring){
   let inside=false

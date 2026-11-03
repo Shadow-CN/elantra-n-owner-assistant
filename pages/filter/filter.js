@@ -11,6 +11,7 @@ var SEARCH_LIMIT = 20
 
 Page({
   data: {
+    model: 'elantra',
     ecuGroups: [],
     paramTypes: [],
     selectedEcu: '',
@@ -29,16 +30,33 @@ Page({
     pageStyle: '',
   },
 
-  onLoad() {
+  onLoad(options) {
     shareUtil.enableShareMenu()
+    var requested = options && options.model
+    var model = requested === '5n' || (!requested && getApp().globalData.obdModel === '5n') ? '5n' : 'elantra'
+    getApp().globalData.obdModel = model
+    this.setData({ model: model })
     this._applyTheme()
-    this._buildFilterData()
+    if (model === 'elantra') this._buildFilterData()
   },
 
   onShow() {
     this._applyTheme()
+    if (this.data.model === '5n') return
     this._refreshCart()
     this._refreshSearchResults()
+  },
+
+  onModelChange(e) {
+    var model = e.currentTarget.dataset.model === '5n' ? '5n' : 'elantra'
+    if (model === this.data.model) return
+    getApp().globalData.obdModel = model
+    this.setData({ model: model, cartOpen: false })
+    if (model === 'elantra') {
+      this._buildFilterData()
+      this._refreshCart()
+      this._refreshSearchResults()
+    }
   },
 
   _applyTheme() {
@@ -297,10 +315,12 @@ Page({
   },
 
   onViewParams() {
+    if (this.data.model !== 'elantra') return
     wx.navigateTo({ url: '/pages/params/params' })
   },
 
   onViewSelected() {
+    if (this.data.model !== 'elantra') return
     if (this.data.cartCount === 0) {
       wx.showToast({ title: '尚未选择任何参数', icon: 'none' })
       return
@@ -308,10 +328,10 @@ Page({
     wx.navigateTo({ url: '/pages/export/export' })
   },
   onShareAppMessage() {
-    return shareUtil.appMessage('filter')
+    return {title: (this.data.model === '5n' ? 'IONIQ 5 N' : 'Elantra N') + ' OBD 参数配置', path: '/pages/filter/filter?model=' + this.data.model}
   },
 
   onShareTimeline() {
-    return shareUtil.timeline('filter')
+    return {title: (this.data.model === '5n' ? 'IONIQ 5 N' : 'Elantra N') + ' OBD 参数配置', query: 'model=' + this.data.model}
   },
 })

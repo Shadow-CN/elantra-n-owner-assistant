@@ -1,5 +1,6 @@
 var themeUtil = require('../../utils/theme')
 var shareUtil = require('../../utils/share')
+var versionUtil = require('../../utils/version')
 
 Page({
   data: {
@@ -7,11 +8,14 @@ Page({
     navColor: 'black',
     themeMode: 'auto',
     pageStyle: '',
+    changelog: null,
+    changelogVisible: false,
   },
 
   onLoad() {
     shareUtil.enableShareMenu()
     this._applyTheme()
+    this._checkVersion()
   },
 
   onShow() {
@@ -58,6 +62,21 @@ Page({
   onOpenGoods() {
     wx.navigateTo({ url: '/pages/goods/goods' })
   },
+
+  // 版本变化时弹一次更新说明，点「知道了」后记录为已读。
+  _checkVersion() {
+    var update = versionUtil.pendingUpdate()
+    if (!update) return
+    this.setData({ changelog: update, changelogVisible: true })
+  },
+
+  onChangelogClose() {
+    versionUtil.markSeen()
+    this.setData({ changelogVisible: false })
+  },
+
+  // 阻止点弹窗本体时冒泡到遮罩，避免误关。
+  onChangelogBodyTap() {},
 
   onShareAppMessage() {
     return shareUtil.appMessage('index')

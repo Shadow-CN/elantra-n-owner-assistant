@@ -122,6 +122,7 @@ function generate(pids) {
     }
     groups[group].add(number)
     entry.values[1] = channels.postfix(entry.position, number)
+    entry.sensorNumber = number
     entry.channelIdentifier = channels.identifier(entry.channelId, entry.position, number)
     entry.profileGroup = group + 1
     if (entry.profileGroup > 1) entry.notes.push('此通道编号需放入车辆配置组 ' + entry.profileGroup + '，避免与前组重名。')
