@@ -30,7 +30,8 @@ module.exports = {
     {
       "id": 5,
       "name": "德国",
-      "pinyin": "deguo"
+      "pinyin": "deguo",
+      "overseas": true
     },
     {
       "id": 6,

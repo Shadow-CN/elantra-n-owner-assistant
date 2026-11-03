@@ -168,7 +168,7 @@ EN修改 `packages/knowledge/data/knowledgeElantra.js`，5N修改同目录 `know
 
 文件分两部分：
 
-- `regions`：地区的 `id`、`name`、`pinyin`。
+- `regions`：地区的 `id`、`name`、`pinyin`；国外地区增加 `overseas: true`。国内地区先按拼音排序，国外地区统一排在最后，再按拼音排序。
 - `tracks`：赛道的 `id`、`name`、`region`（所属地区ID）、`pinyin`。
 
 例如，目前下一个赛道ID为20，天津地区ID为7，可在 `tracks` 末尾追加（示例名称，按实际赛道修改）：

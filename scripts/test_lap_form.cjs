@@ -61,7 +61,7 @@ p.onLoad({});assert.equal(located,2)
 console.log('PASS: share menu, track-specific links, shared track selection without location override, invalid link fallback')
 
 // Picker positions are display-only; cloud/share/edit IDs stay stable.
-assert.deepEqual(p.data.regionOptions,[0,5,4,11,9,8,6,10,2,3,7,1].map(i=>p.data.regions[i]))
+assert.deepEqual(p.data.regionOptions,[0,4,11,9,8,6,10,2,3,7,1,5].map(i=>p.data.regions[i]))
 p.data.tab='submit'
 for(const [region,ids] of [[1,[3,2]],[2,[5,4]],[4,[15,7,14]],[7,[18,11,19]]]){
  p.regionChange({detail:{value:p.data.regionOptions.indexOf(p.data.regions[region])}})
