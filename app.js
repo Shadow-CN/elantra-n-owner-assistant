@@ -31,7 +31,7 @@ App({
 
   /**
    * 新版小程序下载完成后提示重启。
-   * 重启后进入首页，utils/version.js 会弹出本次更新说明。
+   * 重启后进入任一带导航栏的页面，更新说明组件会检查是否有未读内容。
    */
   _watchUpdate() {
     if (typeof wx.getUpdateManager !== 'function') return

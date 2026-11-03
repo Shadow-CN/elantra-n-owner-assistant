@@ -11,6 +11,22 @@
     <text class="label">赛道</text><picker range="{{trackOptions}}" value="{{regionTrack}}" bindchange="trackChange" disabled="{{busy}}"><view class="picker">{{tracks[track]}} ›</view></picker>
   </view>
   <block wx:if="{{tab!=='submit'}}">
+    <view wx:if="{{tab==='mine' && progressGroups.length}}" class="personal-progress">
+      <view class="progress-title">我的进步</view>
+      <text class="hint">同赛道、同车辆名称、同干湿地分别统计。同一天取最佳成绩，展示刷新个人最佳的记录。</text>
+      <view class="card" wx:for="{{progressGroups}}" wx:for-item="group" wx:key="key">
+        <view class="progress-track">{{group.trackName}}</view>
+        <text class="hint">{{group.vehicle}} · {{group.condition}} · {{group.recordCount}} 条成绩</text>
+        <view class="progress-best" bindtap="openDetail" data-id="{{group.bestId}}">
+          <text class="progress-best-label">个人最佳</text><view class="time">{{group.bestLap}}</view><text class="progress-gain">{{group.gainLabel}}</text><text class="hint">{{group.bestDate}} · 查看成绩 ›</text>
+        </view>
+        <view class="progress-timeline">
+          <view class="progress-step" wx:for="{{group.milestones}}" wx:for-item="point" wx:key="id" bindtap="openDetail" data-id="{{point.id}}">
+            <view class="progress-date">{{point.date}}</view><view class="progress-step-main"><view class="progress-lap">{{point.lap}} <text class="progress-delta">{{point.gainLabel}}</text></view><text class="progress-config">{{point.configuration}}</text></view>
+          </view>
+        </view>
+      </view>
+    </view>
     <view class="hint">{{tab==='mine'?'你的全部成绩，按圈速排序':'当前赛道的全部成绩，按圈速排序'}}</view>
     <view class="card error" wx:if="{{error}}"><text>{{error}}</text><button size="mini" bindtap="search">重新加载</button></view>
     <view class="empty" wx:if="{{!loading && !error && !rows.length}}">还没有成绩，来记录第一圈。</view>

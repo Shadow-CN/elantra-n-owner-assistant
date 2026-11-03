@@ -100,23 +100,3 @@
 		</view>
 	</view>
 </scroll-view>
-
-<view wx:if="{{changelogVisible}}" class="update-mask" bindtap="onChangelogClose">
-	<view class="update-card" catchtap="onChangelogBodyTap" aria-role="dialog" aria-label="版本更新说明">
-		<view class="update-head">
-			<text class="update-version">v{{changelog.version}}</text>
-			<text class="update-date">{{changelog.entries[0].date}}</text>
-		</view>
-		<view class="update-title">本次更新</view>
-		<view class="update-list">
-			<view wx:for="{{changelog.entries}}" wx:key="version" class="update-entry">
-				<text wx:if="{{changelog.entries.length > 1}}" class="update-entry-version">v{{item.version}} · {{item.date}}</text>
-				<view wx:for="{{item.items}}" wx:for-item="line" wx:for-index="j" wx:key="*this" class="update-line">
-					<view class="update-dot"></view>
-					<text class="update-text">{{line}}</text>
-				</view>
-			</view>
-		</view>
-		<view class="update-btn" hover-class="update-btn-active" bindtap="onChangelogClose">知道了</view>
-	</view>
-</view>

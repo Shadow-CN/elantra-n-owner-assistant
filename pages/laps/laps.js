@@ -1,6 +1,7 @@
 const theme = require('../../utils/theme')
 const laps = require('../../utils/laps')
 const share = require('../../utils/share')
+const lapProgress = require('../../utils/lapProgress')
 const { REGIONS, REGION_TRACKS, REGION_ORDER } = require('../../utils/trackCatalog')
 function call(data) {
   if (!wx.cloud) return Promise.reject(new Error('当前微信版本不支持云开发，请升级微信'))
@@ -10,7 +11,7 @@ function call(data) {
   })
 }
 Page({
-  data:{themeMode:'auto',tracks:laps.TRACKS,regions:REGIONS,regionOptions:REGION_ORDER.map(i=>REGIONS[i]),regionPicker:0,region:0,regionTrack:0,trackOptions:REGION_TRACKS[0].map(i=>laps.TRACKS[i]),track:0,tab:'board',rows:[],hasMore:false,loading:false,error:'',busy:false,showPrivacy:false,locating:false,locationHint:'',privacyTitle:'选择视频前，请阅读隐私指引',privacyCopy:'圈速榜会使用你主动选择或拍摄的视频。只有提交成绩时才会上传，上传后其他用户可查看。视频为选填，不同意也可继续提交成绩。',privacyAgreeText:'同意并选择视频',privacyContractName:'隐私保护指引',editId:'',editVersion:0,existingVideo:false,removeVideo:false,progress:0,video:null,lapParts:{minutes:'',seconds:'',milliseconds:''},lapError:'',conditions:['干地','湿地'],modTypes:['原厂','改装'],modFields:laps.MOD_FIELDS,form:{driver:'',vehicle:'',date:'',temperature:'',videoLink:'',lap:'',modifications:'原厂',modificationDetails:{},condition:'干地'}},
+  data:{progressGroups:[],themeMode:'auto',tracks:laps.TRACKS,regions:REGIONS,regionOptions:REGION_ORDER.map(i=>REGIONS[i]),regionPicker:0,region:0,regionTrack:0,trackOptions:REGION_TRACKS[0].map(i=>laps.TRACKS[i]),track:0,tab:'board',rows:[],hasMore:false,loading:false,error:'',busy:false,showPrivacy:false,locating:false,locationHint:'',privacyTitle:'选择视频前，请阅读隐私指引',privacyCopy:'圈速榜会使用你主动选择或拍摄的视频。只有提交成绩时才会上传，上传后其他用户可查看。视频为选填，不同意也可继续提交成绩。',privacyAgreeText:'同意并选择视频',privacyContractName:'隐私保护指引',editId:'',editVersion:0,existingVideo:false,removeVideo:false,progress:0,video:null,lapParts:{minutes:'',seconds:'',milliseconds:''},lapError:'',conditions:['干地','湿地'],modTypes:['原厂','改装'],modFields:laps.MOD_FIELDS,form:{driver:'',vehicle:'',date:'',temperature:'',videoLink:'',lap:'',modifications:'原厂',modificationDetails:{},condition:'干地'}},
   onLoad(options) {
     share.enableShareMenu()
     this._alive = true
@@ -72,8 +73,13 @@ Page({
     if(this.data.loading&&!reset)return
     const token=this._loadId=(this._loadId||0)+1
     const rows=reset?[]:this.data.rows
-    this.setData({loading:true,error:'',...(reset?{rows:[],hasMore:false}:{})})
+    this.setData({loading:true,error:'',...(reset?{rows:[],hasMore:false,progressGroups:[]}:{})})
     try {
+      if(this.data.tab==='mine'){
+        const all=await lapProgress.loadAllMine(call,()=>this._alive&&token===this._loadId&&this.data.tab==='mine')
+        if(all)this.setData({rows:all.map((r,i)=>Object.assign({},r,{rank:i+1,trackName:laps.TRACKS[r.track],temperatureLabel:laps.formatTemperature(r.temperature)})),progressGroups:lapProgress.summarize(all),hasMore:false})
+        return
+      }
       const res=await call({action:'list',mine:this.data.tab==='mine',track:this.data.track,offset:rows.length})
       if(this._alive&&token===this._loadId)this.setData({rows:rows.concat(res.rows.map((r,i)=>Object.assign(r,{rank:rows.length+i+1,trackName:laps.TRACKS[r.track],temperatureLabel:laps.formatTemperature(r.temperature)}))),hasMore:res.hasMore})
     }catch(e){if(this._alive&&token===this._loadId)this.setData({error:e.message||'加载失败，请重试'})}

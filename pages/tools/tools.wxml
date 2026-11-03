@@ -25,7 +25,7 @@
       <text class="tools-arrow">›</text>
     </view>
 
-    <view class="tools-card tools-card-spaced" bindtap="onOpenExchange" aria-role="button" aria-label="打开汇率换算"><view class="tools-icon">FX</view><view class="tools-info"><view class="tools-title-row"><text class="tools-name">汇率换算</text></view><text class="tools-card-desc">人民币、韩元、美元等9种货币，查询每日参考汇率。</text></view><text class="tools-arrow">›</text></view>
+    <view class="tools-card tools-card-spaced" bindtap="onOpenExchange" aria-role="button" aria-label="打开汇率换算"><view class="tools-icon">CC</view><view class="tools-info"><view class="tools-title-row"><text class="tools-name">汇率换算</text></view><text class="tools-card-desc">人民币、韩元、美元等9种货币，查询每日参考汇率。</text></view><text class="tools-arrow">›</text></view>
 
     <view class="tools-card tools-card-spaced" bindtap="onOpenWheel" aria-role="button" aria-label="轮毂模拟器，开发中">
       <view class="tools-icon tools-icon-soon">轮毂</view>

@@ -13,6 +13,8 @@
 | 想修改的内容 | 文件 | 修改位置／说明 |
 |---|---|---|
 | 小程序首页入口、文字、卡片顺序 | [pages/index/index.wxml](pages/index/index.wxml) | 按标签从上到下显示；点击行为在同目录 `index.js` |
+| 版本更新内容、弹窗版本号 | [data/changelog.js](data/changelog.js) | 新版本在数组最前面追加，version递增；用户关闭后同版不再弹 |
+| 更新弹窗及已读判断 | `components/update-notice/`、[version.js](utils/version.js) | 通用导航栏挂载，覆盖首页和分享直达页面 |
 | 实用工具列表、工具简介 | [pages/tools/tools.wxml](pages/tools/tools.wxml) | 压力、汇率、轮毂入口；跳转在 `tools.js` |
 | 实用工具页背景与卡片样式 | [pages/tools/tools.wxss](pages/tools/tools.wxss) | 已移除右上角径向渐变晕影 |
 | EN 分类、文章、零件号、备注、图片顺序 | [knowledgeElantra.js](packages/knowledge/data/knowledgeElantra.js) | 搜索词条标题，例如“钥匙”“脚垫卡扣”“迎宾灯” |
@@ -31,6 +33,7 @@
 | 圈速榜页面、表单文字、成绩列表布局 | [pages/laps/laps.wxml](pages/laps/laps.wxml) | 样式在 `laps.wxss`，行为在 `laps.js` |
 | 圈速输入、上传、编辑、删除、分享 | [pages/laps/laps.js](pages/laps/laps.js) | 分／秒／毫秒；毫秒选填；视频和视频链接选填 |
 | 成绩详情页 | [pages/lap-detail/lap-detail.wxml](pages/lap-detail/lap-detail.wxml) | 视频／外链→基础信息→改装项；行为在同目录JS |
+| 我的成绩：个人最佳、提升和进步轨迹 | [lapProgress.js](utils/lapProgress.js)、[laps.wxml](pages/laps/laps.wxml) | 同赛道／车辆名称／干湿地分组；同日取最佳，仅展示刷新最佳的日期 |
 | 赛道名称、地区归属、拼音排序 | [data/tracks.js](data/tracks.js) | 唯一手工维护入口，保留已有ID；修改后运行生成命令 |
 | 改装字段、输入校验 | [utils/laps.js](utils/laps.js) | `MOD_FIELDS`、`validate`；修改后运行生成命令 |
 | 云端成绩校验 | [validation.js](cloudfunctions/lapBoard/validation.js) | 自动生成，不直接编辑；源文件为 `utils/laps.js`，生成后部署 `lapBoard` |
@@ -255,7 +258,7 @@ node scripts/check_all.cjs
 
 RCZ独立解包验证需要本机安装Python并可执行 `python`。
 
-自动发现 `scripts/test_*.js` 与 `scripts/test_*.cjs`，最后检查包体、JSON编码、路由和资源引用。只检查，不生成正文、不上传文件、不部署云函数；失败会列出脚本并返回非零退出码。当前共18项（含版本提示、OBD车型、RCZ和知识库单处维护测试）。
+自动发现 `scripts/test_*.js` 与 `scripts/test_*.cjs`，最后检查包体、JSON编码、路由和资源引用。只检查，不生成正文、不上传文件、不部署云函数；失败会列出脚本并返回非零退出码。当前共19项（含版本提示、OBD车型、RCZ和知识库单处维护测试）。
 
 只改某个功能时，也可运行对应脚本：
 
@@ -267,6 +270,7 @@ node scripts/test_wiki_cloud.cjs
 node scripts/test_laps.js
 node scripts/test_track_catalog.cjs
 node scripts/test_lap_form.cjs
+node scripts/test_lap_progress.cjs
 node scripts/test_lap_upload.cjs
 node scripts/test_lap_detail.cjs
 node scripts/test_location.cjs
@@ -301,3 +305,19 @@ node scripts/check_package_size.js
 项目变化与尚未完成的真机验证见 [HANDOFF.md](HANDOFF.md)，历史记录在 `docs/HANDOFF-history.md`。
 
 配置文件请保存为 **UTF-8（无BOM）**，尤其是页面 `.json`；带BOM会被微信开发者工具报为JSON语法错误。包体检查现已包含包内JSON解析检查。
+
+### 版本更新说明弹窗
+
+在 `data/changelog.js` 最前面增加新版本记录：更新 `version`、`date`、`items`。提示版本号来自这份文件，建议与开发者工具上传时的版本号一致；仅修改文案而不增加version，同版已确认用户不会再次看到。
+
+首次进入任一功能页会显示最新说明，关闭后才记录 `acknowledgedChangelogVersion`；跨版本最多展示三条未读历史。旧版静默写入的 `seenVersion` 不再用于判断，避免实际没看到却被当成已读。
+
+开发者工具重测当前版本：控制台执行 `wx.removeStorageSync('acknowledgedChangelogVersion')`，再重新编译，以清除本次运行的内存记录。无需修改正式版本号或清空其他业务缓存。
+
+### 个人成绩进步记录
+
+圈速榜→“我的成绩”顶部新增“我的进步”。按赛道（布局仍按独立赛道编号）、车辆名称、干地／湿地分组，显示个人最佳圈速、达成日期、首次记录至今累计提升秒数，以及每次刷新最佳的日期、圈速、原厂／改装和已填轮胎。车辆名称按原文去除首尾空格匹配，不推测不同名称是否同一辆车。
+
+同一天有多条成绩时取当天最快一条作为轨迹点；同日内没有时间信息，因此不推断圈与圈的先后。累计提升以首次有记录日期的当天最佳为基准。较慢记录仍保留在下方完整成绩列表，点击轨迹点可查看原成绩详情。
+
+使用现有lapBoard的mine查询逐页加载全部本人公开记录，完成后才计算，避免仅用前20条误称个人最佳；无需新增集合、迁移数据或部署云函数。编辑、删除后重载统计，切换标签时丢弃过期响应。记录很多时首次加载请求数相应增加。

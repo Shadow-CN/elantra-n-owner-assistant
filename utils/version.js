@@ -1,14 +1,15 @@
 /**
  * version.js — 版本更新提示。
  *
- * 数据来自 data/changelog.js。已读版本存在本地缓存 seenVersion。
- * 只有「上次已读版本」和「当前版本」不一致时才提示，首次安装不提示。
+ * 数据来自 data/changelog.js。只有用户关闭更新说明后才记录已读。
+ * 独立的确认记录避免旧版曾自动写入的 seenVersion 导致漏提示。
  */
 
 var CHANGELOG = require('../data/changelog')
 
-var STORAGE_KEY = 'seenVersion'
+var STORAGE_KEY = 'acknowledgedChangelogVersion'
 var MAX_ENTRIES = 3
+var sessionSeen = ''
 
 function currentVersion() {
   return CHANGELOG.length ? CHANGELOG[0].version : ''
@@ -16,15 +17,18 @@ function currentVersion() {
 
 function getSeenVersion() {
   try {
-    return wx.getStorageSync(STORAGE_KEY) || ''
+    return sessionSeen || wx.getStorageSync(STORAGE_KEY) || ''
   } catch (e) {
-    return ''
+    return sessionSeen
   }
 }
 
-function markSeen() {
+function markSeen(version) {
+  version = version || currentVersion()
+  if (!version) return
+  sessionSeen = version
   try {
-    wx.setStorageSync(STORAGE_KEY, currentVersion())
+    wx.setStorageSync(STORAGE_KEY, version)
   } catch (e) {}
 }
 
@@ -39,11 +43,8 @@ function pendingUpdate() {
   var seen = getSeenVersion()
   if (seen === current) return null
 
-  // 首次安装：不打扰，直接记为已读。
-  if (!seen) {
-    markSeen()
-    return null
-  }
+  // 首次使用或从未真正确认过更新说明：显示最新一条，不能预先写已读。
+  if (!seen) return { version: current, entries: CHANGELOG.slice(0, 1) }
 
   // 找到上次已读版本的位置；找不到（例如从更高版本回退）只提示最新一条。
   var idx = -1

@@ -3,7 +3,8 @@
 .rc-search { background: var(--bg-page); padding: 16rpx; height: 48rpx; margin-top: 18rpx; font-size: 26rpx; color: var(--text-primary); border-radius: 8rpx; }
 .rc-toolbar-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16rpx; margin-top: 12rpx; color: var(--text-secondary); font-size: 22rpx; }
 .rc-toolbar-bottom text { flex: 1; min-width: 0; }
-.rc-export { margin: 0; font-size: 22rpx; padding: 0 16rpx; color: var(--text-tag); background: var(--bg-card); border-radius: 8rpx; flex-shrink: 0; }
+.rc-export { margin: 0; font-size: 22rpx; font-weight: 600; padding: 0 16rpx; color: var(--text-accent); background: var(--bg-accent); border-radius: 8rpx; flex-shrink: 0; }
+.rc-export[disabled] { color: var(--text-accent); background: var(--bg-accent); opacity: .4; }
 .rc-scroll { flex: 1; height: 0; min-height: 0; }
 .rc-entry { background: var(--bg-card); margin-bottom: 20rpx; padding-bottom: 20rpx; }
 .rc-entry-head { padding: 24rpx 28rpx; border-bottom: 1rpx solid var(--border-item); }
